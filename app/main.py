@@ -41,14 +41,15 @@ def register():
         username = request.form.get('username')
         firstname = request.form.get('firstname')
         lastname = request.form.get("lastname")
-        email = request.form.get('email')
         password = request.form.get('password')
         passwordconfirm = request.form.get('passwordconfirm')
+        email = request.form.get('email')
+        phone = request.form.get('phone')
         message='Register unsuccessfully'
         if check_user(username) and password == passwordconfirm:
             add_user(firstname=firstname,lastname=lastname,
                      username=username, password=password,
-                     email=email)
+                     email=email, phone=phone)
             message='Register successfully'
         return render_template('admin/registration.html', message=message)
     return render_template("admin/registration.html")
