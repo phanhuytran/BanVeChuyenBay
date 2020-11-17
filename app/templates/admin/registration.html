@@ -1,0 +1,51 @@
+{% extends 'base/log.html' %}
+{% block function %}
+<div class="col-md-5 col-md-offset-1">
+    <section id="first-tab-group" class="tabgroup">
+        <div class="submit-form">
+            <h4>Registration:
+            {% if message == 'Register successfully'%}
+                <span class="alert alert-success">{{ message }}</span>
+            {% else %}
+                <span class="alert alert-danger">{{ message }}</span>
+            {% endif %}
+            </h4>
+            <form action="{{ url_for('register') }}" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>First name:</label>
+                        <input class="form-control date" type="text"  name="firstname" id="firstname" placeholder="First name..." required />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Last name:</label>
+                        <input class="form-control date" type="text"  name="lastname" id=lastname" placeholder="Last name..." required />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Username:</label>
+                        <input class="form-control date" type="text" name="username" id="username" placeholder="Username..." required />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Password:</label>
+                        <input class="form-control date" type="password"  name="password" id="password" placeholder="Password..." required />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Confirm password:</label>
+                        <input class="form-control date" type="password" name="passwordconfirm" id="passwordconfirm" placeholder="Confirm password..." required />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Email:</label>
+                        <input class="form-control date" type="email" name="email" id="email" placeholder="Email..." required />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Phone:</label>
+                        <input class="form-control date" type="text" name="phone" id="phone" placeholder="Phone..." required />
+                    </div>
+                    <div class="col-md-6"><br/>
+                        <button class="btn" type="submit">Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}
