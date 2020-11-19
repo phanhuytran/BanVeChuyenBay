@@ -8,6 +8,10 @@ from flask_admin import BaseView, expose
 from flask_login import UserMixin, current_user, logout_user
 from enum import Enum as UserEnum
 
+from wtforms import validators, PasswordField
+from wtforms.fields.html5 import EmailField, TelField
+
+
 class UserRole(UserEnum):
     USER = 1
     ADMIN = 2
@@ -26,9 +30,10 @@ class Staff(db.Model, UserMixin):
     lastname = Column(String(50), nullable=False)
     email = Column(String(50))
     phone = Column(String(50))
+    avatar = Column(String(100))
     active = Column(Boolean, default=True)
     joined_date = Column(Date, default=datetime.now())
-    #account = relationship('Account', backref='staff', lazy=True)
+    account = relationship('Account', backref='staff', lazy=True)
     def __str__(self):
         return self.name
 
@@ -37,8 +42,6 @@ class Account(db.Model, UserMixin):
     id = Column(Integer, ForeignKey(Staff.id), primary_key=True, autoincrement=True)
     username = Column(String(100), nullable=False)
     password = Column(String(100), nullable=False)
-    def __str__(self):
-        return self.name
 
 class ModelView_Base(AuthenticatedView):
     column_display_pk = True
@@ -46,6 +49,11 @@ class ModelView_Base(AuthenticatedView):
     can_edit = True
     can_export = True
     can_delete = True
+    edit_modal = True
+    column_searchable_list = ('firstname', 'lastname', 'phone', 'email', 'joined_date')
+    form_extra_fields = {
+        'email': EmailField("Email", validators=[validators.data_required()])
+    }
 
 class AboutUsView(AuthenticatedView_1):
     @expose('/')

@@ -3,7 +3,7 @@ from flask import render_template, request, redirect
 from app.Models import *
 from app.admin import *
 from flask_login import login_user, login_required
-import hashlib
+import hashlib, os
 
 @login.user_loader
 def load_user(user_id):
@@ -28,31 +28,41 @@ def check_user(username):
             return False
     return True
 
-def add_user(firstname,lastname, username, password, email, phone):
-    user = Staff(firstname=firstname, lastname=lastname, email=email, phone=phone)
+def add_user(firstname, lastname, username, password, email, phone, avatar):
+    password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
+    user = Staff(firstname=firstname, lastname=lastname, email=email, phone=phone, avatar=avatar)
     user1 = Account(username=username, password=password)
-    db.session.add(user)
-    db.session.add(user1)
-    db.session.commit()
+    try:
+        db.session.add(user)
+        db.session.add(user1)
+        db.session.commit()
+        return True
+    except Exception as ex:
+        print(ex)
+        return False
 
 @app.route("/registration", methods=['GET', 'POST'])
 def register():
+    message = ''
     if request.method == 'POST':
-        username = request.form.get('username')
         firstname = request.form.get('firstname')
         lastname = request.form.get("lastname")
+        username = request.form.get('username')
         password = request.form.get('password')
-        passwordconfirm = request.form.get('passwordconfirm')
+        confirm_password = request.form.get('confirm_password')
         email = request.form.get('email')
         phone = request.form.get('phone')
-        message='Register unsuccessfully'
-        if check_user(username) and password == passwordconfirm:
-            add_user(firstname=firstname,lastname=lastname,
-                     username=username, password=password,
-                     email=email, phone=phone)
-            message='Register successfully'
-        return render_template('admin/registration.html', message=message)
-    return render_template("admin/registration.html")
+        avatar = request.files["avatar"]
+        avatar_path = 'img/upload/%s' % avatar.filename
+        avatar.save(os.path.join(app.config['ROOT_PROJECT_PATH'], 'static/', avatar_path))
+        if check_user(username) and password == confirm_password:
+            if add_user(firstname=firstname, lastname=lastname,
+                        username=username, password=password,
+                        email=email,phone=phone, avatar=avatar_path):
+                return redirect('/admin')
+        else:
+            message = "Register unsuccessfully"
+    return render_template('admin/registration.html', message=message)
 
 @app.route("/air-ticket-sales")
 def air_ticket_sales():

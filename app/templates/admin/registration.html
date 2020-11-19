@@ -1,16 +1,21 @@
 {% extends 'base/log.html' %}
+
+{% block banner_registration %}
+    <div class="banner_registration">
+        <div><img src="{{ url_for('static', filename='img/vna.png') }}"></div>
+    </div>
+{% endblock %}
+
 {% block function %}
 <div class="col-md-5 col-md-offset-1">
     <section id="first-tab-group" class="tabgroup">
         <div class="submit-form">
             <h4>Registration:
-            {% if message == 'Register successfully'%}
-                <span class="alert alert-success">{{ message }}</span>
-            {% else %}
-                <span class="alert alert-danger">{{ message }}</span>
-            {% endif %}
+                {% if message %}
+                <span class="alert alert-danger"> {{ message }}</span>
+                {% endif %}
             </h4>
-            <form action="{{ url_for('register') }}" method="post">
+            <form action="{{ url_for('register') }}" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6">
                         <label>First name:</label>
@@ -30,7 +35,7 @@
                     </div>
                     <div class="col-md-6">
                         <label>Confirm password:</label>
-                        <input class="form-control date" type="password" name="passwordconfirm" id="passwordconfirm" placeholder="Confirm password..." required />
+                        <input class="form-control date" type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password..." required />
                     </div>
                     <div class="col-md-6">
                         <label>Email:</label>
@@ -40,8 +45,15 @@
                         <label>Phone:</label>
                         <input class="form-control date" type="text" name="phone" id="phone" placeholder="Phone..." required />
                     </div>
+                    <div class="col-md-6">
+                        <label>Profile picture:</label>
+                        <input class="form-control date" type="file" name="avatar" id="avatar" required />
+                    </div>
                     <div class="col-md-6"><br/>
-                        <button class="btn" type="submit">Register</button>
+                        <input class="btn button-register" type="submit" value="Register"/>
+                    </div>
+                    <div class="col-md-6"><br/>
+                        <a href="/admin"><br/>Do you have an account?</a>
                     </div>
                 </div>
             </form>
