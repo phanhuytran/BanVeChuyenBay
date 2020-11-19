@@ -55,13 +55,15 @@ def register():
         avatar = request.files["avatar"]
         avatar_path = 'img/upload/%s' % avatar.filename
         avatar.save(os.path.join(app.config['ROOT_PROJECT_PATH'], 'static/', avatar_path))
-        if check_user(username) and password == confirm_password:
-            if add_user(firstname=firstname, lastname=lastname,
-                        username=username, password=password,
-                        email=email,phone=phone, avatar=avatar_path):
-                return redirect('/admin')
+        if password != confirm_password:
+            message = "Password incorrect"
+        elif check_user(username) == False:
+            message = "Username already exists"
         else:
-            message = "Register unsuccessfully"
+            if add_user(firstname=firstname, lastname=lastname,
+                            username=username, password=password,
+                            email=email,phone=phone, avatar=avatar_path):
+                    return redirect('/admin')
     return render_template('admin/registration.html', message=message)
 
 @app.route("/air-ticket-sales")

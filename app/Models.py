@@ -27,8 +27,12 @@ class ModelView_Base(AuthenticatedView):
     can_edit = True
     can_export = True
     can_delete = True
+    create_modal = True
 
-admin.add_view(ModelView_Base(Schedule, db.session, name="Flight Schedule"))
+class ModelView_Schedule(ModelView_Base):
+    column_searchable_list = ('departure', 'arrival', 'date', 'time')
+
+admin.add_view(ModelView_Schedule(Schedule, db.session, name="Flight Schedule"))
 
 if __name__ == "__main__":
     db.create_all()

@@ -8,8 +8,8 @@ from flask_admin import BaseView, expose
 from flask_login import UserMixin, current_user, logout_user
 from enum import Enum as UserEnum
 
-from wtforms import validators, PasswordField
-from wtforms.fields.html5 import EmailField, TelField
+from wtforms import validators
+from wtforms.fields.html5 import EmailField
 
 
 class UserRole(UserEnum):
@@ -28,8 +28,8 @@ class Staff(db.Model, UserMixin):
     id = Column(Integer, primary_key=True, autoincrement=True)
     firstname = Column(String(50), nullable=False)
     lastname = Column(String(50), nullable=False)
-    email = Column(String(50))
-    phone = Column(String(50))
+    email = Column(String(50), nullable=False)
+    phone = Column(String(50), nullable=False)
     avatar = Column(String(100))
     active = Column(Boolean, default=True)
     joined_date = Column(Date, default=datetime.now())
@@ -43,6 +43,17 @@ class Account(db.Model, UserMixin):
     username = Column(String(100), nullable=False)
     password = Column(String(100), nullable=False)
 
+class Customer(db.Model, UserMixin):
+    __tablename__ = 'customer'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    firstname = Column(String(50), nullable=False)
+    lastname = Column(String(50), nullable=False)
+    identity_card = Column(String(50))
+    email = Column(String(50))
+    phone = Column(String(50))
+    def __str__(self):
+        return self.name
+
 class ModelView_Base(AuthenticatedView):
     column_display_pk = True
     can_create = False
@@ -50,10 +61,14 @@ class ModelView_Base(AuthenticatedView):
     can_export = True
     can_delete = True
     edit_modal = True
-    column_searchable_list = ('firstname', 'lastname', 'phone', 'email', 'joined_date')
-    form_extra_fields = {
-        'email': EmailField("Email", validators=[validators.data_required()])
-    }
+    form_extra_fields = { 'email': EmailField("Email", validators=[validators.data_required()]) }
+
+class ModelView_Staff(ModelView_Base):
+    column_searchable_list = ('firstname', 'lastname', 'email', 'phone', 'joined_date')
+
+class ModelView_Customer(ModelView_Base):
+    column_searchable_list = ('firstname', 'lastname', 'identity_card', 'email', 'phone')
+
 
 class AboutUsView(AuthenticatedView_1):
     @expose('/')
@@ -66,22 +81,11 @@ class LogoutView(AuthenticatedView_1):
         logout_user()
         return redirect('/admin')
 
-admin.add_view(ModelView_Base(Staff, db.session, name="Staff"))
+
+admin.add_view(ModelView_Staff(Staff, db.session, category="User"))
+admin.add_view(ModelView_Customer(Customer, db.session, category="User"))
 admin.add_view(AboutUsView(name="About us"))
 admin.add_view(LogoutView(name="Logout"))
 
 if __name__ == "__main__":
     db.create_all()
-
-# class Customer(db.Model, UserMixin):
-#     __tablename__ = 'customer'
-#     id = Column(Integer, primary_key=True, autoincrement=True)
-#     fullname = Column(String(50), nullable=False)
-#     username = Column(String(100), nullable=False)
-#     password = Column(String(100), nullable=False)
-#     email = Column(String(50))
-#     phone = Column(String(50))
-#     active = Column(Boolean, default=True)
-#     joined_date = Column(Date, default=datetime.now())
-#     def __str__(self):
-#         return self.name
