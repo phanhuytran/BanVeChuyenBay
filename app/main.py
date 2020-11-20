@@ -19,21 +19,46 @@ def login_admin():
                                  Account.password == password).first()
         if user:
             login_user(user=user)
+
     return redirect("/admin")
 
-def check_user(username):
-    users = Account.query.all()
-    for user in users:
-        if user.username == username:
-            return False
-    return True
 
-def add_user(firstname, lastname, username, password, email, phone, avatar):
+#kiểm tra nhân viên đã tồn tại hay chưa
+def check_staff(id_staff):
+    staff = Staff.query.filter(Staff.id == id_staff).first()
+    if staff:
+        return True
+    return False
+
+
+# kiểm acount đã tồn tại hay chưa theo id
+def check_account(key=''):
+    if key.isdigit():
+        account = Account.query.filter(Account.id == key).first()
+    elif key.isalpha():
+        account = Account.query.filter(Account.username == key.strip()).first()
+
+    if account:
+        return True
+    return False
+
+
+# kiểm tra account đã tồn tại hay chưa theo username
+
+# def check_account(username=''):
+#     acount = Account.query.filter(Account.username == username.strip()).first()
+#     if acount:
+#         return True
+#     return False
+
+
+
+def add_account(id_staff, username, password):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
-    user = Staff(firstname=firstname, lastname=lastname, email=email, phone=phone, avatar=avatar)
-    user1 = Account(username=username, password=password)
+    # user = Staff(firstname=firstname, lastname=lastname, email=email, phone=phone, avatar=avatar)
+    user1 = Account(id=id_staff, username=username, password=password)
     try:
-        db.session.add(user)
+        # db.session.add(user)
         db.session.add(user1)
         db.session.commit()
         return True
@@ -45,6 +70,7 @@ def add_user(firstname, lastname, username, password, email, phone, avatar):
 def register():
     message = ''
     if request.method == 'POST':
+        id_staff = request.form.get('id-staff')
         firstname = request.form.get('firstname')
         lastname = request.form.get("lastname")
         username = request.form.get('username')
@@ -55,14 +81,21 @@ def register():
         avatar = request.files["avatar"]
         avatar_path = 'img/upload/%s' % avatar.filename
         avatar.save(os.path.join(app.config['ROOT_PROJECT_PATH'], 'static/', avatar_path))
+
         if password != confirm_password:
             message = "Password incorrect"
-        elif check_user(username) == False:
+
+        elif check_account(key=username):
             message = "Username already exists"
-        else:
-            if add_user(firstname=firstname, lastname=lastname,
-                            username=username, password=password,
-                            email=email,phone=phone, avatar=avatar_path):
+
+        elif check_account(key=id_staff):
+            message = 'This id has been registered by someone else'
+
+        elif check_staff(id_staff=id_staff) == False:
+            message = 'id_staff not already exists'
+
+        elif add_account(id_staff=id_staff,
+                            username=username, password=password):
                     return redirect('/admin')
     return render_template('admin/registration.html', message=message)
 
@@ -83,4 +116,5 @@ def report():
     return render_template("report.html")
 
 if __name__ == "__main__":
+
     app.run(debug=True)

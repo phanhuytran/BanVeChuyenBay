@@ -18,6 +18,10 @@
             <form action="{{ url_for('register') }}" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6">
+                        <label>Id staff:</label>
+                        <input class="form-control date" type="text"  name="id-staff" id="id-staff" placeholder="Id staff do admin cung  cấp..." required />
+                    </div>
+                    <div class="col-md-6">
                         <label>First name:</label>
                         <input class="form-control date" type="text"  name="firstname" id="firstname" placeholder="First name..." required />
                     </div>
@@ -53,7 +57,7 @@
                         <input class="btn button-register" type="submit" value="Register"/>
                     </div>
                     <div class="col-md-6" style="margin:12px -22px 0 22px">
-                        <a href="/admin"><br/>Do you have an account?</a>
+                        <a href="/admin"><br/>Have an account already?</a>
                     </div>
                 </div>
             </form>
