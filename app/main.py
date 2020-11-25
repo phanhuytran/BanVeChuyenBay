@@ -4,13 +4,20 @@ from app.Models import *
 from app.admin import *
 from flask_login import login_user, login_required
 import hashlib, os
+from flask_admin import Admin
 
 @login.user_loader
 def load_user(user_id):
     return Account.query.get(user_id)
 
+class MyView(BaseView):
+    def __init__(self, *args, **kwargs):
+        self._default_view = True
+        super(MyView, self).__init__(*args, **kwargs)
+        self.admin = Admin()
 @app.route("/login-admin", methods=['GET', 'POST'])
 def login_admin():
+    message = ''
     if request.method == 'POST':
         username = request.form.get("username")
         password = request.form.get("password")
@@ -19,17 +26,18 @@ def login_admin():
                                  Account.password == password).first()
         if user:
             login_user(user=user)
-
+        else:
+            message = 'Username or password incorrect'
+            return MyView().render('admin/index.html', message=message)
     return redirect("/admin")
 
 
-#kiểm tra nhân viên đã tồn tại hay chưa
+# kiểm tra nhân viên đã tồn tại hay chưa
 def check_staff(id_staff):
     staff = Staff.query.filter(Staff.id == id_staff).first()
     if staff:
-        return True
-    return False
-
+        return False
+    return True
 
 # kiểm acount đã tồn tại hay chưa theo id
 def check_account(key=''):
@@ -39,27 +47,14 @@ def check_account(key=''):
         account = Account.query.filter(Account.username == key.strip()).first()
 
     if account:
-        return True
-    return False
-
-
-# kiểm tra account đã tồn tại hay chưa theo username
-
-# def check_account(username=''):
-#     acount = Account.query.filter(Account.username == username.strip()).first()
-#     if acount:
-#         return True
-#     return False
-
-
+        return False
+    return True
 
 def add_account(id_staff, username, password):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
-    # user = Staff(firstname=firstname, lastname=lastname, email=email, phone=phone, avatar=avatar)
-    user1 = Account(id=id_staff, username=username, password=password)
+    user = Account(id=id_staff, username=username, password=password)
     try:
-        # db.session.add(user)
-        db.session.add(user1)
+        db.session.add(user)
         db.session.commit()
         return True
     except Exception as ex:
@@ -71,13 +66,9 @@ def register():
     message = ''
     if request.method == 'POST':
         id_staff = request.form.get('id-staff')
-        firstname = request.form.get('firstname')
-        lastname = request.form.get("lastname")
         username = request.form.get('username')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
-        email = request.form.get('email')
-        phone = request.form.get('phone')
         avatar = request.files["avatar"]
         avatar_path = 'img/upload/%s' % avatar.filename
         avatar.save(os.path.join(app.config['ROOT_PROJECT_PATH'], 'static/', avatar_path))
@@ -85,14 +76,14 @@ def register():
         if password != confirm_password:
             message = "Password incorrect"
 
-        elif check_account(key=username):
+        elif check_account(key=username) == False:
             message = "Username already exists"
 
-        elif check_account(key=id_staff):
-            message = 'This id has been registered by someone else'
-
         elif check_staff(id_staff=id_staff) == False:
-            message = 'id_staff not already exists'
+            message = 'Id staff already exists'
+
+        elif check_account(key=id_staff):
+            message = 'This id staff has been registered by someone else'
 
         elif add_account(id_staff=id_staff,
                             username=username, password=password):
@@ -116,5 +107,4 @@ def report():
     return render_template("report.html")
 
 if __name__ == "__main__":
-
     app.run(debug=True)
