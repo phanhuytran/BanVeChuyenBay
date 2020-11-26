@@ -36,10 +36,10 @@ def login_admin():
 def check_staff(id_staff):
     staff = Staff.query.filter(Staff.id == id_staff).first()
     if staff:
-        return False
-    return True
+        return True
+    return False
 
-# kiểm acount đã tồn tại hay chưa theo id
+# kiểm acount đã tồn tại hay chưa theo id hoặc username
 def check_account(key=''):
     if key.isdigit():
         account = Account.query.filter(Account.id == key).first()
@@ -47,8 +47,8 @@ def check_account(key=''):
         account = Account.query.filter(Account.username == key.strip()).first()
 
     if account:
-        return False
-    return True
+        return True
+    return False
 
 def add_account(id_staff, username, password):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
@@ -76,16 +76,17 @@ def register():
         if password != confirm_password:
             message = "Password incorrect"
 
-        elif check_account(key=username) == False:
+        elif check_account(key=username):
             message = "Username already exists"
-
-        elif check_staff(id_staff=id_staff) == False:
-            message = 'Id staff already exists'
 
         elif check_account(key=id_staff):
             message = 'This id staff has been registered by someone else'
 
-        elif add_account(id_staff=id_staff,
+        elif check_staff(id_staff=id_staff) == False:
+            message = 'Id staff not already exists'
+
+        else:
+                if add_account(id_staff=id_staff,
                             username=username, password=password):
                     return redirect('/admin')
     return render_template('admin/registration.html', message=message)
