@@ -16,9 +16,10 @@ li {
 .content {
     background: rgba(0, 0, 0, 0.5);
     width: 320px;
+    height: 485px;
     float: right;
     padding: 40px 25px 0 25px;
-    margin: 50px auto;
+    margin: 35px auto;
     box-sizing: border-box;
 }
 

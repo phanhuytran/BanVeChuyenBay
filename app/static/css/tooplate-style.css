@@ -330,6 +330,15 @@ footer p em {
 .page-heading .page-direction-button {
 	text-align: right;
 	margin-top: 110px;
+	padding-bottom: 10px;
+}
+
+.menu {
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    background-color: #ffe165;
+    border-style: hidden;
+    padding:0 80px;
 }
 
 .contact-form {
