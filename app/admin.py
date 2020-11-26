@@ -69,6 +69,10 @@ class ModelView_Customer(ModelView_Base):
     column_searchable_list = ('firstname', 'lastname', 'identity_card', 'email', 'phone')
 
 
+class ModelView_Admin(ModelView_Base):
+    form_columns = ('id', 'username', 'password',)
+
+
 class AboutUsView(AuthenticatedView_1):
     @expose('/')
     def index(self):
@@ -80,9 +84,10 @@ class LogoutView(AuthenticatedView_1):
         logout_user()
         return redirect('/admin')
 
-admin.add_view(ModelView_Base(Account, db.session, category="Users"))
+# admin.add_view(ModelView_Base(Account, db.session, category="Users"))
 admin.add_view(ModelView_Staff(Staff, db.session, category="Users"))
 admin.add_view(ModelView_Customer(Customer, db.session, category="Users"))
+admin.add_view(ModelView_Admin(Account, db.session, category="Users"))
 admin.add_view(AboutUsView(name="About us"))
 admin.add_view(LogoutView(name="Log out"))
 
