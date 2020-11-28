@@ -13,14 +13,43 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/fontAwesome.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/hero-slider.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tooplate-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
     <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/logo-i.png') }}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- css search -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,600,700" rel="stylesheet" />
+    <!-- css bonus -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/css-bonus/datepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/css-bonus/owl-carousel.css') }}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".goToTop > a").hide();
+            $(".goToTop > a").click(function() {
+                $("html, body").animate({scrollTop:0}, 800);
+			});
+			$(window).scroll(function() {
+				if ($("html, body").scrollTop() > 200) {
+					$(".goToTop > a").fadeIn("slow");
+				} else {
+					$(".goToTop > a").fadeOut("slow");
+				}
+			});
+		});
+	</script>
+
 </head>
 
-<body>
-    <section class="page-heading" id="top">
-        <div class="container">
+<body class="container">
+
+    <div class="goToTop">
+        <a href="#top"><img src="{{ url_for('static', filename='img/go-to-top.png') }}"/></a>
+    </div>
+
+    <section class="page-heading container" id="top">
+        <div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="logo">
@@ -30,11 +59,6 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <!-- <div class="log">
-                        <div class="fa fa-user"></div>
-                        <div class="fa fa-bell"></div>
-                        <div class="fa fa-sign-out"></div>
-                    </div> -->
                     <div class="page-direction-button">
                         <a href="{{ url_for('search_flight') }}"><i class="fa fa-home"></i>Go Back Home</a>
                     </div>
@@ -45,14 +69,16 @@
 
     <div class="navbar">
         <a href="#" style="width:12%"><img src="{{ url_for('static', filename='img/vna.png') }}"></a>
-        <a href="#"><i class="fa fa-fw fa-home"></i> Home</a>
-        <a href="#"><i class="fa fa-fw fa-search"></i> Search</a>
-        <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a>
+        <a class="navbar-hover" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
+        <a class="navbar-hover" href="#"><i class="fa fa-fw fa-search"></i> Search</a>
+        <a class="navbar-hover" href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a>
         <div class="nav navbar-nav navbar-right">
-            <a href="#"><i class="fa fa-user"></i> </a>
-            <a href="#"><i class="fa fa-sign-out"></i></a>
+            <a class="navbar-hover" href="#"><i class="fa fa-user"></i> </a>
+            <a class="navbar-hover" href="#"><i class="fa fa-sign-out"></i></a>
         </div>
     </div>
+
+
     {% block function %}
     {% endblock %}
 
@@ -74,7 +100,7 @@
                     </ul>
                 </div>
                 <div class="col-md-12">
-                    <p>Copyright &copy; 2020 Flight Tour and Travel Company</p>
+                    <p>Copyright &copy; 2020 Phan Huy Tran and Do Trong Nguyen</p>
                 </div>
             </div>
         </div>
