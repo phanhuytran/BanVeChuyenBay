@@ -46,13 +46,13 @@ def register():
         avatar.save(os.path.join(app.config['ROOT_PROJECT_PATH'], 'static/', avatar_path))
 
         if password != confirm_password:
-            message = "Password incorrect"
+            message = "Password confirm incorrect"
 
-        elif check_account(key=username) == False:
+        elif check_account(key=username):
             message = "Username already exists"
 
         elif check_staff(id_staff=id_staff) == False:
-            message = 'Id staff already exists'
+            message = 'Id staff not already exists'
 
         elif check_account(key=id_staff):
             message = 'This id staff has been registered by someone else'
