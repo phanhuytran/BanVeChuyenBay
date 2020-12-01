@@ -18,33 +18,53 @@
 }
 
 .navbar .navbar-hover:hover {
-    background-color: #000;
+    background-color: #364a59;
     color: #fff;
 }
 
 .s009 {
-  width: 100%;
+    width: 100%;
 }
 
 .s009 form {
-  width: 100%;
-  margin: 0 auto;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.s009 form .inner-form .input-field .btn-delete {
+    height: 40px;
+    padding: 0 15px;
+    background: transparent;
+    white-space: nowrap;
+    border-radius: 0;
+    font-size: 14px;
+    color: #666;
+    transition: all .2s ease-out, color .2s ease-out;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.s009 form .inner-form .input-field .btn-delete:hover, .s009 form .inner-form .input-field .btn-delete:focus {
+    color: #000;
+    outline: 0;
+    box-shadow: none;
 }
 
 .s009 form .inner-form .input-field .btn-search {
-  min-width: 100px;
-  height: 40px;
-  padding: 0 15px;
-  background: #364a59;
-  white-space: nowrap;
-  border-radius: 0;
-  font-size: 14px;
-  color: #fff;
-  border: 0;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
-  transition: background 0.5s, color 0.5s;
+    min-width: 100px;
+    height: 40px;
+    padding: 0 15px;
+    background: #364a59;
+    white-space: nowrap;
+    border-radius: 0;
+    font-size: 14px;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
+    transition: background 0.5s, color 0.5s;
 }
 
 .s009 form .inner-form .input-field .btn-search:hover {
@@ -52,53 +72,35 @@
     color: black;
 }
 
-.s009 form .inner-form .input-field .btn-delete {
-  min-width: 100px;
-  height: 40px;
-  padding: 0 15px;
-  background: transparent;
-  white-space: nowrap;
-  border-radius: 0;
-  font-size: 14px;
-  color: #666;
-  transition: all .2s ease-out, color .2s ease-out;
-  border: 0;
-  cursor: pointer;
-  font-weight: bold;
+.submit-search {
+    display: flex;
 }
-
-.s009 form .inner-form .input-field .btn-delete:hover, .s009 form .inner-form .input-field .btn-delete:focus {
-  color: #000;
-  outline: 0;
-  box-shadow: none;
-}
-
 
 .s009 form .inner-form .advance-search {
-  padding: 40px;
-  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
 }
 
 .s009 form .inner-form .advance-search .desc {
-  font-size: 14px;
-  color: #999;
-  display: block;
-  margin-bottom: 26px;
-  font-weight: bold;
+    font-size: 14px;
+    color: #999;
+    display: block;
+    margin-bottom: 26px;
+    font-weight: bold;
 }
 
 .s009 form .inner-form .advance-search .row {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: justify;
-      justify-content: space-between;
-  -ms-flex-align: center;
-      align-items: center;
-  margin-bottom: 20px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .s009 form .inner-form .advance-search .row.second {
-  margin-bottom: 46px;
+    margin-bottom: 46px;
 }
 
 .s009 form .inner-form .advance-search .row.third .input-field {
