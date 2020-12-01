@@ -59,6 +59,9 @@ class Plane(Base):
     amount_Seat_Class1 = Column(Integer, nullable=False)
     amount_Seat_Class2 = Column(Integer, nullable=False)
 
+    def __str__(self):
+        return str(self.idPlane)
+
 
 class Airport(Base):
     __tablename__ = 'Airport'
@@ -71,7 +74,7 @@ class Schedule(Base):
     idFlight = Column(Integer, primary_key=True, autoincrement=True)
     departure = Column(Integer, ForeignKey(Airport.idAirport), nullable=False)
     arrival = Column(Integer, ForeignKey(Airport.idAirport), nullable=False)
-    intermediate = Column(Integer, ForeignKey(Airport.idAirport), nullable=False)
+    intermediate = Column(Integer, ForeignKey(Airport.idAirport))
     date = Column(DateTime, nullable=False)
     idPlane = Column(Integer, ForeignKey(Plane.idPlane))
     ticket = relationship('Ticket', backref='schedule', lazy=True)
@@ -96,7 +99,7 @@ class Seat(Base):
 class Ticket(Base):
     __tablename__ ="ticket"
     idTicket = Column(Integer, ForeignKey(Seat.idSeat), primary_key=True, autoincrement=True)
-    idFlight = Column(Integer, ForeignKey(Schedule.idFlight))
+    idFlight = Column(Integer, ForeignKey(Schedule.idFlight), nullable= False)
     idCustomer = Column(Integer, ForeignKey(Customer.id))
     exportTime = Column(DateTime, nullable=False)
     exportPlace = Column(String(50), nullable=False)

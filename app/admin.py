@@ -53,6 +53,9 @@ admin.add_view(ModelView_Customer(Customer, db.session, category="Users"))
 admin.add_view(ModelView_Admin(Account, db.session, category="Users"))
 admin.add_view(AboutUsView(name="About us"))
 admin.add_view(LogoutView(name="Log out"))
+admin.add_view(ModelView(Airport,db.session))
+admin.add_view(ModelView(Ticket,db.session))
+admin.add_view(ModelView(Seat,db.session))
 
 if __name__ == "__main__":
     db.create_all()
