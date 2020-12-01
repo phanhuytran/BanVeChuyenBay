@@ -33,9 +33,11 @@
                                 <li><a href="http://instagram.com/">Log in with <em>Instagram</em><i class="fa fa-instagram"></i></a></li>
                             </ul>
                         </div>
-                        <div class="page-direction-button">
+                        {% block register %}
+                        {% endblock %}
+                       <!-- <div class="page-direction-button">
                             <a href="{{ url_for('register') }}"><i class="fa fa-sign-in"></i> REGISTER</a>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
 

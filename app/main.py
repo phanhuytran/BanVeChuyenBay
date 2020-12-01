@@ -6,6 +6,34 @@ import os
 from app.utils import *
 
 
+
+@app.route("/login", methods=['POST', 'GET'])
+def login_staff():
+    message = ""
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password', '')
+        password = hashlib.md5(password.encode('utf-8')).hexdigest()
+
+        user = Account.query.filter(username == username,
+                                 password == password).first()
+
+
+        if user.staff.user_role == 'STAFF':
+            login_user(user=user)
+        else:
+            return render_template('login.html')
+    elif request.method == 'GET':
+        return render_template('login.html')
+
+    return redirect(url_for("index"))
+
+@app.route('/logout')
+def logout_usr():
+    logout_user()
+    return redirect(url_for('search_flight'))
+
+
 @app.route("/")
 def index():
     return redirect(url_for("search_flight"))
