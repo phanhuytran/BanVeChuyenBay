@@ -94,7 +94,7 @@ def register():
 @app.route("/air-ticket-sales")
 def air_ticket_sales():
     return render_template("air-ticket-sales.html")
-
+#huy
 
 @app.route("/search-flight")
 def search_flight():
