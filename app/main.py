@@ -18,15 +18,18 @@ def login_staff():
         user = Account.query.join(Staff, Staff.id == Account.id)\
                             .filter(Account.username == username, Account.password == password)\
                             .add_columns(Account.id, Staff.user_role).first()
-        # user = Account.query.filter(username == username,
-        #                          password == password).first()
 
-        acc = Account.query.filter(Account.id == user.id).first()
 
-        if user.user_role == UserRole.STAFF:
-            login_user(user=acc)
+        if user:
+            acc = Account.query.filter(Account.id == user.id).first()
+            if user.user_role == UserRole.STAFF:
+                login_user(user=acc)
+            else:
+                message = 'Username or password incorrect'
+                render_template('login.html', message=message)
         else:
-            return render_template('login.html')
+            message = 'Username or password incorrect'
+            return render_template('login.html', message=message)
     elif request.method == 'GET':
         return render_template('login.html')
 
@@ -59,10 +62,13 @@ def login_admin():
                             .filter(Account.username == username, Account.password == password)\
                             .add_columns(Account.id, Staff.user_role).first()
 
-        acc = Account.query.filter(Account.id == user.id).first()
-
-        if user.user_role == UserRole.ADMIN :
-            login_user(user=acc)
+        if user:
+            acc = Account.query.filter(Account.id == user.id).first()
+            if user.user_role == UserRole.ADMIN:
+                login_user(user=acc)
+            else:
+                message = 'Username or password incorrect'
+                return MyView().render('admin/index.html', message=message)
         else:
             message = 'Username or password incorrect'
             return MyView().render('admin/index.html', message=message)

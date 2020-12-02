@@ -67,6 +67,7 @@ class Airport(Base):
     __tablename__ = 'Airport'
     idAirport = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50), nullable=False)
+    locate = Column(String (50), nullable=False)
 
 
 class Schedule(Base):
@@ -110,21 +111,7 @@ class AuthenticatedView(ModelView):
         return current_user.is_authenticated
 
 
-class ModelView_Base(AuthenticatedView):
-    column_display_pk = True
-    can_create = True
-    can_edit = True
-    can_export = True
-    can_delete = True
-    create_modal = True
 
-
-class ModelView_Schedule(ModelView_Base):
-    column_searchable_list = ('departure', 'arrival', 'date',)
-
-
-admin.add_view(ModelView_Base(Plane, db.session, name="Plane"))
-admin.add_view(ModelView_Schedule(Schedule, db.session, name="Flight Schedule"))
 
 
 if __name__ == "__main__":
