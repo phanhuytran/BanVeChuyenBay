@@ -15,6 +15,43 @@
     font-size: 17px;
     width: auto;
     transition: color 0.5s, background 0.5s;
+    cursor:pointer;
+}
+
+div.sub-content {
+	margin-top:6%;
+	position:absolute;
+	visibility:hidden;
+	opacity:0;
+	position:absolute;
+	background-color:#364a59;
+	border-radius:10px;
+	padding:10px;
+	width:220px;
+	right:10px;
+	z-index:2;
+	text-align:left;
+	color:black;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:15px;
+}
+
+div.sub-content::after {
+	content:" ";
+	border-width:20px;
+	border-color:transparent transparent #364a59; transparent;
+	border-style:solid;
+	position:absolute;
+	z-index:3;
+	right:65%;
+	bottom:100%;
+}
+
+span.hover-user:hover div.sub-content {
+	visibility:visible;
+	transition:visibility 1s, opacity 1s;
+	opacity:0.98;
+	color:#fff;
 }
 
 .navbar .navbar-hover:hover {

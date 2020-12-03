@@ -23,7 +23,6 @@ def check_staff(id_staff):
     return False
 
 
-
 # kiểm acount đã tồn tại hay chưa theo id hoặc username
 def check_account(key=''):
     if key.isdigit():
@@ -49,11 +48,9 @@ def add_account(id_staff, username, password):
 
 
 def get_all_schedule():
-    airport_1 = aliased (Airport)
+    airport_1 = aliased(Airport)
     airport_2 = aliased(Airport)
     airport_3 = aliased(Airport)
-
-
 
     schedule = Schedule.query.join(airport_1, Schedule.arrival )\
     .join(airport_2,Schedule.departure)\
@@ -68,4 +65,3 @@ def get_all_schedule():
                 Plane.amount_Seat_Class2).order_by(desc(Schedule.date)).all()
 
     return  schedule
-

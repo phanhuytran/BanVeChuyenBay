@@ -1,4 +1,11 @@
 {% extends 'base/log.html' %}
+
+{% block banner_registration %}
+    <div class="banner_registration">
+        <div><img src="{{ url_for('static', filename='img/vna.png') }}"></div>
+    </div>
+{% endblock %}
+
 {% block function %}
 <div class="content clearfix">
     <ul id="p-frm">

@@ -6,7 +6,6 @@ import os
 from app.utils import *
 
 
-
 @app.route("/login", methods=['POST', 'GET'])
 def login_staff():
     message = ""
@@ -18,7 +17,6 @@ def login_staff():
         user = Account.query.join(Staff, Staff.id == Account.id)\
                             .filter(Account.username == username, Account.password == password)\
                             .add_columns(Account.id, Staff.user_role).first()
-
 
         if user:
             acc = Account.query.filter(Account.id == user.id).first()
@@ -34,6 +32,7 @@ def login_staff():
         return render_template('login.html')
 
     return redirect(url_for("index"))
+
 
 @app.route('/logout')
 def logout_usr():
@@ -101,14 +100,14 @@ def register():
 
         elif add_account(id_staff=id_staff,
                             username=username, password=password):
-                    return redirect('/admin')
+                    return redirect('/login')
     return render_template('admin/registration.html', message=message)
 
 
 @app.route("/air-ticket-sales")
 def air_ticket_sales():
     return render_template("air-ticket-sales.html")
-#huy
+
 
 @app.route("/search-flight")
 def search_flight():
