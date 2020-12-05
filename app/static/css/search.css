@@ -137,7 +137,7 @@ span.hover-user:hover div.sub-content {
 }
 
 .s009 form .inner-form .advance-search .row.second {
-    margin-bottom: 46px;
+    margin-bottom: 20px;
 }
 
 .s009 form .inner-form .advance-search .row.third .input-field {
@@ -148,6 +148,7 @@ span.hover-user:hover div.sub-content {
     justify-content: space-between;
     -ms-flex-align: center;
     align-items: center;
+    margin-top:46px;
 }
 
 .s009 form .inner-form .advance-search .row.third .input-field .result-count span {
