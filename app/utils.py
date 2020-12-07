@@ -54,8 +54,6 @@ def get_all_schedule():
     airport_2 = aliased(Airport)
     airport_3 = aliased(Airport)
 
-
-
     schedule = Schedule.query.join(airport_1, Schedule.departure == airport_1.idAirport)\
     .join(airport_2,Schedule.arrival == airport_2.idAirport)\
     .join(Plane, Schedule.idPlane == Plane.idPlane)\
@@ -66,11 +64,11 @@ def get_all_schedule():
                 airport_2.locate.label("arrival_locate"),
                 Schedule.departureDate,
                 Plane.idPlane,
-                count(Seat.idSeat).label("emty_seats")).group_by("idFlight").order_by(desc(Schedule.departureDate)).all()
+                count(Seat.idSeat).label("empty_seats")).group_by("idFlight").order_by(desc(Schedule.departureDate)).all()
 
     return  schedule
 
-def get_schedule ( departure_locate, arrival_locate, date= None):
+def get_schedule (departure_locate, arrival_locate, date = None):
     airport_1 = aliased(Airport)
     airport_2 = aliased(Airport)
     airport_3 = aliased(Airport)
@@ -92,7 +90,7 @@ def get_schedule ( departure_locate, arrival_locate, date= None):
                          Schedule.departureDate.label("departure_date"),
                          Schedule.departureTime.label("departure_time"),
                          Plane.idPlane,
-                         count(Seat.idSeat).label("emty_seats")).group_by("idFlight").order_by(desc(Schedule.departureDate)).all()
+                         count(Seat.idSeat).label("empty_seats")).group_by("idFlight").order_by(desc(Schedule.departureDate)).all()
 
     return schedule
 
@@ -102,13 +100,13 @@ def get_all_airport():
     return airports
 
 
-def count_seat_not_emty(id_plane):
+def count_seat_not_empty(id_plane):
     count = Seat.query.join(Plane, Plane.idPlane  == Seat.idPlane)\
         .join(Ticket,Ticket.idTicket == Seat.idSeat)\
         .filter(Seat.idPlane == id_plane, Ticket.is_empty == True)\
         .count(Seat.idSeat).group_by(Plane.idPlane).all()
     return count
-# #
+
 # print(count_seat_not_emty(1))
 #
 #

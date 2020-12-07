@@ -13,14 +13,11 @@
                         <div class="advance-search">
                             <span class="desc">ADVANCED SEARCH</span>
                             <div class="row">
-
                                 <div class="input-field">
                                     <div class="input-select">
                                         <input type="date" name="date_flight" />
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row second">
                                 <div class="input-field">
                                    <div class="input-select">
                                        <select name="from_locate">
@@ -28,7 +25,6 @@
                                             {% for airport in airports %}
                                                 <option>{{ airport.locate }}</option>
                                             {% endfor %}
-
                                        </select>
                                    </div>
                                 </div>
@@ -36,7 +32,6 @@
                                    <div class="input-select">
                                        <select name="to_locate">
                                            <option>Flight to...</option>
-
                                             {% for airport in airports %}
                                                 <option>{{ airport.locate }}</option>
                                             {% endfor %}
@@ -47,7 +42,7 @@
                             <div class="row third">
                                 <div class="input-field">
                                     <div class="result-count">
-                                        <span>{{ count_result}}</span>results
+                                        <span>{{ count_result }}</span>results
                                     </div>
                                     <div class="submit-search">
                                         <input class="btn-delete" type="submit" value="RESET" />
@@ -75,20 +70,17 @@
                                     <tbody>
                                     {% for i, schedule in  enumerate_schedules %}
                                        <tr>
-                                            <th scope="row">{{ i + 1}}</th>
+                                            <th scope="row">{{ i + 1 }}</th>
                                             <td>{{ schedule.idFlight }}</td>
                                             <td>{{ schedule.departure_airport }}</td>
                                             <td>{{ schedule.arrival_airport }}</td>
                                             <td>{{ schedule.departure_locate }}</td>
                                             <td>{{ schedule.arrival_locate }}</td>
-                                            <td>{{ schedule.departure_date}}</td>
-                                            <td>{{ schedule.departure_time}}</td>
-                                            <td>{{ schedule.emty_seats }}</td>
-
+                                            <td>{{ schedule.departure_date }}</td>
+                                            <td>{{ schedule.departure_time }}</td>
+                                            <td>{{ schedule.empty_seats }}</td>
                                         </tr>
                                     {% endfor %}
-
-
                                     </tbody>
                                 </table>
                             </div>
