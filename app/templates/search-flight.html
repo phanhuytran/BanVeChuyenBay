@@ -45,7 +45,7 @@
                             <div class="row third">
                                 <div class="input-field">
                                     <div class="result-count">
-                                        <span>108 </span>results
+                                        <span>{{ count_result}}</span>results
                                     </div>
                                     <div class="submit-search">
                                         <input class="btn-delete" type="submit" value="RESET" />
@@ -71,9 +71,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for schedule in schedules  %}
+                                    {% for i, schedule in  enumerate_schedules %}
                                        <tr>
-                                            <th scope="row">1</th>
+                                            <th scope="row">{{ i + 1}}</th>
                                             <td>{{ schedule.idFlight }}</td>
                                             <td>{{ schedule.departure_airport }}</td>
                                             <td>{{ schedule.arrival_airport }}</td>
