@@ -1,6 +1,8 @@
-from sqlalchemy import Column, Integer, String, Date, DateTime, Boolean, ForeignKey, Enum
+from sqlalchemy import Column, Integer, String, Date, Time, Boolean, ForeignKey, Enum,Float,DateTime
 from datetime import datetime
-from app import db, admin
+
+
+from app import db
 from sqlalchemy.orm import relationship
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user, UserMixin
@@ -39,6 +41,7 @@ class Account(db.Model, UserMixin):
     id = Column(Integer, ForeignKey(Staff.id), primary_key=True)
     username = Column(String(20))
     password = Column(String(50))
+    ticket = relationship('Ticket', backref='account', lazy=True)
 
 
 class Customer(Base, UserMixin):
@@ -49,6 +52,7 @@ class Customer(Base, UserMixin):
     identity_card = Column(String(20))
     email = Column(String(50))
     phone = Column(String(20))
+    ticket = relationship('Ticket', backref = 'customer', lazy = True)
 
 
 class Plane(Base):
@@ -56,8 +60,7 @@ class Plane(Base):
     idPlane = Column(Integer, primary_key=True, autoincrement=True)
     schedule = relationship('Schedule', backref='plane', lazy=True)
     seat = relationship('Seat', backref='plane', lazy=True)
-    amount_Seat_Class1 = Column(Integer, nullable=False)
-    amount_Seat_Class2 = Column(Integer, nullable=False)
+
 
     def __str__(self):
         return str(self.idPlane)
@@ -76,34 +79,45 @@ class Schedule(Base):
     departure = Column(Integer, ForeignKey(Airport.idAirport), nullable=False)
     arrival = Column(Integer, ForeignKey(Airport.idAirport), nullable=False)
     intermediate = Column(Integer, ForeignKey(Airport.idAirport))
-    date = Column(DateTime, nullable=False)
+    departureDate = Column(Date, nullable=False)
+    departureTime = Column(Time, nullable=False)
+    timeFlight =  Column(Float, nullable=False)
     idPlane = Column(Integer, ForeignKey(Plane.idPlane))
     ticket = relationship('Ticket', backref='schedule', lazy=True)
     departure_fk = relationship('Airport', foreign_keys=[departure])
     arrival_fk = relationship('Airport',  foreign_keys=[arrival])
     intermediate_fk = relationship('Airport',  foreign_keys=[intermediate])
 
-
-class RoleSeat(UserEnum):
-    SEAT_CLASS1 = 1
-    SEAT_CLASS2 = 2
+    def __str__(self):
+        return str(self.idPlane)
 
 
-class Seat(Base):
+class TypeSeat(Base):
+    id = Column(Integer,primary_key=True, autoincrement=True)
+    name = Column(String(100),nullable=False)
+    price = Column(Float,nullable=False)
+    seat = relationship('Seat', backref='typeseat', lazy=True)
+
+
+class Seat(db.Model):
     __tablename__ = "seat"
     idSeat = Column(Integer, primary_key=True, autoincrement=True)
-    role_seat = Column(Enum(RoleSeat), default=RoleSeat.SEAT_CLASS1)
-    idPlane = Column(Integer, ForeignKey(Plane.idPlane))
-    is_empty = Column(Boolean, default=True)
+    typeSeat = Column(Integer, ForeignKey(TypeSeat.id), nullable=False)
+    idPlane = Column(Integer, ForeignKey(Plane.idPlane), nullable=False)
+    ticket = relationship('Ticket', backref='seat', lazy=True)
 
 
-class Ticket(Base):
+
+class Ticket(db.Model):
     __tablename__ ="ticket"
     idTicket = Column(Integer, ForeignKey(Seat.idSeat), primary_key=True, autoincrement=True)
     idFlight = Column(Integer, ForeignKey(Schedule.idFlight), nullable= False)
     idCustomer = Column(Integer, ForeignKey(Customer.id))
+    idAccount = Column(Integer,ForeignKey(Account.id))
     exportTime = Column(DateTime, nullable=False)
     exportPlace = Column(String(50), nullable=False)
+
+    is_empty = Column(Boolean, default=True)
 
 
 class AuthenticatedView(ModelView):
@@ -116,6 +130,9 @@ class AuthenticatedView(ModelView):
 
 if __name__ == "__main__":
     db.create_all()
+
+
+
 
 
 #Thêm bộ lọc
