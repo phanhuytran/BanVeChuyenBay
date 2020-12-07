@@ -69,9 +69,13 @@
 
     <div class="navbar">
         <a href="#" style="width:12%"><img src="{{ url_for('static', filename='img/vna.png') }}"></a>
-        <a class="navbar-hover" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
-        <a class="navbar-hover" href="#"><i class="fa fa-fw fa-search"></i> Search</a>
-        <a class="navbar-hover" href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a>
+        <a class="navbar-hover" href="{{ url_for('search_flight') }}"><i class="fa fa-fw fa-home"></i> Home</a>
+        <a class="navbar-hover" href="{{ url_for('search_flight') }}"><i class="fa fa-fw fa-search"></i> Search</a>
+        <a class="navbar-hover" href="{{ url_for('air_ticket_sales') }}"><i class="fa fa-fw fa-plane"></i> Book Tickets</a>
+        {% if current_user.is_authenticated %}
+            <a class="navbar-hover" href="#"><i class="fa fa-fw fa-file"></i> Report</a>
+        {% endif %}
+        <a class="navbar-hover" href="{{ url_for('contact') }}"><i class="fa fa-fw fa-envelope"></i> Contact</a>
         <div class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated %}
                 <span class="hover-user">
