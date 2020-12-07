@@ -120,7 +120,7 @@ def search_flight():
         arrival = request.form.get('to_locate')
         date_flight = request.form.get('date_flight')
 
-        schedules = get_schedule(arrival_locate = arrival, depature_locate=departure, date=date_flight)
+        schedules = get_schedule(arrival_locate = arrival, departure_locate=departure, date=date_flight)
         enumerate_schedules = enumerate(schedules)
         count_result = len(schedules)
         if schedules:

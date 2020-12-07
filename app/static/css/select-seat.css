@@ -1,0 +1,36 @@
+div.seat {
+    display: flex;
+}
+
+div.seat-class {
+    width: 80%;
+}
+
+div.seat-note {
+    width: 20%;
+}
+
+div.seat-note button {
+    width: 20% !important;
+}
+
+div.seat button {
+    margin: 10px;
+    width: 5%;
+    height: 40px;
+    background: #666;
+    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all .2s;
+}
+
+button.seat-class-1 {
+    background: #ffe165 !important;
+    color: black !important;
+    transition: all .2s;
+}
+
+div.seat button:hover, button.seat-class-1:hover {
+    background: #364a59 !important;
+    color: #fff !important;
+}
