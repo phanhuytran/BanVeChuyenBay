@@ -62,7 +62,7 @@ def get_all_schedule():
     .add_columns(Schedule.idFlight,
                  airport_1.name.label("departure_airport"),
                 airport_2.name.label("arrival_airport"),
-                airport_1.locate.label("depature_locate"),
+                airport_1.locate.label("departure_locate"),
                 airport_2.locate.label("arrival_locate"),
                 Schedule.departureDate,
                 Plane.idPlane,
@@ -70,7 +70,7 @@ def get_all_schedule():
 
     return  schedule
 
-def get_schedule ( depature_locate, arrival_locate, date= None):
+def get_schedule ( departure_locate, arrival_locate, date= None):
     airport_1 = aliased(Airport)
     airport_2 = aliased(Airport)
     airport_3 = aliased(Airport)
@@ -81,7 +81,7 @@ def get_schedule ( depature_locate, arrival_locate, date= None):
             .join(Plane, Schedule.idPlane == Plane.idPlane)\
             .join(Seat, Plane.idPlane ==  Seat.idPlane)\
             .join(Ticket, Seat.idSeat == Ticket.idTicket)\
-            .filter(airport_1.locate == depature_locate,
+            .filter(airport_1.locate == departure_locate,
                     airport_2.locate == arrival_locate,
                     Ticket.is_empty == True)\
             .add_columns(Schedule.idFlight,
