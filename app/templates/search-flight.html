@@ -28,7 +28,6 @@
                                             {% for airport in airports %}
                                                 <option>{{ airport.locate }}</option>
                                             {% endfor %}
-
                                        </select>
                                    </div>
                                 </div>
@@ -36,7 +35,6 @@
                                    <div class="input-select">
                                        <select name="to_locate">
                                            <option>Flight to...</option>
-
                                             {% for airport in airports %}
                                                 <option>{{ airport.locate }}</option>
                                             {% endfor %}
@@ -84,11 +82,8 @@
                                             <td>{{ schedule.departure_date}}</td>
                                             <td>{{ schedule.departure_time}}</td>
                                             <td>{{ schedule.emty_seats }}</td>
-
                                         </tr>
                                     {% endfor %}
-
-
                                     </tbody>
                                 </table>
                             </div>

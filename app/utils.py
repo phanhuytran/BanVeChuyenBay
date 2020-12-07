@@ -54,8 +54,6 @@ def get_all_schedule():
     airport_2 = aliased(Airport)
     airport_3 = aliased(Airport)
 
-
-
     schedule = Schedule.query.join(airport_1, Schedule.departure == airport_1.idAirport)\
     .join(airport_2,Schedule.arrival == airport_2.idAirport)\
     .join(Plane, Schedule.idPlane == Plane.idPlane)\
@@ -70,7 +68,7 @@ def get_all_schedule():
 
     return  schedule
 
-def get_schedule ( depature_locate, arrival_locate, date= None):
+def get_schedule ( depature_locate, arrival_locate, date = None):
     airport_1 = aliased(Airport)
     airport_2 = aliased(Airport)
     airport_3 = aliased(Airport)
