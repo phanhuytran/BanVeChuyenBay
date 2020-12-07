@@ -114,18 +114,28 @@ def air_ticket_sales():
 @app.route("/search-flight", methods=['POST','GET'])
 def search_flight():
     airports = get_all_airport()
+
     if request.method == 'POST':
         departure = request.form.get('from_locate')
         arrival = request.form.get('to_locate')
         date_flight = request.form.get('date_flight')
 
-        schedules = get_schedule(arrival_locate = arrival, depature_locate = departure,date = date_flight)
+        schedules = get_schedule(arrival_locate = arrival, depature_locate=departure, date=date_flight)
+        enumerate_schedules = enumerate(schedules)
+        count_result = len(schedules)
         if schedules:
-            return render_template("search-flight.html", airports=airports, schedules=schedules)
+            return render_template("search-flight.html", airports=airports,
+                                   enumerate_schedules=enumerate_schedules, count_result=count_result)
         else:
             return render_template("search-flight.html", airports=airports)
 
-    return render_template("search-flight.html",airports=airports)
+
+    schedules = get_all_schedule()
+    enumerate_schedules = enumerate(schedules)
+    count_result  =  len(schedules)
+
+    return render_template("search-flight.html",airports=airports,
+                           enumerate_schedules=enumerate_schedules, count_result=count_result)
 
 
 @app.route("/receive-flight-schedule")
