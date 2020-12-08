@@ -23,7 +23,7 @@ def login_staff():
 
         if user:
             acc = Account.query.filter(Account.id == user.id).first()
-            if user.user_role:
+            if user.user_role == UserRole.STAFF:
                 login_user(user=acc)
             else:
                 message = 'Username or password incorrect'
@@ -106,6 +106,9 @@ def register():
     return render_template('admin/registration.html', message=message)
 
 
+
+
+
 @app.route("/air-ticket-sales")
 def air_ticket_sales():
     return render_template("air-ticket-sales.html")
@@ -114,13 +117,17 @@ def air_ticket_sales():
 @app.route("/search-flight", methods=['POST','GET'])
 def search_flight():
     airports = get_all_airport()
-
+    schedules = get_all_schedule()
+    enumerate_schedules = enumerate(schedules)
+    count_result = len(schedules)
     if request.method == 'POST':
         departure = request.form.get('from_locate')
         arrival = request.form.get('to_locate')
         date_flight = request.form.get('date_flight')
-
-        schedules = get_schedule(arrival_locate = arrival, departure_locate=departure, date=date_flight)
+        if departure == "Flight from..." or departure is None and arrival == 'Flight to...' or departure is None and date_flight is None:
+            schedules = get_all_schedule()
+        else:
+            schedules = get_schedule(arrival_locate = arrival, departure_locate=departure, date=date_flight)
         enumerate_schedules = enumerate(schedules)
         count_result = len(schedules)
         if schedules:
@@ -130,9 +137,7 @@ def search_flight():
             return render_template("search-flight.html", airports=airports)
 
 
-    schedules = get_all_schedule()
-    enumerate_schedules = enumerate(schedules)
-    count_result  =  len(schedules)
+
 
     return render_template("search-flight.html",airports=airports,
                            enumerate_schedules=enumerate_schedules, count_result=count_result)
