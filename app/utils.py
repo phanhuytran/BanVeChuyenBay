@@ -56,15 +56,21 @@ def get_all_schedule():
 
     schedule = Schedule.query.join(airport_1, Schedule.departure == airport_1.idAirport)\
     .join(airport_2,Schedule.arrival == airport_2.idAirport)\
-    .join(Plane, Schedule.idPlane == Plane.idPlane)\
+    .join(Plane, Schedule.idPlane == Plane.idPlane) \
+    .join(Ticket, Schedule.idFlight == Ticket.idFlight) \
     .add_columns(Schedule.idFlight,
-                 airport_1.name.label("departure_airport"),
-                airport_2.name.label("arrival_airport"),
-                airport_1.locate.label("departure_locate"),
-                airport_2.locate.label("arrival_locate"),
-                Schedule.departureDate,
-                Plane.idPlane,
-                count(Seat.idSeat).label("empty_seats")).group_by("idFlight").order_by(desc(Schedule.departureDate)).all()
+                     airport_1.name.label("departure_airport"),
+                     airport_2.name.label("arrival_airport"),
+                     airport_1.locate.label("departure_locate"),
+                     airport_2.locate.label("arrival_locate"),
+                     Schedule.departureDate.label("departure_date"),
+                     Schedule.departureTime.label("departure_time"),
+                     Plane.idPlane,
+                     Ticket.is_empty,
+                     count(Ticket.idTicket).label("empty_seats")) \
+    .group_by(Schedule.idFlight)\
+    .having(Ticket.is_empty == True) \
+    .order_by(desc(Schedule.departureDate)).all()
 
     return  schedule
 
@@ -73,15 +79,14 @@ def get_schedule (departure_locate, arrival_locate, date = None):
     airport_2 = aliased(Airport)
     airport_3 = aliased(Airport)
     schedule = []
+
     if date:
         schedule = Schedule.query.join(airport_1, Schedule.departure == airport_1.idAirport)\
             .join(airport_2,Schedule.arrival == airport_2.idAirport)\
             .join(Plane, Schedule.idPlane == Plane.idPlane)\
-            .join(Seat, Plane.idPlane ==  Seat.idPlane)\
-            .join(Ticket, Seat.idSeat == Ticket.idTicket)\
+            .join(Ticket, Schedule.idFlight == Ticket.idFlight)\
             .filter(airport_1.locate == departure_locate,
-                    airport_2.locate == arrival_locate,
-                    Ticket.is_empty == True)\
+                    airport_2.locate == arrival_locate)\
             .add_columns(Schedule.idFlight,
                          airport_1.name.label("departure_airport"),
                          airport_2.name.label("arrival_airport"),
@@ -89,8 +94,12 @@ def get_schedule (departure_locate, arrival_locate, date = None):
                          airport_2.locate.label("arrival_locate"),
                          Schedule.departureDate.label("departure_date"),
                          Schedule.departureTime.label("departure_time"),
+                         Ticket.is_empty,
                          Plane.idPlane,
-                         count(Seat.idSeat).label("empty_seats")).group_by("idFlight").order_by(desc(Schedule.departureDate)).all()
+                         count(Ticket.idTicket).label("empty_seats"))\
+            .group_by("idFlight")\
+            .having(Ticket.is_empty == True)\
+            .order_by(desc(Schedule.departureDate)).all()
 
     return schedule
 
@@ -112,3 +121,4 @@ def count_seat_not_empty(id_plane):
 #
 # print(get_schedule(depature_locate= "Ha Noi", arrival_locate='Binh Thuan', date='2020-12-03'))
 # print(get_all_schedule())
+

@@ -14,7 +14,7 @@ class AuthenticatedView_1(BaseView):
         return current_user.is_authenticated and current_user.staff.user_role == UserRole.ADMIN
 
 
-class ModelView_Base(AuthenticatedView):
+class  ModelView_Base(AuthenticatedView):
     column_display_pk = True
     can_edit = True
     can_export = True
@@ -61,8 +61,9 @@ admin.add_view(ModelView_Customer(Customer, db.session, category="Users"))
 admin.add_view(ModelView_Admin(Account, db.session, category="Users"))
 admin.add_view(ModelView_Base(Airport,db.session))
 admin.add_view(ModelView_Base(Ticket,db.session))
-admin.add_view(ModelView_Base(Seat,db.session))
-admin.add_view(ModelView_Base(TypeSeat,db.session))
+admin.add_view(ModelView_Base(Seat,db.session, category='seat'))
+admin.add_view(ModelView_Base(TypeSeat,db.session, category='seat'))
+admin.add_view(ModelView_Base(SeatLocation,db.session, category='seat'))
 admin.add_view(AboutUsView(name="About us"))
 admin.add_view(LogoutView(name="Log out"))
 

@@ -82,7 +82,7 @@ class Schedule(Base):
     departureDate = Column(Date, nullable=False)
     departureTime = Column(Time, nullable=False)
     timeFlight =  Column(Float, nullable=False)
-    idPlane = Column(Integer, ForeignKey(Plane.idPlane))
+    idPlane = Column(Integer, ForeignKey(Plane.idPlane), nullable=False)
     ticket = relationship('Ticket', backref='schedule', lazy=True)
     departure_fk = relationship('Airport', foreign_keys=[departure])
     arrival_fk = relationship('Airport',  foreign_keys=[arrival])
@@ -96,21 +96,29 @@ class TypeSeat(Base):
     id = Column(Integer,primary_key=True, autoincrement=True)
     name = Column(String(100),nullable=False)
     price = Column(Float,nullable=False)
-    seat = relationship('Seat', backref='typeseat', lazy=True)
+    seat = relationship('SeatLocation', backref='typeseat', lazy=True)
 
+
+class SeatLocation(Base):
+    __tablename__ = "seat location"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(50), unique=True, nullable=False)
+    seat = relationship('Seat', backref='seatlocation', lazy=True)
+    typeSeat = Column(Integer, ForeignKey(TypeSeat.id), nullable=False)
 
 class Seat(db.Model):
     __tablename__ = "seat"
     idSeat = Column(Integer, primary_key=True, autoincrement=True)
-    typeSeat = Column(Integer, ForeignKey(TypeSeat.id), nullable=False)
+
     idPlane = Column(Integer, ForeignKey(Plane.idPlane), nullable=False)
     ticket = relationship('Ticket', backref='seat', lazy=True)
+    seatLocation = Column(Integer,ForeignKey(SeatLocation.id),nullable=False)
 
 
 
 class Ticket(db.Model):
     __tablename__ ="ticket"
-    idTicket = Column(Integer, ForeignKey(Seat.idSeat), primary_key=True, autoincrement=True)
+    idTicket = Column(Integer, ForeignKey(Seat.idSeat), primary_key=True)
     idFlight = Column(Integer, ForeignKey(Schedule.idFlight), nullable= False)
     idCustomer = Column(Integer, ForeignKey(Customer.id))
     idAccount = Column(Integer,ForeignKey(Account.id))
