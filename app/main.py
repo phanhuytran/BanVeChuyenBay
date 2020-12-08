@@ -23,7 +23,7 @@ def login_staff():
 
         if user:
             acc = Account.query.filter(Account.id == user.id).first()
-            if user.user_role == UserRole.STAFF:
+            if user.user_role:
                 login_user(user=acc)
             else:
                 message = 'Username or password incorrect'
@@ -102,7 +102,7 @@ def register():
 
         elif add_account(id_staff=id_staff,
                             username=username, password=password):
-                    return redirect('/admin')
+                    return redirect(url_for("index"))
     return render_template('admin/registration.html', message=message)
 
 
