@@ -54,16 +54,18 @@ class ModelView_Schedule(ModelView_Base):
     column_searchable_list = ('departure', 'arrival', 'departureDate',)
 
 
-admin.add_view(ModelView_Base(Plane, db.session, name="Plane"))
-admin.add_view(ModelView_Schedule(Schedule, db.session, name="Flight Schedule"))
-admin.add_view(ModelView_Staff(Staff, db.session, category="Users"))
-admin.add_view(ModelView_Customer(Customer, db.session, category="Users"))
+
+
 admin.add_view(ModelView_Admin(Account, db.session, category="Users"))
-admin.add_view(ModelView_Base(Airport,db.session))
+admin.add_view(ModelView_Customer(Customer, db.session, category="Users"))
+admin.add_view(ModelView_Staff(Staff, db.session, category="Users"))
+admin.add_view(ModelView_Schedule(Schedule, db.session, name="Flight Schedule"))
 admin.add_view(ModelView_Base(Ticket,db.session))
-admin.add_view(ModelView_Base(Seat,db.session, category='seat'))
-admin.add_view(ModelView_Base(TypeSeat,db.session, category='seat'))
-admin.add_view(ModelView_Base(SeatLocation,db.session, category='seat'))
+admin.add_view(ModelView_Base(Seat,db.session, category='Seat'))
+admin.add_view(ModelView_Base(SeatLocation,db.session, category='Seat'))
+admin.add_view(ModelView_Base(TypeSeat,db.session, category='Seat'))
+admin.add_view(ModelView_Base(Plane, db.session, name="Plane"))
+admin.add_view(ModelView_Base(Airport,db.session))
 admin.add_view(AboutUsView(name="About us"))
 admin.add_view(LogoutView(name="Log out"))
 
