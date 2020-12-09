@@ -15,7 +15,7 @@ div.seat-note button {
 }
 
 div.seat button {
-    margin: 10px;
+    margin: 0 10px;
     width: 5%;
     height: 40px;
     background: #666;
@@ -33,4 +33,14 @@ button.seat-class-1 {
 div.seat button:hover, button.seat-class-1:hover {
     background: #364a59 !important;
     color: #fff !important;
+}
+
+div.radio-seat {
+    display:flex;
+    margin-left: 4%;
+}
+
+div.radio-seat input {
+    width:2%;
+    margin-left: 6.15%;
 }
