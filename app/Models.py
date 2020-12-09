@@ -109,7 +109,6 @@ class SeatLocation(Base):
 class Seat(db.Model):
     __tablename__ = "seat"
     idSeat = Column(Integer, primary_key=True, autoincrement=True)
-
     idPlane = Column(Integer, ForeignKey(Plane.idPlane), nullable=False)
     ticket = relationship('Ticket', backref='seat', lazy=True)
     seatLocation = Column(Integer,ForeignKey(SeatLocation.id),nullable=False)

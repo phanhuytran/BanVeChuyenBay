@@ -98,7 +98,7 @@ def register():
             message = 'Id staff not already exists'
 
         elif check_account(key=id_staff):
-            message = 'This id staff has been registered by someone else'
+            message = 'Id staff has been registered by someone else'
 
         elif add_account(id_staff=id_staff,
                             username=username, password=password):

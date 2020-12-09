@@ -18,8 +18,8 @@
                                 <div class="input-field">
                                     <div class="input-select">
                                         <div class="input-select">
-                                            <select name="id_flight">
-                                                <option>Select a flight...</option>
+                                            <select name="id_flight" required>
+                                                <option value="">Select a flight...</option>
                                                 <option>TP HCM - Ha Noi</option>
                                                 <option>Khanh Hoa - TP HCCM</option>
                                             </select>
@@ -27,129 +27,130 @@
                                     </div>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="first_name" placeholder="First name..." />
+                                    <input type="text" name="first_name" placeholder="First name..." required/>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="last_name" placeholder="Last name..." />
+                                    <input type="text" name="last_name" placeholder="Last name..." required/>
                                 </div>
                             </div>
 
                             <div class="row second">
                                 <div class="input-field">
-                                    <input type="text" name="identity_card" placeholder="Identity card..." />
+                                    <input type="text" name="identity_card" placeholder="Identity card..." required/>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="email" placeholder="Email..." />
+                                    <input type="text" name="email" placeholder="Email..." required/>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="phone" placeholder="Phone..." />
+                                    <input type="text" name="phone" placeholder="Phone..." required/>
                                 </div>
                             </div>
 
-                            <span class="desc">SELECT SEAT</span>
-
-                            <div class="seat">
-                                <div class="seat-class">
-                                    <button disabled class="seat-class-1">A1</button>
-                                    <button disabled class="seat-class-1">B1</button>
-                                    <button disabled>C1</button>
-                                    <button disabled>D1</button>
-                                    <button disabled>E1</button>
-                                    <button disabled>F1</button>
-                                    <button disabled>G1</button>
-                                    <button disabled>H1</button>
-                                    <button disabled>I1</button>
-                                    <button disabled>K1</button>
-                                    <button disabled>L1</button><br/>
-                                    <div class="radio-seat">
-                                        <input type="radio" name="seat" id="A1">
-                                        <input type="radio" name="seat" id="B1">
-                                        <input type="radio" name="seat" id="C1">
-                                        <input type="radio" name="seat" id="D1">
-                                        <input type="radio" name="seat" id="E1">
-                                        <input type="radio" name="seat" id="F1">
-                                        <input type="radio" name="seat" id="G1">
-                                        <input type="radio" name="seat" id="H1">
-                                        <input type="radio" name="seat" id="I1">
-                                        <input type="radio" name="seat" id="K1">
-                                        <input type="radio" name="seat" id="L1">
-                                    </div><br/>
-                                    <button disabled class="seat-class-1">A2</button>
-                                    <button disabled class="seat-class-1">B2</button>
-                                    <button disabled>C2</button>
-                                    <button disabled>D2</button>
-                                    <button disabled>E2</button>
-                                    <button disabled>F2</button>
-                                    <button disabled>G2</button>
-                                    <button disabled>H2</button>
-                                    <button disabled>I2</button>
-                                    <button disabled>K2</button>
-                                    <button disabled>L2</button><br/>
-                                    <div class="radio-seat">
-                                        <input type="radio" name="seat" id="A2">
-                                        <input type="radio" name="seat" id="B2">
-                                        <input type="radio" name="seat" id="C2">
-                                        <input type="radio" name="seat" id="D2">
-                                        <input type="radio" name="seat" id="E2">
-                                        <input type="radio" name="seat" id="F2">
-                                        <input type="radio" name="seat" id="G2">
-                                        <input type="radio" name="seat" id="H2">
-                                        <input type="radio" name="seat" id="I2">
-                                        <input type="radio" name="seat" id="K2">
-                                        <input type="radio" name="seat" id="L2">
-                                    </div><br/>
-                                    <button disabled class="seat-class-1">A3</button>
-                                    <button disabled class="seat-class-1">B3</button>
-                                    <button disabled>C3</button>
-                                    <button disabled>D3</button>
-                                    <button disabled>E3</button>
-                                    <button disabled>F3</button>
-                                    <button disabled>G3</button>
-                                    <button disabled>H3</button>
-                                    <button disabled>I3</button>
-                                    <button disabled>K3</button>
-                                    <button disabled>L3</button><br/>
-                                    <div class="radio-seat">
-                                        <input type="radio" name="seat" id="A3">
-                                        <input type="radio" name="seat" id="B3">
-                                        <input type="radio" name="seat" id="C3">
-                                        <input type="radio" name="seat" id="D3">
-                                        <input type="radio" name="seat" id="E3">
-                                        <input type="radio" name="seat" id="F3">
-                                        <input type="radio" name="seat" id="G3">
-                                        <input type="radio" name="seat" id="H3">
-                                        <input type="radio" name="seat" id="I3">
-                                        <input type="radio" name="seat" id="K3">
-                                        <input type="radio" name="seat" id="L3">
-                                    </div><br/>
-                                    <button disabled class="seat-class-1">A4</button>
-                                    <button disabled class="seat-class-1">B4</button>
-                                    <button disabled>C4</button>
-                                    <button disabled>D4</button>
-                                    <button disabled>E4</button>
-                                    <button disabled>F4</button>
-                                    <button disabled>G4</button>
-                                    <button disabled>H4</button>
-                                    <button disabled>I4</button>
-                                    <button disabled>K4</button>
-                                    <button disabled>L4</button><br/>
-                                    <div class="radio-seat">
-                                        <input type="radio" name="seat" id="A4">
-                                        <input type="radio" name="seat" id="B4">
-                                        <input type="radio" name="seat" id="C4">
-                                        <input type="radio" name="seat" id="D4">
-                                        <input type="radio" name="seat" id="E4">
-                                        <input type="radio" name="seat" id="F4">
-                                        <input type="radio" name="seat" id="G4">
-                                        <input type="radio" name="seat" id="H4">
-                                        <input type="radio" name="seat" id="I4">
-                                        <input type="radio" name="seat" id="K4">
-                                        <input type="radio" name="seat" id="L4">
+                            <div class="seat" id="show-seat">
+                                <span class="desc">SELECT SEAT</span>
+                                <div id="seat-flex">
+                                    <div class="seat-class">
+                                        <button disabled class="seat-class-1">A1</button>
+                                        <button disabled class="seat-class-1">B1</button>
+                                        <button disabled>C1</button>
+                                        <button disabled>D1</button>
+                                        <button disabled>E1</button>
+                                        <button disabled>F1</button>
+                                        <button disabled>G1</button>
+                                        <button disabled>H1</button>
+                                        <button disabled>I1</button>
+                                        <button disabled>K1</button>
+                                        <button disabled>L1</button><br/>
+                                        <div class="radio-seat">
+                                            <input type="radio" name="seat" id="A1" required>
+                                            <input type="radio" name="seat" id="B1" required>
+                                            <input type="radio" name="seat" id="C1" required>
+                                            <input type="radio" name="seat" id="D1" required>
+                                            <input type="radio" name="seat" id="E1" required>
+                                            <input type="radio" name="seat" id="F1" required>
+                                            <input type="radio" name="seat" id="G1" required>
+                                            <input type="radio" name="seat" id="H1" required>
+                                            <input type="radio" name="seat" id="I1" required>
+                                            <input type="radio" name="seat" id="K1" required>
+                                            <input type="radio" name="seat" id="L1" required>
+                                        </div><br/>
+                                        <button disabled class="seat-class-1">A2</button>
+                                        <button disabled class="seat-class-1">B2</button>
+                                        <button disabled>C2</button>
+                                        <button disabled>D2</button>
+                                        <button disabled>E2</button>
+                                        <button disabled>F2</button>
+                                        <button disabled>G2</button>
+                                        <button disabled>H2</button>
+                                        <button disabled>I2</button>
+                                        <button disabled>K2</button>
+                                        <button disabled>L2</button><br/>
+                                        <div class="radio-seat">
+                                            <input type="radio" name="seat" id="A2" required>
+                                            <input type="radio" name="seat" id="B2" required>
+                                            <input type="radio" name="seat" id="C2" required>
+                                            <input type="radio" name="seat" id="D2" required>
+                                            <input type="radio" name="seat" id="E2" required>
+                                            <input type="radio" name="seat" id="F2" required>
+                                            <input type="radio" name="seat" id="G2" required>
+                                            <input type="radio" name="seat" id="H2" required>
+                                            <input type="radio" name="seat" id="I2" required>
+                                            <input type="radio" name="seat" id="K2" required>
+                                            <input type="radio" name="seat" id="L2" required>
+                                        </div><br/>
+                                        <button disabled class="seat-class-1">A3</button>
+                                        <button disabled class="seat-class-1">B3</button>
+                                        <button disabled>C3</button>
+                                        <button disabled>D3</button>
+                                        <button disabled>E3</button>
+                                        <button disabled>F3</button>
+                                        <button disabled>G3</button>
+                                        <button disabled>H3</button>
+                                        <button disabled>I3</button>
+                                        <button disabled>K3</button>
+                                        <button disabled>L3</button><br/>
+                                        <div class="radio-seat">
+                                            <input type="radio" name="seat" id="A3" required>
+                                            <input type="radio" name="seat" id="B3" required>
+                                            <input type="radio" name="seat" id="C3" required>
+                                            <input type="radio" name="seat" id="D3" required>
+                                            <input type="radio" name="seat" id="E3" required>
+                                            <input type="radio" name="seat" id="F3" required>
+                                            <input type="radio" name="seat" id="G3" required>
+                                            <input type="radio" name="seat" id="H3" required>
+                                            <input type="radio" name="seat" id="I3" required>
+                                            <input type="radio" name="seat" id="K3" required>
+                                            <input type="radio" name="seat" id="L3" required>
+                                        </div><br/>
+                                        <button disabled class="seat-class-1">A4</button>
+                                        <button disabled class="seat-class-1">B4</button>
+                                        <button disabled>C4</button>
+                                        <button disabled>D4</button>
+                                        <button disabled>E4</button>
+                                        <button disabled>F4</button>
+                                        <button disabled>G4</button>
+                                        <button disabled>H4</button>
+                                        <button disabled>I4</button>
+                                        <button disabled>K4</button>
+                                        <button disabled>L4</button><br/>
+                                        <div class="radio-seat">
+                                            <input type="radio" name="seat" id="A4" required>
+                                            <input type="radio" name="seat" id="B4" required>
+                                            <input type="radio" name="seat" id="C4" required>
+                                            <input type="radio" name="seat" id="D4" required>
+                                            <input type="radio" name="seat" id="E4" required>
+                                            <input type="radio" name="seat" id="F4" required>
+                                            <input type="radio" name="seat" id="G4" required>
+                                            <input type="radio" name="seat" id="H4" required>
+                                            <input type="radio" name="seat" id="I4" required>
+                                            <input type="radio" name="seat" id="K4" required>
+                                            <input type="radio" name="seat" id="L4" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="seat-note">
-                                    <button disabled class="seat-class-1"></button><span class="desc">Seat class 1</span>
-                                    <button disabled style="margin-top:15px"></button><span class="desc">Seat class 2</span>
+                                    <div class="seat-note">
+                                        <button disabled class="seat-class-1"></button><span class="desc">Seat class 1</span>
+                                        <button disabled style="margin-top:15px"></button><span class="desc">Seat class 2</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -160,7 +161,7 @@
                                     </div>
                                     <div class="submit-search">
                                         <input class="btn-delete" type="submit" value="RESET"/>
-                                        <input class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px"/>
+                                        <input onclick="show_seat_function(); this.onclick=null" class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px"/>
                                     </div>
                                 </div>
                             </div>
@@ -170,8 +171,18 @@
             </div>
         </div>
     </section>
-
-
+    <script>
+        function show_seat_function() {
+            var x = document.getElementById("show-seat");
+            var y = document.getElementById("seat-flex");
+            if (x.style.display == "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+                y.style.display = "flex";
+            }
+        }
+    </script>
 
     <section class="map">
         <div class="container">

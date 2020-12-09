@@ -1,5 +1,6 @@
 div.seat {
     display: flex;
+    display: none;
 }
 
 div.seat-class {
