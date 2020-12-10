@@ -18,7 +18,7 @@
                                 <div class="input-field">
                                     <div class="input-select">
                                         <div class="input-select">
-                                            <select name="id_flight" required>
+                                            <select name="id_flight" required id="select-flight">
                                                 <option value="">Select a flight...</option>
                                                 <option>TP HCM - Ha Noi</option>
                                                 <option>Khanh Hoa - TP HCCM</option>
@@ -27,22 +27,22 @@
                                     </div>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="first_name" placeholder="First name..." required/>
+                                    <input type="text" id="first-name" name="first_name" placeholder="First name..." required/>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="last_name" placeholder="Last name..." required/>
+                                    <input type="text" id="last-name" name="last_name" placeholder="Last name..." required/>
                                 </div>
                             </div>
 
                             <div class="row second">
                                 <div class="input-field">
-                                    <input type="text" name="identity_card" placeholder="Identity card..." required/>
+                                    <input type="text" id="identity-card" name="identity_card" placeholder="Identity card..." required/>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="email" placeholder="Email..." required/>
+                                    <input type="text" id="email" name="email" placeholder="Email..." required/>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="phone" placeholder="Phone..." required/>
+                                    <input type="text" id="phone" name="phone" placeholder="Phone..." required/>
                                 </div>
                             </div>
 
@@ -161,7 +161,7 @@
                                     </div>
                                     <div class="submit-search">
                                         <input class="btn-delete" type="submit" value="RESET"/>
-                                        <input onclick="show_seat_function(); this.onclick=null" class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px"/>
+                                        <input onclick="show_seat_function()" class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px"/>
                                     </div>
                                 </div>
                             </div>
@@ -173,13 +173,24 @@
     </section>
     <script>
         function show_seat_function() {
+            var a = document.getElementById("select-flight").value;
+            var b = document.getElementById("first-name").value;
+            var c = document.getElementById("last-name").value;
+            var d = document.getElementById("identity-card").value;
+            var e = document.getElementById("email").value;
+            var f = document.getElementById("phone").value;
+
             var x = document.getElementById("show-seat");
             var y = document.getElementById("seat-flex");
-            if (x.style.display == "block") {
-                x.style.display = "none";
-            } else {
-                x.style.display = "block";
-                y.style.display = "flex";
+
+            if (a != '' && b != '' && c != '' && d != '' && e != '' && f != '') {
+                if (x.style.display == "block") {
+                    x.style.display = "block";
+                    y.style.display = "flex";
+                } else {
+                    x.style.display = "block";
+                    y.style.display = "flex";
+                }
             }
         }
     </script>
