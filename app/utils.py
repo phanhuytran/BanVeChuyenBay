@@ -6,7 +6,7 @@ from sqlalchemy.sql.functions import count
 
 
 from app import db
-from app.Models import Schedule, Airport, Plane, Seat, Staff, Account, Ticket
+from app.Models import Schedule, Airport, Plane, Seat, Staff, Account, Ticket,SeatLocation
 
 
 class MyView(BaseView):
@@ -116,6 +116,17 @@ def count_seat_not_empty(id_plane):
         .count(Seat.idSeat).group_by(Plane.idPlane).all()
     return count
 
+
+def get_seats(id_flight):
+    seats  = Seat.query.join(SeatLocation, SeatLocation.id == Seat.seatLocation)\
+                .join(Ticket, Ticket.idTicket == Seat.idSeat)\
+                .join(Schedule, Schedule.idFlight == Ticket.idFlight)
+
+
+
+#
+# def book_ticket(id_flight, seat_location):
+#
 # print(count_seat_not_emty(1))
 #
 #

@@ -118,6 +118,7 @@ def air_ticket_sales():
 def search_flight():
     airports = get_all_airport()
     schedules = get_all_schedule()
+
     enumerate_schedules = enumerate(schedules)
     count_result = len(schedules)
     if request.method == 'POST':

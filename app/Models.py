@@ -89,7 +89,7 @@ class Schedule(Base):
     intermediate_fk = relationship('Airport',  foreign_keys=[intermediate])
 
     def __str__(self):
-        return str(self.idPlane)
+        return str(self.idFlight)
 
 
 class TypeSeat(Base):
@@ -114,6 +114,8 @@ class Seat(db.Model):
     ticket = relationship('Ticket', backref='seat', lazy=True)
     seatLocation = Column(Integer,ForeignKey(SeatLocation.id),nullable=False)
 
+    def __str__(self):
+        return str(self.idSeat)
 
 
 class Ticket(db.Model):
@@ -127,6 +129,8 @@ class Ticket(db.Model):
 
     is_empty = Column(Boolean, default=True)
 
+    def __str__(self):
+        return str(self.idTicket)
 
 class AuthenticatedView(ModelView):
     def is_accessible(self):

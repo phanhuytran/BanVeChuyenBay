@@ -1,7 +1,7 @@
 {% extends 'base/index.html' %}
 
 {% block function %}
-    <section class="contact-form">
+    <section class="contact-form" id="section_search">
         <div class="container">
             <div class="section-heading">
                 <h2>flight list</h2>
@@ -48,13 +48,13 @@
                                     </div>
                                     <div class="submit-search">
                                         <input class="btn-delete" type="submit" value="RESET" />
-                                        <input class="btn-search" type="submit" value="SEARCH" />
+                                        <input class="btn-search" type="submit" value="SEARCH" name="btn"/>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row" style="padding-top: 20px">
-                                <table class="table table-hover" style="text-align:left">
+                                <table class="table table-hover" style="text-align:left" id="tb_schedules">
                                     <thead>
                                     <tr>
                                         <th scope="col">No</th>
@@ -66,6 +66,7 @@
                                         <th scope="col">departure date</th>
                                         <th scope="col">departure time</th>
                                         <th scope="col">Empty seats</th>
+                                        <th scope="col">Book ticket </th>
                                         <!--<th scope="col">Reserved seats</th>-->
                                     </tr>
                                     </thead>
@@ -81,10 +82,198 @@
                                             <td>{{ schedule.departure_date }}</td>
                                             <td>{{ schedule.departure_time }}</td>
                                             <td>{{ schedule.empty_seats }}</td>
+                                            <td>
+                                                <a onclick="myFunction({{ i + 1 }})" href="#section_ticket"  >
+                                                    Book ticket
+                                                </a>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+     <section class="contact-form" id="section_ticket">
+        <div class="container">
+            <div class="section-heading">
+                <h2>flight ticket</h2>
+                <h2 id="demo"></h2>
+            </div>
+            <div class="item-tickets">
+                <a href="{{ url_for('search_flight') }}"><i class="fa fa-search"></i> Search Flight</a>
+            </div>
+            <div class="s009">
+                <form>
+                    <div class="inner-form">
+                        <div class="advance-search">
+                            <span class="desc">ORDER TICKETS</span>
+                            <table class="table table-hover" style="text-align:left" >
+                                <thead>
+                                    <tr>
+                                        <th scope="row">Id Flight</th>
+                                        <th scope="row">departure airport</th>
+                                        <th scope="row">arrival airport</th>
+                                        <th scope="row">departure date</th>
+                                        <th scope="row">departure time</th>
+                                        <th scope="row">empty seats</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="td_idFlight">...</td>
+                                        <td id="td_departure_airport">...</td>
+                                        <td id="td_arrival_airport">...</td>
+                                        <td id="td_departure_date">...</td>
+                                        <td id="td_departure_time">...</td>
+                                        <td id="td_empty_seats">...</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                            <div class="row">
+
+                                <div class="input-field">
+                                    <input type="text" name="first_name" placeholder="First name..." />
+                                </div>
+                                <div class="input-field">
+                                    <input type="text" name="last_name" placeholder="Last name..." />
+                                </div>
+                            </div>
+
+                            <div class="row second">
+                                <div class="input-field">
+                                    <input type="text" name="identity_card" placeholder="Identity card..." />
+                                </div>
+                                <div class="input-field">
+                                    <input type="text" name="email" placeholder="Email..." />
+                                </div>
+                                <div class="input-field">
+                                    <input type="text" name="phone" placeholder="Phone..." />
+                                </div>
+                            </div>
+
+                            <span class="desc">SELECT SEAT</span>
+
+                            <div class="seat">
+                                <div class="seat-class">
+                                    <button disabled class="seat-class-1">A1</button>
+                                    <button disabled class="seat-class-1">B1</button>
+                                    <button disabled>C1</button>
+                                    <button disabled>D1</button>
+                                    <button disabled>E1</button>
+                                    <button disabled>F1</button>
+                                    <button disabled>G1</button>
+                                    <button disabled>H1</button>
+                                    <button disabled>I1</button>
+                                    <button disabled>K1</button>
+                                    <button disabled>L1</button><br/>
+                                    <div class="radio-seat">
+                                        <input type="radio" name="seat" id="A1">
+                                        <input type="radio" name="seat" id="B1">
+                                        <input type="radio" name="seat" id="C1">
+                                        <input type="radio" name="seat" id="D1">
+                                        <input type="radio" name="seat" id="E1">
+                                        <input type="radio" name="seat" id="F1">
+                                        <input type="radio" name="seat" id="G1">
+                                        <input type="radio" name="seat" id="H1">
+                                        <input type="radio" name="seat" id="I1">
+                                        <input type="radio" name="seat" id="K1">
+                                        <input type="radio" name="seat" id="L1">
+                                    </div><br/>
+                                    <button disabled class="seat-class-1">A2</button>
+                                    <button disabled class="seat-class-1">B2</button>
+                                    <button disabled>C2</button>
+                                    <button disabled>D2</button>
+                                    <button disabled>E2</button>
+                                    <button disabled>F2</button>
+                                    <button disabled>G2</button>
+                                    <button disabled>H2</button>
+                                    <button disabled>I2</button>
+                                    <button disabled>K2</button>
+                                    <button disabled>L2</button><br/>
+                                    <div class="radio-seat">
+                                        <input type="radio" name="seat" id="A2">
+                                        <input type="radio" name="seat" id="B2">
+                                        <input type="radio" name="seat" id="C2">
+                                        <input type="radio" name="seat" id="D2">
+                                        <input type="radio" name="seat" id="E2">
+                                        <input type="radio" name="seat" id="F2">
+                                        <input type="radio" name="seat" id="G2">
+                                        <input type="radio" name="seat" id="H2">
+                                        <input type="radio" name="seat" id="I2">
+                                        <input type="radio" name="seat" id="K2">
+                                        <input type="radio" name="seat" id="L2">
+                                    </div><br/>
+                                    <button disabled class="seat-class-1">A3</button>
+                                    <button disabled class="seat-class-1">B3</button>
+                                    <button disabled>C3</button>
+                                    <button disabled>D3</button>
+                                    <button disabled>E3</button>
+                                    <button disabled>F3</button>
+                                    <button disabled>G3</button>
+                                    <button disabled>H3</button>
+                                    <button disabled>I3</button>
+                                    <button disabled>K3</button>
+                                    <button disabled>L3</button><br/>
+                                    <div class="radio-seat">
+                                        <input type="radio" name="seat" id="A3">
+                                        <input type="radio" name="seat" id="B3">
+                                        <input type="radio" name="seat" id="C3">
+                                        <input type="radio" name="seat" id="D3">
+                                        <input type="radio" name="seat" id="E3">
+                                        <input type="radio" name="seat" id="F3">
+                                        <input type="radio" name="seat" id="G3">
+                                        <input type="radio" name="seat" id="H3">
+                                        <input type="radio" name="seat" id="I3">
+                                        <input type="radio" name="seat" id="K3">
+                                        <input type="radio" name="seat" id="L3">
+                                    </div><br/>
+                                    <button disabled class="seat-class-1">A4</button>
+                                    <button disabled class="seat-class-1">B4</button>
+                                    <button disabled>C4</button>
+                                    <button disabled>D4</button>
+                                    <button disabled>E4</button>
+                                    <button disabled>F4</button>
+                                    <button disabled>G4</button>
+                                    <button disabled>H4</button>
+                                    <button disabled>I4</button>
+                                    <button disabled>K4</button>
+                                    <button disabled>L4</button><br/>
+                                    <div class="radio-seat">
+                                        <input type="radio" name="seat" id="A4">
+                                        <input type="radio" name="seat" id="B4">
+                                        <input type="radio" name="seat" id="C4">
+                                        <input type="radio" name="seat" id="D4">
+                                        <input type="radio" name="seat" id="E4">
+                                        <input type="radio" name="seat" id="F4">
+                                        <input type="radio" name="seat" id="G4">
+                                        <input type="radio" name="seat" id="H4">
+                                        <input type="radio" name="seat" id="I4">
+                                        <input type="radio" name="seat" id="K4">
+                                        <input type="radio" name="seat" id="L4">
+                                    </div>
+                                </div>
+                                <div class="seat-note">
+                                    <button disabled class="seat-class-1"></button><span class="desc">Seat class 1</span>
+                                    <button disabled></button><span class="desc">Seat class 2</span>
+                                </div>
+                            </div>
+
+                            <div class="row third">
+                                <div class="input-field">
+                                    <div class="result-count">
+                                        PRICE: <span style="font-size:20px">2,000,000.00 VND</span>
+                                    </div>
+                                    <div class="submit-search">
+                                        <input class="btn-delete" type="submit" value="RESET" />
+                                        <input class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -622,4 +811,19 @@
             </div>
         </div>
     </section>
+    <script>
+        function myFunction(i) {
+            document.getElementById("td_idFlight").innerHTML = document.getElementById("tb_schedules").rows[i].cells[1].innerHTML;
+            document.getElementById("td_departure_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[2].innerHTML;
+            document.getElementById("td_arrival_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[3].innerHTML;
+            document.getElementById("td_departure_date").innerHTML = document.getElementById("tb_schedules").rows[i].cells[6].innerHTML;
+            document.getElementById("td_departure_time").innerHTML = document.getElementById("tb_schedules").rows[i].cells[7].innerHTML;
+            document.getElementById("td_empty_seats").innerHTML = document.getElementById("tb_schedules").rows[i].cells[8].innerHTML;
+
+        }
+    </script>
 {% endblock %}
+
+
+
+
