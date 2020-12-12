@@ -1,12 +1,14 @@
 import hashlib
+from pprint import pprint
+
 from flask_admin import BaseView, Admin
-from sqlalchemy import desc, Date
+from sqlalchemy import desc, Date,asc
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql.functions import count
 
 
 from app import db
-from app.Models import Schedule, Airport, Plane, Seat, Staff, Account, Ticket,SeatLocation
+from app.Models import Schedule, Airport, Plane, Seat, Staff, Account, Ticket,SeatLocation,TypeSeat
 
 
 class MyView(BaseView):
@@ -69,7 +71,6 @@ def get_all_schedule():
                      Ticket.is_empty,
                      count(Ticket.idTicket).label("empty_seats")) \
     .group_by(Schedule.idFlight)\
-    .having(Ticket.is_empty == True) \
     .order_by(desc(Schedule.departureDate)).all()
 
     return  schedule
@@ -98,7 +99,6 @@ def get_schedule (departure_locate, arrival_locate, date = None):
                          Plane.idPlane,
                          count(Ticket.idTicket).label("empty_seats"))\
             .group_by("idFlight")\
-            .having(Ticket.is_empty == True)\
             .order_by(desc(Schedule.departureDate)).all()
 
     return schedule
@@ -118,9 +118,21 @@ def count_seat_not_empty(id_plane):
 
 
 def get_seats(id_flight):
-    seats  = Seat.query.join(SeatLocation, SeatLocation.id == Seat.seatLocation)\
-                .join(Ticket, Ticket.idTicket == Seat.idSeat)\
-                .join(Schedule, Schedule.idFlight == Ticket.idFlight)
+    seats  = Ticket.query.join(Seat, Ticket.idTicket == Seat.idSeat)\
+                .join(SeatLocation, SeatLocation.id == Seat.seatLocation)\
+                .join(Schedule, Schedule.idFlight == Ticket.idFlight)\
+                .join(TypeSeat, TypeSeat.id == SeatLocation.typeSeat)\
+                .filter(Schedule.idFlight == id_flight)\
+                .add_columns(SeatLocation.name.label("seat_location"),
+                     TypeSeat.name.label("type_seat"),
+                     Ticket.idTicket,
+                     Ticket.is_empty
+
+                     )\
+                .order_by(asc(SeatLocation.name)).all()
+
+    return seats
+
 
 
 
@@ -132,4 +144,5 @@ def get_seats(id_flight):
 #
 # print(get_schedule(depature_locate= "Ha Noi", arrival_locate='Binh Thuan', date='2020-12-03'))
 # print(get_all_schedule())
+
 

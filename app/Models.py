@@ -49,9 +49,9 @@ class Customer(Base, UserMixin):
     id = Column(Integer, primary_key=True, autoincrement=True)
     firstname = Column(String(50), nullable=False)
     lastname = Column(String(20), nullable=False)
-    identity_card = Column(String(20))
+    identity_card = Column(String(20), nullable=False)
     email = Column(String(50))
-    phone = Column(String(20))
+    phone = Column(String(20), nullable=False)
     ticket = relationship('Ticket', backref = 'customer', lazy = True)
 
 
@@ -120,7 +120,8 @@ class Seat(db.Model):
 
 class Ticket(db.Model):
     __tablename__ ="ticket"
-    idTicket = Column(Integer, ForeignKey(Seat.idSeat), primary_key=True)
+    idTicket = Column(Integer,  primary_key=True, autoincrement=True)
+    idSeat = Column(Integer,ForeignKey(Seat.idSeat),nullable=True)
     idFlight = Column(Integer, ForeignKey(Schedule.idFlight), nullable= False)
     idCustomer = Column(Integer, ForeignKey(Customer.id))
     idAccount = Column(Integer,ForeignKey(Account.id))

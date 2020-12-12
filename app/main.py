@@ -121,27 +121,50 @@ def search_flight():
 
     enumerate_schedules = enumerate(schedules)
     count_result = len(schedules)
-    if request.method == 'POST':
-        departure = request.form.get('from_locate')
-        arrival = request.form.get('to_locate')
-        date_flight = request.form.get('date_flight')
-        if departure == "Flight from..." or departure is None and arrival == 'Flight to...' or departure is None and date_flight is None:
-            schedules = get_all_schedule()
-        else:
-            schedules = get_schedule(arrival_locate = arrival, departure_locate=departure, date=date_flight)
-        enumerate_schedules = enumerate(schedules)
-        count_result = len(schedules)
-        if schedules:
-            return render_template("search-flight.html", airports=airports,
-                                   enumerate_schedules=enumerate_schedules, count_result=count_result)
-        else:
-            return render_template("search-flight.html", airports=airports)
+
+    id_flight = request.form.get('td_idFlight')
+    seats = get_seats(id_flight=1)
+    enumerate_seat = enumerate(seats)
+
+    if request.form.get('btn') == "SEARCH":
+        if request.method == 'POST':
+            departure = request.form.get('from_locate')
+            arrival = request.form.get('to_locate')
+            date_flight = request.form.get('date_flight')
+            if departure == "Flight from..." or departure is None and arrival == 'Flight to...' or departure is None and date_flight is None:
+                schedules = get_all_schedule()
+            else:
+                schedules = get_schedule(arrival_locate = arrival, departure_locate=departure, date=date_flight)
+            enumerate_schedules = enumerate(schedules)
+            count_result = len(schedules)
+            if schedules:
+                return render_template("search-flight.html", airports=airports,
+                                       enumerate_schedules=enumerate_schedules, count_result=count_result,seats=seats)
+            else:
+                return render_template("search-flight.html", airports=airports)
+
+
+    id_flight = request.form.get('td_idFlight')
+    seats = get_seats(id_flight=1)
+    enumerate_seat = enumerate(seats)
+    if  request.form.get('btn') == "ORDER TICKET NOW":
+        id_flight = request.form.get('td_idFlight')
+        seats = get_seats(id_flight=id_flight)
+        enumerate_seat = enumerate(seats)
+        if  request.method == 'POST':
+            pass
+
+
+        return render_template("search-flight.html", airports=airports,
+                               enumerate_schedules=enumerate_schedules,
+                               count_result=count_result, enumerate_seat=enumerate_seat,seats=seats)
 
 
 
 
     return render_template("search-flight.html",airports=airports,
-                           enumerate_schedules=enumerate_schedules, count_result=count_result)
+                           enumerate_schedules=enumerate_schedules,
+                           count_result=count_result,enumerate_seat=enumerate_seat,seats=seats)
 
 
 @app.route("/receive-flight-schedule")

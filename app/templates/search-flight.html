@@ -108,14 +108,14 @@
                 <a href="{{ url_for('search_flight') }}"><i class="fa fa-search"></i> Search Flight</a>
             </div>
             <div class="s009">
-                <form>
+                <form action="{{ url_for('search_flight') }}" method="post">
                     <div class="inner-form">
                         <div class="advance-search">
-                            <span class="desc">ORDER TICKETS</span>
+                            <span  class="desc">ORDER TICKETS</span>
                             <table class="table table-hover" style="text-align:left" >
                                 <thead>
                                     <tr>
-                                        <th scope="row">Id Flight</th>
+                                        <th scope="row" >Id Flight</th>
                                         <th scope="row">departure airport</th>
                                         <th scope="row">arrival airport</th>
                                         <th scope="row">departure date</th>
@@ -125,7 +125,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td id="td_idFlight">...</td>
+                                        <td id="td_idFlight" name="td_idFlight">...</td>
                                         <td id="td_departure_airport">...</td>
                                         <td id="td_arrival_airport">...</td>
                                         <td id="td_departure_date">...</td>
@@ -138,22 +138,22 @@
                             <div class="row">
 
                                 <div class="input-field">
-                                    <input type="text" name="first_name" placeholder="First name..." />
+                                    <input type="text" name="first_name" placeholder="First name..." required/>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="last_name" placeholder="Last name..." />
+                                    <input type="text" name="last_name" placeholder="Last name..." required />
                                 </div>
                             </div>
 
                             <div class="row second">
                                 <div class="input-field">
-                                    <input type="text" name="identity_card" placeholder="Identity card..." />
+                                    <input type="text" name="identity_card" placeholder="Identity card..." required />
                                 </div>
                                 <div class="input-field">
                                     <input type="text" name="email" placeholder="Email..." />
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="phone" placeholder="Phone..." />
+                                    <input type="text" name="phone" placeholder="Phone..."  required/>
                                 </div>
                             </div>
 
@@ -161,106 +161,31 @@
 
                             <div class="seat">
                                 <div class="seat-class">
-                                    <button disabled class="seat-class-1">A1</button>
-                                    <button disabled class="seat-class-1">B1</button>
-                                    <button disabled>C1</button>
-                                    <button disabled>D1</button>
-                                    <button disabled>E1</button>
-                                    <button disabled>F1</button>
-                                    <button disabled>G1</button>
-                                    <button disabled>H1</button>
-                                    <button disabled>I1</button>
-                                    <button disabled>K1</button>
-                                    <button disabled>L1</button><br/>
-                                    <div class="radio-seat">
-                                        <input type="radio" name="seat" id="A1">
-                                        <input type="radio" name="seat" id="B1">
-                                        <input type="radio" name="seat" id="C1">
-                                        <input type="radio" name="seat" id="D1">
-                                        <input type="radio" name="seat" id="E1">
-                                        <input type="radio" name="seat" id="F1">
-                                        <input type="radio" name="seat" id="G1">
-                                        <input type="radio" name="seat" id="H1">
-                                        <input type="radio" name="seat" id="I1">
-                                        <input type="radio" name="seat" id="K1">
-                                        <input type="radio" name="seat" id="L1">
-                                    </div><br/>
-                                    <button disabled class="seat-class-1">A2</button>
-                                    <button disabled class="seat-class-1">B2</button>
-                                    <button disabled>C2</button>
-                                    <button disabled>D2</button>
-                                    <button disabled>E2</button>
-                                    <button disabled>F2</button>
-                                    <button disabled>G2</button>
-                                    <button disabled>H2</button>
-                                    <button disabled>I2</button>
-                                    <button disabled>K2</button>
-                                    <button disabled>L2</button><br/>
-                                    <div class="radio-seat">
-                                        <input type="radio" name="seat" id="A2">
-                                        <input type="radio" name="seat" id="B2">
-                                        <input type="radio" name="seat" id="C2">
-                                        <input type="radio" name="seat" id="D2">
-                                        <input type="radio" name="seat" id="E2">
-                                        <input type="radio" name="seat" id="F2">
-                                        <input type="radio" name="seat" id="G2">
-                                        <input type="radio" name="seat" id="H2">
-                                        <input type="radio" name="seat" id="I2">
-                                        <input type="radio" name="seat" id="K2">
-                                        <input type="radio" name="seat" id="L2">
-                                    </div><br/>
-                                    <button disabled class="seat-class-1">A3</button>
-                                    <button disabled class="seat-class-1">B3</button>
-                                    <button disabled>C3</button>
-                                    <button disabled>D3</button>
-                                    <button disabled>E3</button>
-                                    <button disabled>F3</button>
-                                    <button disabled>G3</button>
-                                    <button disabled>H3</button>
-                                    <button disabled>I3</button>
-                                    <button disabled>K3</button>
-                                    <button disabled>L3</button><br/>
-                                    <div class="radio-seat">
-                                        <input type="radio" name="seat" id="A3">
-                                        <input type="radio" name="seat" id="B3">
-                                        <input type="radio" name="seat" id="C3">
-                                        <input type="radio" name="seat" id="D3">
-                                        <input type="radio" name="seat" id="E3">
-                                        <input type="radio" name="seat" id="F3">
-                                        <input type="radio" name="seat" id="G3">
-                                        <input type="radio" name="seat" id="H3">
-                                        <input type="radio" name="seat" id="I3">
-                                        <input type="radio" name="seat" id="K3">
-                                        <input type="radio" name="seat" id="L3">
-                                    </div><br/>
-                                    <button disabled class="seat-class-1">A4</button>
-                                    <button disabled class="seat-class-1">B4</button>
-                                    <button disabled>C4</button>
-                                    <button disabled>D4</button>
-                                    <button disabled>E4</button>
-                                    <button disabled>F4</button>
-                                    <button disabled>G4</button>
-                                    <button disabled>H4</button>
-                                    <button disabled>I4</button>
-                                    <button disabled>K4</button>
-                                    <button disabled>L4</button><br/>
-                                    <div class="radio-seat">
-                                        <input type="radio" name="seat" id="A4">
-                                        <input type="radio" name="seat" id="B4">
-                                        <input type="radio" name="seat" id="C4">
-                                        <input type="radio" name="seat" id="D4">
-                                        <input type="radio" name="seat" id="E4">
-                                        <input type="radio" name="seat" id="F4">
-                                        <input type="radio" name="seat" id="G4">
-                                        <input type="radio" name="seat" id="H4">
-                                        <input type="radio" name="seat" id="I4">
-                                        <input type="radio" name="seat" id="K4">
-                                        <input type="radio" name="seat" id="L4">
-                                    </div>
+                                    {% for i,seat in enumerate_seat %}
+                                        {% if seat.is_empty == False %}
+                                            <button disabled class="seat-class-1">{{ seat.seat_location }}</button>
+
+                                        {% else %}
+                                            <button disabled>{{ seat.seat_location }}</button>
+                                        {% endif %}
+                                        {% if i % 4 == 3 %}
+                                            <br/>
+                                            <div class="radio-seat">
+                                                {% for j in range(i - 3,i + 1) %}
+                                                    <input type="radio" name="seat" id={{ seats[j].seat_location }}>
+                                                {% endfor %}
+
+                                            </div>
+                                            <br/>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
                                 </div>
                                 <div class="seat-note">
-                                    <button disabled class="seat-class-1"></button><span class="desc">Seat class 1</span>
-                                    <button disabled></button><span class="desc">Seat class 2</span>
+                                    <button disabled class="seat-class-1"></button><span class="desc">Seat is emty</span>
+                                    <button disabled></button><span class="desc">Seat ot emty </span>
                                 </div>
                             </div>
 
@@ -271,7 +196,7 @@
                                     </div>
                                     <div class="submit-search">
                                         <input class="btn-delete" type="submit" value="RESET" />
-                                        <input class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px"/>
+                                        <input class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px" name="btn"/>
                                     </div>
                                 </div>
                             </div>
