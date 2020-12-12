@@ -1,6 +1,14 @@
 {% extends 'base/index.html' %}
 
 {% block function %}
+
+{% if scroll %}
+<script>
+    {#document.getElementById('{{ scroll }}').scrollIntoView();#}
+
+    document.location.hash = '#' + '{{ scroll }}';
+</script>
+{% endif %}
     <section class="contact-form" id="section_search">
         <div class="container">
             <div class="section-heading">
@@ -83,9 +91,11 @@
                                             <td>{{ schedule.departure_time }}</td>
                                             <td>{{ schedule.empty_seats }}</td>
                                             <td>
-                                                <a onclick="myFunction({{ i + 1 }})" href="#section_ticket"  >
-                                                    Book ticket
-                                                </a>
+                                                <button  onclick="myFunction({{ i + 1 }})" type="submit"
+                                                         name="btn" value={{ schedule.idFlight }}>Book ticket</button>
+{#                                                <a onclick="myFunction({{ i + 1 }})" href="#section_ticket"  >#}
+{#                                                    Book ticket#}
+{#                                                </a>#}
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -124,13 +134,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     <tr>
-                                        <td id="td_idFlight" name="td_idFlight">...</td>
-                                        <td id="td_departure_airport">...</td>
-                                        <td id="td_arrival_airport">...</td>
-                                        <td id="td_departure_date">...</td>
-                                        <td id="td_departure_time">...</td>
-                                        <td id="td_empty_seats">...</td>
+                                         {% if flight %}
+                                             <td id="td_idFlight" >{{ flight.idFlight }}</td>
+                                            <td id="td_departure_airport">{{ flight.departure_airport }}</td>
+                                            <td id="td_arrival_airport">{{ flight.arrival_airport }}</td>
+                                            <td id="td_departure_date">{{ flight.departure_date }}</td>
+                                            <td id="td_departure_time">{{ flight.departure_time }}</td>
+                                            <td id="td_empty_seats">{{ flight.empty_seats }}</td>
+                                         {% else %}
+                                             <td> <a href="#section_search">chose in above..</a></td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                        {% endif %}
                                     </tr>
                                 </tbody>
 
