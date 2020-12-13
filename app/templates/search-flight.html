@@ -1,7 +1,15 @@
 {% extends 'base/index.html' %}
 
 {% block function %}
-    <section class="contact-form">
+
+{% if scroll %}
+<script>
+    {#document.getElementById('{{ scroll }}').scrollIntoView();#}
+
+    document.location.hash = '#' + '{{ scroll }}';
+</script>
+{% endif %}
+    <section class="contact-form" id="section_search">
         <div class="container">
             <div class="section-heading">
                 <h2>flight list</h2>
@@ -48,13 +56,13 @@
                                     </div>
                                     <div class="submit-search">
                                         <input class="btn-delete" type="submit" value="RESET" />
-                                        <input class="btn-search" type="submit" value="SEARCH" />
+                                        <input class="btn-search" type="submit" value="SEARCH" name="btn"/>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row" style="padding-top: 20px">
-                                <table class="table table-hover" style="text-align:left">
+                                <table class="table table-hover" style="text-align:left" id="tb_schedules">
                                     <thead>
                                     <tr>
                                         <th scope="col">No</th>
@@ -66,6 +74,7 @@
                                         <th scope="col">departure date</th>
                                         <th scope="col">departure time</th>
                                         <th scope="col">Empty seats</th>
+                                        <th scope="col">Book ticket </th>
                                         <!--<th scope="col">Reserved seats</th>-->
                                     </tr>
                                     </thead>
@@ -81,10 +90,135 @@
                                             <td>{{ schedule.departure_date }}</td>
                                             <td>{{ schedule.departure_time }}</td>
                                             <td>{{ schedule.empty_seats }}</td>
+                                            <td>
+                                                <button  onclick="myFunction({{ i + 1 }})" type="submit"
+                                                         name="btn" value={{ schedule.idFlight }}>Book ticket</button>
+{#                                                <a onclick="myFunction({{ i + 1 }})" href="#section_ticket"  >#}
+{#                                                    Book ticket#}
+{#                                                </a>#}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+     <section class="contact-form" id="section_ticket">
+        <div class="container">
+            <div class="section-heading">
+                <h2>flight ticket</h2>
+                <h2 id="demo"></h2>
+            </div>
+            <div class="item-tickets">
+                <a href="{{ url_for('search_flight') }}"><i class="fa fa-search"></i> Search Flight</a>
+            </div>
+            <div class="s009">
+                <form action="{{ url_for('search_flight') }}" method="post">
+                    <div class="inner-form">
+                        <div class="advance-search">
+                            <span  class="desc">ORDER TICKETS</span>
+                            <table class="table table-hover" style="text-align:left" >
+                                <thead>
+                                    <tr>
+                                        <th scope="row" >Id Flight</th>
+                                        <th scope="row">departure airport</th>
+                                        <th scope="row">arrival airport</th>
+                                        <th scope="row">departure date</th>
+                                        <th scope="row">departure time</th>
+                                        <th scope="row">empty seats</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                         {% if flight %}
+                                             <td id="td_idFlight" >{{ flight.idFlight }}</td>
+                                            <td id="td_departure_airport">{{ flight.departure_airport }}</td>
+                                            <td id="td_arrival_airport">{{ flight.arrival_airport }}</td>
+                                            <td id="td_departure_date">{{ flight.departure_date }}</td>
+                                            <td id="td_departure_time">{{ flight.departure_time }}</td>
+                                            <td id="td_empty_seats">{{ flight.empty_seats }}</td>
+                                         {% else %}
+                                             <td> <a href="#section_search">chose in above..</a></td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                        {% endif %}
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                            <div class="row">
+
+                                <div class="input-field">
+                                    <input type="text" name="first_name" placeholder="First name..." required/>
+                                </div>
+                                <div class="input-field">
+                                    <input type="text" name="last_name" placeholder="Last name..." required />
+                                </div>
+                            </div>
+
+                            <div class="row second">
+                                <div class="input-field">
+                                    <input type="text" name="identity_card" placeholder="Identity card..." required />
+                                </div>
+                                <div class="input-field">
+                                    <input type="text" name="email" placeholder="Email..." />
+                                </div>
+                                <div class="input-field">
+                                    <input type="text" name="phone" placeholder="Phone..."  required/>
+                                </div>
+                            </div>
+
+                            <span class="desc">SELECT SEAT</span>
+
+                            <div class="seat">
+                                <div class="seat-class">
+                                    {% for i,seat in enumerate_seat %}
+                                        {% if seat.is_empty == False %}
+                                            <button disabled class="seat-class-1">{{ seat.seat_location }}</button>
+
+                                        {% else %}
+                                            <button disabled>{{ seat.seat_location }}</button>
+                                        {% endif %}
+                                        {% if i % 4 == 3 %}
+                                            <br/>
+                                            <div class="radio-seat">
+                                                {% for j in range(i - 3,i + 1) %}
+                                                    <input type="radio" name="seat" id={{ seats[j].seat_location }}>
+                                                {% endfor %}
+
+                                            </div>
+                                            <br/>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+                                <div class="seat-note">
+                                    <button disabled class="seat-class-1"></button><span class="desc">Seat is emty</span>
+                                    <button disabled></button><span class="desc">Seat ot emty </span>
+                                </div>
+                            </div>
+
+                            <div class="row third">
+                                <div class="input-field">
+                                    <div class="result-count">
+                                        PRICE: <span style="font-size:20px">2,000,000.00 VND</span>
+                                    </div>
+                                    <div class="submit-search">
+                                        <input class="btn-delete" type="submit" value="RESET" />
+                                        <input class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px" name="btn"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -622,4 +756,19 @@
             </div>
         </div>
     </section>
+    <script>
+        function myFunction(i) {
+            document.getElementById("td_idFlight").innerHTML = document.getElementById("tb_schedules").rows[i].cells[1].innerHTML;
+            document.getElementById("td_departure_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[2].innerHTML;
+            document.getElementById("td_arrival_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[3].innerHTML;
+            document.getElementById("td_departure_date").innerHTML = document.getElementById("tb_schedules").rows[i].cells[6].innerHTML;
+            document.getElementById("td_departure_time").innerHTML = document.getElementById("tb_schedules").rows[i].cells[7].innerHTML;
+            document.getElementById("td_empty_seats").innerHTML = document.getElementById("tb_schedules").rows[i].cells[8].innerHTML;
+
+        }
+    </script>
 {% endblock %}
+
+
+
+
