@@ -166,5 +166,6 @@ def get_seats(id_flight):
 # print(get_schedule(depature_locate= "Ha Noi", arrival_locate='Binh Thuan', date='2020-12-03'))
 # print(get_all_schedule())
 # print(get_flight_by_id(1))
+print(get_seats(1))
 
 

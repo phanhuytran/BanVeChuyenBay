@@ -120,12 +120,12 @@ class Seat(db.Model):
 class Ticket(db.Model):
     __tablename__ ="ticket"
     idTicket = Column(Integer,  primary_key=True, autoincrement=True)
-    idSeat = Column(Integer,ForeignKey(Seat.idSeat),nullable=True)
+    idSeat = Column(Integer,ForeignKey(Seat.idSeat),nullable=False)
     idFlight = Column(Integer, ForeignKey(Schedule.idFlight), nullable= False)
     idCustomer = Column(Integer, ForeignKey(Customer.id))
     idAccount = Column(Integer,ForeignKey(Account.id))
-    exportTime = Column(DateTime, nullable=False)
-    exportPlace = Column(String(50), nullable=False)
+    exportTime = Column(DateTime)
+    exportPlace = Column(String(50))
 
     is_empty = Column(Boolean, default=True)
 
