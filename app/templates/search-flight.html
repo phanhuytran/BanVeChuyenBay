@@ -190,7 +190,7 @@
                                             <br/>
                                             <div class="radio-seat">
                                                 {% for j in range(i - 3, i + 1) %}
-                                                    <input type="radio" name="seat" id={{ seats[j].seat_location }}>
+                                                    <input type="radio" name="seat" id={{ seats[j].seat_location }} required/>
                                                 {% endfor %}
                                             </div>
                                             <br/>
