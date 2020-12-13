@@ -524,7 +524,7 @@ div.item-tickets {
 }
 
 table.table-air-ticket-info {
-    margin: 0 auto;
+    margin: 40px auto;
     width: 50%;
     text-align: left;
     border: 5px double black;
