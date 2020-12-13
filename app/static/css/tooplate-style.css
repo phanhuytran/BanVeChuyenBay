@@ -522,3 +522,21 @@ div.item-tickets {
     text-align: right;
     padding: 0 1% 2% 0;
 }
+
+table.table-air-ticket-info {
+    margin: 0 auto;
+    width: 50%;
+    text-align: left;
+    border: 5px double black;
+}
+
+table.table-air-ticket-info span.desc {
+    padding-top: 8%;
+    font-size: 20px !important;
+    color: #364a59 !important;
+    text-align: center !important;
+}
+
+table.table-air-ticket-info th {
+    padding: 2% 5% !important;
+}

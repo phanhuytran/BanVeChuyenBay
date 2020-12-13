@@ -159,6 +159,11 @@ def search_flight():
                            count_result=count_result, flight=flight)
 
 
+@app.route("/check-booking-status")
+def check_booking_status():
+    return render_template("check-booking-status.html")
+
+
 @app.route("/receive-flight-schedule")
 def receive_flight_schedule():
     return render_template("receive-flight-schedule.html")
