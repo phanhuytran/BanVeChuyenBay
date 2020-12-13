@@ -25,13 +25,13 @@ div.seat button {
     transition: all .2s;
 }
 
-button.seat-class-1 {
+button.seat-reserved {
     background: #ffe165 !important;
     color: black !important;
     transition: all .2s;
 }
 
-div.seat button:hover, button.seat-class-1:hover {
+div.seat button:hover, button.seat-reserved:hover {
     background: #364a59 !important;
     color: #fff !important;
 }

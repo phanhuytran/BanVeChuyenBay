@@ -183,7 +183,7 @@
                                 <div class="seat-class">
                                     {% for i, seat in enumerate_seat %}
                                         {% if seat.is_empty == False %}
-                                            <button disabled class="seat-class-1">{{ seat.seat_location }}</button>
+                                            <button disabled class="seat-reserved">{{ seat.seat_location }}</button>
                                         {% else %}
                                             <button disabled>{{ seat.seat_location }}</button>
                                         {% endif %}
@@ -199,7 +199,7 @@
                                     {% endfor %}
                                 </div>
                                 <div class="seat-note">
-                                    <button disabled class="seat-class-1"></button><span class="desc">Seat is reserved</span>
+                                    <button disabled class="seat-reserved"></button><span class="desc">Seat is reserved</span>
                                     <button disabled></button><span class="desc">Seat is empty</span>
                                 </div>
                             </div>
