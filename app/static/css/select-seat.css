@@ -38,12 +38,12 @@ div.seat button:hover, button.seat-class-1:hover {
 
 div.radio-seat {
     display:flex;
-    margin-left: 32%;
+    margin-left: 31.5%;
 }
 
 div.radio-seat input {
     width:3%;
-    margin-left: 8.25%;
+    margin-left: 8.45%;
 }
 
 button.btn-book-ticket {
