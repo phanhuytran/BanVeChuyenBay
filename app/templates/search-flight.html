@@ -2,19 +2,17 @@
 
 {% block function %}
 
-{% if scroll %}
-    <script>
-        {#document.getElementById('{{ scroll }}').scrollIntoView();#}
-        document.location.hash = '#' + '{{ scroll }}';
-    </script>
-{% endif %}
+    {% if scroll %}
+        <script>
+            {#document.getElementById('{{ scroll }}').scrollIntoView();#}
+            document.location.hash = '#' + '{{ scroll }}';
+        </script>
+    {% endif %}
+
     <section class="contact-form" id="section_search">
         <div class="container">
             <div class="section-heading">
                 <h2>flight list</h2>
-            </div>
-            <div class="item-tickets">
-                <a href="#"><i class="fa fa-plane"></i> Order Ticket</a>
             </div>
             <div class="s009">
                 <form method="post" action="{{ url_for('search_flight') }}">
