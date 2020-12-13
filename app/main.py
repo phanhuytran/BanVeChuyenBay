@@ -6,8 +6,6 @@ import os
 from app.utils import *
 
 
-
-
 @app.route("/login", methods=['POST', 'GET'])
 def login_staff():
     message = ""
@@ -35,6 +33,7 @@ def login_staff():
         return render_template('login.html')
 
     return redirect(url_for("index"))
+
 
 @app.route('/logout')
 def logout_usr():
@@ -98,20 +97,12 @@ def register():
             message = 'Id staff not already exists'
 
         elif check_account(key=id_staff):
-            message = 'This id staff has been registered by someone else'
+            message = 'Id staff has been registered by someone else'
 
         elif add_account(id_staff=id_staff,
                             username=username, password=password):
-                    return redirect(url_for("index"))
+                    return redirect(url_for("login_staff"))
     return render_template('admin/registration.html', message=message)
-
-
-
-
-
-@app.route("/air-ticket-sales")
-def air_ticket_sales():
-    return render_template("air-ticket-sales.html")
 
 
 @app.route("/search-flight", methods=['POST','GET'])
@@ -123,7 +114,6 @@ def search_flight():
     count_result = len(schedules)
 
     flight = None
-
 
     if request.form.get('btn') == "SEARCH":
         if request.method == 'POST':
@@ -149,7 +139,6 @@ def search_flight():
             enumerate_seat = enumerate(seats)
             flight = get_flight_by_id(idFlight=id_flight)
 
-
             return render_template("search-flight.html", airports=airports,
                                    enumerate_schedules=enumerate_schedules, enumerate_seat=enumerate_seat,
                                    count_result=count_result, seats=seats,flight=flight, scroll="section_ticket")
@@ -161,13 +150,9 @@ def search_flight():
         if  request.method == 'POST':
             pass
 
-
         return render_template("search-flight.html", airports=airports,
                                enumerate_schedules=enumerate_schedules,
                                count_result=count_result, enumerate_seat=enumerate_seat,seats=seats)
-
-
-
 
     return render_template("search-flight.html",airports=airports,
                            enumerate_schedules=enumerate_schedules,
@@ -177,6 +162,7 @@ def search_flight():
 @app.route("/receive-flight-schedule")
 def receive_flight_schedule():
     return render_template("receive-flight-schedule.html")
+
 
 @app.route("/contact")
 def contact():

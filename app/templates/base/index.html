@@ -69,10 +69,8 @@
     </section>
 
     <div class="navbar">
-        <a href="#" style="width:12%"><img src="{{ url_for('static', filename='img/vna.png') }}"></a>
+        <a href="{{ url_for('search_flight') }}" style="width:12%"><img src="{{ url_for('static', filename='img/vna.png') }}"></a>
         <a class="navbar-hover" href="{{ url_for('search_flight') }}"><i class="fa fa-fw fa-home"></i> Home</a>
-        <a class="navbar-hover" href="{{ url_for('search_flight') }}"><i class="fa fa-fw fa-search"></i> Search</a>
-        <a class="navbar-hover" href="{{ url_for('air_ticket_sales') }}"><i class="fa fa-fw fa-plane"></i> Book Tickets</a>
         {% if current_user.is_authenticated and current_user.username != 'nguyentrong' %}
             <a class="navbar-hover" href="{{ url_for('report') }}"><i class="fa fa-fw fa-file"></i> Report</a>
         {% elif current_user.is_authenticated and current_user.username == 'nguyentrong' %}

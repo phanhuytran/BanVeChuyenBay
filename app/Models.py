@@ -1,7 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date, Time, Boolean, ForeignKey, Enum,Float,DateTime
 from datetime import datetime
-
-
 from app import db
 from sqlalchemy.orm import relationship
 from flask_admin.contrib.sqla import ModelView
@@ -61,7 +59,6 @@ class Plane(Base):
     schedule = relationship('Schedule', backref='plane', lazy=True)
     seat = relationship('Seat', backref='plane', lazy=True)
 
-
     def __str__(self):
         return str(self.idPlane)
 
@@ -106,10 +103,10 @@ class SeatLocation(Base):
     seat = relationship('Seat', backref='seatlocation', lazy=True)
     typeSeat = Column(Integer, ForeignKey(TypeSeat.id), nullable=False)
 
+
 class Seat(db.Model):
     __tablename__ = "seat"
     idSeat = Column(Integer, primary_key=True, autoincrement=True)
-
     idPlane = Column(Integer, ForeignKey(Plane.idPlane), nullable=False)
     ticket = relationship('Ticket', backref='seat', lazy=True)
     seatLocation = Column(Integer,ForeignKey(SeatLocation.id),nullable=False)
@@ -125,9 +122,8 @@ class Ticket(db.Model):
     idFlight = Column(Integer, ForeignKey(Schedule.idFlight), nullable= False)
     idCustomer = Column(Integer, ForeignKey(Customer.id))
     idAccount = Column(Integer,ForeignKey(Account.id))
-    exportTime = Column(DateTime, nullable=False)
-    exportPlace = Column(String(50), nullable=False)
-
+    exportTime = Column(DateTime)
+    exportPlace = Column(String(50))
     is_empty = Column(Boolean, default=True)
 
     def __str__(self):
@@ -138,14 +134,8 @@ class AuthenticatedView(ModelView):
         return current_user.is_authenticated
 
 
-
-
-
 if __name__ == "__main__":
     db.create_all()
-
-
-
 
 
 #Thêm bộ lọc
