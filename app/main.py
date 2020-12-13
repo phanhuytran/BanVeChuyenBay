@@ -14,9 +14,7 @@ def login_staff():
         password = request.form.get('password', '')
         password = hashlib.md5(password.encode('utf-8')).hexdigest()
 
-        user = Account.query.join(Staff, Staff.id == Account.id)\
-                            .filter(Account.username == username, Account.password == password)\
-                            .add_columns(Account.id, Staff.user_role).first()
+        user = get_account(username=username,password=password)
 
 
         if user:
@@ -58,9 +56,7 @@ def login_admin():
         username = request.form.get("username")
         password = request.form.get("password")
         password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
-        user = Account.query.join(Staff, Staff.id == Account.id)\
-                            .filter(Account.username == username, Account.password == password)\
-                            .add_columns(Account.id, Staff.user_role).first()
+        user = get_account(username=username,password=password)
 
         if user:
             acc = Account.query.filter(Account.id == user.id).first()

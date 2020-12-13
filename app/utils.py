@@ -5,7 +5,7 @@ from sqlalchemy import desc, Date,asc
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql.functions import count
 from app import db
-from app.Models import Schedule, Airport, Plane, Seat, Staff, Account, Ticket,SeatLocation,TypeSeat
+from app.Models import Schedule, Airport, Plane, Seat, Staff, Account, Ticket, SeatLocation, TypeSeat, Customer
 
 
 class MyView(BaseView):
@@ -45,6 +45,14 @@ def add_account(id_staff, username, password):
     except Exception as ex:
         print(ex)
         return False
+
+
+def get_account(username, password):
+    user = Account.query.join(Staff, Staff.id == Account.id) \
+        .filter(Account.username == username, Account.password == password) \
+        .add_columns(Account.id, Staff.user_role).first()
+
+    return user
 
 
 def get_all_schedule():
@@ -149,8 +157,52 @@ def get_seats(id_flight):
     return seats
 
 
+def update_ticket(id_customer, id_staff, id_seat, id_flight):
+    ticket = Ticket.query.filter(Ticket.idSeat == id_seat, Ticket.idFlight == id_flight).first()
+    ticket.idCustomer = id_customer
+    ticket.idAccount = id_staff
+    ticket.is_empty =  False
+
+    try:
+        db.session.merge(ticket)
+        db.session.flush()
+        db.session.commit()
+        return True
+    except Exception as ex:
+        print(ex)
+        return False
+
+
+def add_customer(firstname,lastname,identity_card, phone, email = None):
+    if email:
+        customer =Customer(firstname=firstname,lastname=lastname,identity_card=identity_card,phone=phone,email=email)
+    else:
+        customer =Customer(firstname=firstname,lastname=lastname,identity_card=identity_card,phone=phone)
+
+    try:
+        db.session.add(customer)
+        db.session.commit()
+        return True
+    except Exception as ex:
+        print(ex)
+        return False
+
+
+def get_customer(firstname,lastname,identity_card, phone):
+    customer = Customer.query.filter(Customer.firstname == firstname,
+                                     Customer.lastname == lastname,
+                                     Customer.identity_card == identity_card,
+                                     Customer.phone == phone).first()
+
+    return customer
+
+
+
+
+
+
 # def book_ticket(id_flight, seat_location):
-#
+#,
 # print(count_seat_not_emty(1))
 #
 #
@@ -158,3 +210,4 @@ def get_seats(id_flight):
 # print(get_all_schedule())
 # print(get_flight_by_id(1))
 # print(get_seats(1))
+update_ticket(id_customer=1, id_staff=2, id_seat=2, id_flight=1)
