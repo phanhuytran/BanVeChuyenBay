@@ -3,11 +3,10 @@
 {% block function %}
 
 {% if scroll %}
-<script>
-    {#document.getElementById('{{ scroll }}').scrollIntoView();#}
-
-    document.location.hash = '#' + '{{ scroll }}';
-</script>
+    <script>
+        {#document.getElementById('{{ scroll }}').scrollIntoView();#}
+        document.location.hash = '#' + '{{ scroll }}';
+    </script>
 {% endif %}
     <section class="contact-form" id="section_search">
         <div class="container">
@@ -61,7 +60,7 @@
                                 </div>
                             </div>
 
-                            <div class="row" style="padding-top: 20px">
+                            <div class="row" style="padding-top:20px">
                                 <table class="table table-hover" style="text-align:left" id="tb_schedules">
                                     <thead>
                                     <tr>
@@ -91,7 +90,7 @@
                                             <td>{{ schedule.departure_time }}</td>
                                             <td>{{ schedule.empty_seats }}</td>
                                             <td>
-                                                <button  onclick="myFunction({{ i + 1 }})" type="submit"
+                                                <button class="btn-book-ticket" onclick="myFunction({{ i + 1 }})" type="submit"
                                                          name="btn" value={{ schedule.idFlight }}>Book ticket</button>
 {#                                                <a onclick="myFunction({{ i + 1 }})" href="#section_ticket"  >#}
 {#                                                    Book ticket#}
@@ -108,6 +107,7 @@
             </div>
         </div>
     </section>
+
      <section class="contact-form" id="section_ticket">
         <div class="container">
             <div class="section-heading">
@@ -134,7 +134,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <tr>
                                          {% if flight %}
                                              <td id="td_idFlight" >{{ flight.idFlight }}</td>
@@ -144,7 +143,7 @@
                                             <td id="td_departure_time">{{ flight.departure_time }}</td>
                                             <td id="td_empty_seats">{{ flight.empty_seats }}</td>
                                          {% else %}
-                                             <td> <a href="#section_search">chose in above..</a></td>
+                                             <td> <a href="#section_search">Choose in above...</a></td>
                                             <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
@@ -156,7 +155,9 @@
 
                             </table>
                             <div class="row">
-
+                                <div class="input-field">
+                                    <img style="width:80%" src="{{ url_for('static', filename='img/vna1.png') }}"/>
+                                </div>
                                 <div class="input-field">
                                     <input type="text" name="first_name" placeholder="First name..." required/>
                                 </div>
@@ -175,15 +176,31 @@
                                 <div class="input-field">
                                     <input type="text" name="phone" placeholder="Phone..."  required/>
                                 </div>
-                            </div>
+                            </div><br/>
 
                             <span class="desc">SELECT SEAT</span>
-
                             <div class="seat">
-
+                                <div class="seat-class">
+                                    {% for i, seat in enumerate_seat %}
+                                        {% if seat.is_empty == False %}
+                                            <button disabled class="seat-class-1">{{ seat.seat_location }}</button>
+                                        {% else %}
+                                            <button disabled>{{ seat.seat_location }}</button>
+                                        {% endif %}
+                                        {% if i % 4 == 3 %}
+                                            <br/>
+                                            <div class="radio-seat">
+                                                {% for j in range(i - 3, i + 1) %}
+                                                    <input type="radio" name="seat" id={{ seats[j].seat_location }}>
+                                                {% endfor %}
+                                            </div>
+                                            <br/>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                                 <div class="seat-note">
-                                    <button disabled class="seat-class-1"></button><span class="desc">Seat is emty</span>
-                                    <button disabled></button><span class="desc">Seat not emty </span>
+                                    <button disabled class="seat-class-1"></button><span class="desc">Seat is empty</span>
+                                    <button disabled></button><span class="desc">Seat not empty </span>
                                 </div>
                             </div>
 

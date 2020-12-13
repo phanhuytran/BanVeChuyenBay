@@ -6,8 +6,6 @@ import os
 from app.utils import *
 
 
-
-
 @app.route("/login", methods=['POST', 'GET'])
 def login_staff():
     message = ""
@@ -35,6 +33,7 @@ def login_staff():
         return render_template('login.html')
 
     return redirect(url_for("index"))
+
 
 @app.route('/logout')
 def logout_usr():
@@ -106,9 +105,6 @@ def register():
     return render_template('admin/registration.html', message=message)
 
 
-
-
-
 @app.route("/air-ticket-sales")
 def air_ticket_sales():
     return render_template("air-ticket-sales.html")
@@ -123,7 +119,6 @@ def search_flight():
     count_result = len(schedules)
 
     flight = None
-
 
     if request.form.get('btn') == "SEARCH":
         if request.method == 'POST':
@@ -161,13 +156,9 @@ def search_flight():
         if  request.method == 'POST':
             pass
 
-
         return render_template("search-flight.html", airports=airports,
                                enumerate_schedules=enumerate_schedules,
                                count_result=count_result, enumerate_seat=enumerate_seat,seats=seats)
-
-
-
 
     return render_template("search-flight.html",airports=airports,
                            enumerate_schedules=enumerate_schedules,
@@ -177,6 +168,7 @@ def search_flight():
 @app.route("/receive-flight-schedule")
 def receive_flight_schedule():
     return render_template("receive-flight-schedule.html")
+
 
 @app.route("/contact")
 def contact():
@@ -189,4 +181,4 @@ def report():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=1234)
+    app.run(debug=True)

@@ -1,12 +1,9 @@
 import hashlib
 from pprint import pprint
-
 from flask_admin import BaseView, Admin
 from sqlalchemy import desc, Date,asc
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql.functions import count
-
-
 from app import db
 from app.Models import Schedule, Airport, Plane, Seat, Staff, Account, Ticket,SeatLocation,TypeSeat
 
@@ -24,7 +21,6 @@ def check_staff(id_staff):
     if staff:
         return True
     return False
-
 
 
 # kiểm acount đã tồn tại hay chưa theo id hoặc username
@@ -75,6 +71,7 @@ def get_all_schedule():
 
     return  schedule
 
+
 def search_schedule (departure_locate, arrival_locate, date = None):
     airport_1 = aliased(Airport)
     airport_2 = aliased(Airport)
@@ -102,7 +99,6 @@ def search_schedule (departure_locate, arrival_locate, date = None):
             .order_by(desc(Schedule.departureDate)).all()
 
     return schedule
-
 
 
 def get_flight_by_id(idFlight):
@@ -136,8 +132,6 @@ def get_all_airport():
     return airports
 
 
-
-
 def get_seats(id_flight):
     seats  = Ticket.query.join(Seat, Ticket.idTicket == Seat.idSeat)\
                 .join(SeatLocation, SeatLocation.id == Seat.seatLocation)\
@@ -155,9 +149,6 @@ def get_seats(id_flight):
     return seats
 
 
-
-
-#
 # def book_ticket(id_flight, seat_location):
 #
 # print(count_seat_not_emty(1))
@@ -166,6 +157,4 @@ def get_seats(id_flight):
 # print(get_schedule(depature_locate= "Ha Noi", arrival_locate='Binh Thuan', date='2020-12-03'))
 # print(get_all_schedule())
 # print(get_flight_by_id(1))
-print(get_seats(1))
-
-
+# print(get_seats(1))
