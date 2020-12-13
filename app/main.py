@@ -105,11 +105,6 @@ def register():
     return render_template('admin/registration.html', message=message)
 
 
-@app.route("/air-ticket-sales")
-def air_ticket_sales():
-    return render_template("air-ticket-sales.html")
-
-
 @app.route("/search-flight", methods=['POST','GET'])
 def search_flight():
     airports = get_all_airport()
@@ -143,7 +138,6 @@ def search_flight():
             seats = get_seats(id_flight=id_flight)
             enumerate_seat = enumerate(seats)
             flight = get_flight_by_id(idFlight=id_flight)
-
 
             return render_template("search-flight.html", airports=airports,
                                    enumerate_schedules=enumerate_schedules, enumerate_seat=enumerate_seat,
