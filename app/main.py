@@ -101,7 +101,7 @@ def register():
 
         elif add_account(id_staff=id_staff,
                             username=username, password=password):
-                    return redirect(url_for("index"))
+                    return redirect(url_for("login_staff"))
     return render_template('admin/registration.html', message=message)
 
 
