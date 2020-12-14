@@ -1,7 +1,7 @@
 {% extends 'base/index.html' %}
 
-        {% block login_staff %}
-             <div class="nav navbar-nav navbar-right">
+    {% block login_staff %}
+        <div class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated %}
                 <span class="hover-user">
                     <a class="navbar-hover"><i class="fa fa-user"> User</i></a>
@@ -15,16 +15,15 @@
                 <a class="navbar-hover" href="{{ url_for('register') }}"><i class="fa fa-user-plus"></i> Sign up</a>
             {% endif %}
         </div>
-        {% endblock %}
-{% block function %}
+    {% endblock %}
 
-    {% if scroll %}
-        <script>
-            {#document.getElementById('{{ scroll }}').scrollIntoView();#}
-            document.location.hash = '#' + '{{ scroll }}';
-        </script>
+    {% block function %}
+        {% if scroll %}
+            <script>
+                {#document.getElementById('{{ scroll }}').scrollIntoView();#}
+                document.location.hash = '#' + '{{ scroll }}';
+            </script>
     {% endif %}
-
 
     <section class="contact-form" id="section_search">
         <div class="container">

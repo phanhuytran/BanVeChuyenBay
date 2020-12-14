@@ -8,8 +8,6 @@
             document.location.hash = '#' + '{{ scroll }}';
         </script>
     {% endif %}
-
-
     <section class="contact-form" id="section_search">
         <div class="container">
             <div class="section-heading">
@@ -120,7 +118,7 @@
                     <div class="inner-form">
                         <div class="advance-search">
                             <span  class="desc">ORDER TICKETS</span>
-                            <div class=""> <a href="#section_search">{{ mess_err }}</a></div>
+                            <div class="mess_err"> <a href="#section_search">{{ mess_err }}</a></div>
 
                             <table class="table table-hover" style="text-align:left" >
                                 <thead>
@@ -136,14 +134,14 @@
                                 <tbody>
                                     <tr>
                                          {% if flight %}
-                                             <td name="id_flight" id="id_flight">{{ flight.idFlight }}</td>
+                                            <td name="id_flight" id="id_flight">{{ flight.idFlight }}</td>
                                             <td>{{ flight.departure_airport }}</td>
                                             <td>{{ flight.arrival_airport }}</td>
                                             <td>{{ flight.departure_date }}</td>
                                             <td>{{ flight.departure_time }}</td>
                                             <td>{{ flight.empty_seats }}</td>
-                                         {% else %}
-                                             <td name="id_flight"> <a href="#section_search">Choose in above...</a></td>
+                                        {% else %}
+                                            <td name="id_flight"><a href="#section_search">Choose in above...</a></td>
                                             <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
@@ -765,6 +763,23 @@
         {#    document.getElementById("td_empty_seats").innerHTML = document.getElementById("tb_schedules").rows[i].cells[8].innerHTML;#}
         {#}#}
         function confirmBookTicket() {
+<<<<<<< HEAD
+            var a = document.getElementById("first-name").value;
+            var b = document.getElementById("last-name").value;
+            var c = document.getElementById("identity-card").value;
+            var d = document.getElementById("email").value;
+            var e = document.getElementById("phone").value;
+            var f = document.getElementById("phone").value;
+
+            if (a != '' && b != '' && c != '' && d != '' && e != '' && f != '') {
+                var txt;
+                if (confirm("Press a button!")) {
+                    txt = "You pressed OK!";
+                } else {
+                    txt = "You pressed Cancel!";
+                }
+<!--                document.getElementById("demo").innerHTML = txt;-->
+=======
             var txt = '';
             var r = confirm("are you sure!");
 
@@ -772,8 +787,9 @@
                 txt = "You pressed OK!";
             } else {
                 txt = "You pressed Cancel!";
+>>>>>>> phu
             }
-            document.getElementById("demo").innerHTML = txt;
+<!--            document.getElementById("demo").innerHTML = txt;-->
 }
     </script>
 {% endblock %}
