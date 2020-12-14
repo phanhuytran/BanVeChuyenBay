@@ -210,4 +210,4 @@ def get_customer(firstname,lastname,identity_card, phone):
 # print(get_all_schedule())
 # print(get_flight_by_id(1))
 # print(get_seats(1))
-update_ticket(id_customer=1, id_staff=2, id_seat=2, id_flight=1)
+# update_ticket(id_customer=1, id_staff=2, id_seat=2, id_flight=1)

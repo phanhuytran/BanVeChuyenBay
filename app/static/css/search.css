@@ -39,7 +39,7 @@ div.sub-content {
 div.sub-content::after {
 	content:" ";
 	border-width:20px;
-	border-color:transparent transparent #364a59; transparent;
+	border-color:transparent transparent #364a59;
 	border-style:solid;
 	position:absolute;
 	z-index:3;

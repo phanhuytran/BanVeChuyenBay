@@ -88,7 +88,7 @@
                                             <td>{{ schedule.departure_time }}</td>
                                             <td>{{ schedule.empty_seats }}</td>
                                             <td>
-                                                <button class="btn-book-ticket" onclick="myFunction({{ i + 1 }})" type="submit"
+                                                <button class="btn-book-ticket"  type="submit"
                                                          name="btn" value={{ schedule.idFlight }}>Book ticket</button>
 {#                                                <a onclick="myFunction({{ i + 1 }})" href="#section_ticket"  >#}
 {#                                                    Book ticket#}
@@ -120,6 +120,8 @@
                     <div class="inner-form">
                         <div class="advance-search">
                             <span  class="desc">ORDER TICKETS</span>
+                            <div class=""> <a href="#section_search">{{ mess_err }}</a></div>
+
                             <table class="table table-hover" style="text-align:left" >
                                 <thead>
                                     <tr>
@@ -134,15 +136,15 @@
                                 <tbody>
                                     <tr>
                                          {% if flight %}
-                                             <td id="td_idFlight" >{{ flight.idFlight }}</td>
-                                            <td id="td_departure_airport">{{ flight.departure_airport }}</td>
-                                            <td id="td_arrival_airport">{{ flight.arrival_airport }}</td>
-                                            <td id="td_departure_date">{{ flight.departure_date }}</td>
-                                            <td id="td_departure_time">{{ flight.departure_time }}</td>
-                                            <td id="td_empty_seats">{{ flight.empty_seats }}</td>
+                                             <td name="id_flight" id="id_flight">{{ flight.idFlight }}</td>
+                                            <td>{{ flight.departure_airport }}</td>
+                                            <td>{{ flight.arrival_airport }}</td>
+                                            <td>{{ flight.departure_date }}</td>
+                                            <td>{{ flight.departure_time }}</td>
+                                            <td>{{ flight.empty_seats }}</td>
                                          {% else %}
-                                             <td> <a href="#section_search">Choose in above...</a></td>
-                                            <td>...</td>
+                                             <td name="id_flight"> <a href="#section_search">Choose in above...</a></td>
+                                            <td id="id_flight">...</td>
                                             <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
@@ -189,7 +191,11 @@
                                             <br/>
                                             <div class="radio-seat">
                                                 {% for j in range(i - 3, i + 1) %}
-                                                    <input type="radio" name="seat" id={{ seats[j].seat_location }} required/>
+                                                    {% if seats[j].is_empty %}
+                                                        <input type="radio" name="seat" id={{ seats[j].seat_location }} required/>
+                                                    {% else %}
+                                                        <input disabled type="radio" name="seat" id={{ seats[j].seat_location }} required/>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </div>
                                             <br/>
@@ -205,11 +211,11 @@
                             <div class="row third">
                                 <div class="input-field">
                                     <div class="result-count">
-                                        PRICE: <span style="font-size:20px">2,000,000.00 VND</span>
+                                        PRICE: <span style="font-size:20px"> VND</span>
                                     </div>
                                     <div class="submit-search">
                                         <input class="btn-delete" type="submit" value="RESET" />
-                                        <input class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px" name="btn"/>
+                                        <input onclick="confirmBookTicket()" class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px" name="btn"/>
                                     </div>
                                 </div>
                             </div>
@@ -750,14 +756,25 @@
         </div>
     </section>
     <script>
-        function myFunction(i) {
-            document.getElementById("td_idFlight").innerHTML = document.getElementById("tb_schedules").rows[i].cells[1].innerHTML;
-            document.getElementById("td_departure_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[2].innerHTML;
-            document.getElementById("td_arrival_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[3].innerHTML;
-            document.getElementById("td_departure_date").innerHTML = document.getElementById("tb_schedules").rows[i].cells[6].innerHTML;
-            document.getElementById("td_departure_time").innerHTML = document.getElementById("tb_schedules").rows[i].cells[7].innerHTML;
-            document.getElementById("td_empty_seats").innerHTML = document.getElementById("tb_schedules").rows[i].cells[8].innerHTML;
-        }
+        {#function myFunction(i) {#}
+        {#    document.getElementById("td_idFlight").innerHTML = document.getElementById("tb_schedules").rows[i].cells[1].innerHTML;#}
+        {#    document.getElementById("td_departure_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[2].innerHTML;#}
+        {#    document.getElementById("td_arrival_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[3].innerHTML;#}
+        {#    document.getElementById("td_departure_date").innerHTML = document.getElementById("tb_schedules").rows[i].cells[6].innerHTML;#}
+        {#    document.getElementById("td_departure_time").innerHTML = document.getElementById("tb_schedules").rows[i].cells[7].innerHTML;#}
+        {#    document.getElementById("td_empty_seats").innerHTML = document.getElementById("tb_schedules").rows[i].cells[8].innerHTML;#}
+        {#}#}
+        function confirmBookTicket() {
+            var txt = '';
+            var r = confirm("are you sure!");
+
+            if (r == true) {
+                txt = "You pressed OK!";
+            } else {
+                txt = "You pressed Cancel!";
+            }
+            document.getElementById("demo").innerHTML = txt;
+}
     </script>
 {% endblock %}
 

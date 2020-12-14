@@ -1,0 +1,19 @@
+{% extends 'search-flight.html' %}
+
+
+{% block login_staf %}
+    <div class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+                <span class="hover-user">
+                    <a class="navbar-hover"><i class="fa fa-user"> User</i></a>
+                    <div class="sub-content">
+                        <span>Username: </span>{{ current_user.username }}
+                    </div>
+                </span>
+                <a class="navbar-hover" href="{{ url_for('logout_usr') }}"><i class="fa fa-sign-out"> Log out</i></a>
+            {% else %}
+                <a class="navbar-hover" href="{{ url_for('login_staff') }}"><i class="fa fa-sign-in"></i> Sign in</a>
+                <a class="navbar-hover" href="{{ url_for('register') }}"><i class="fa fa-user-plus"></i> Sign up</a>
+            {% endif %}
+        </div>
+{% endblock %}
