@@ -540,3 +540,8 @@ table.table-air-ticket-info span.desc {
 table.table-air-ticket-info th {
     padding: 2% 5% !important;
 }
+
+div.mess_err {
+    margin-bottom:3%;
+    font-size:20px;
+}

@@ -30,8 +30,8 @@ class Staff(db.Model, UserMixin):
     joined_date = Column(Date, default=datetime.now())
     user_role = Column(Enum(UserRole), default=UserRole.STAFF)
     account = relationship('Account', backref='staff', lazy=True)
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return str(self.id)
 
 
 class Account(db.Model, UserMixin):

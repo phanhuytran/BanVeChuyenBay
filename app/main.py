@@ -1,5 +1,5 @@
 from app import app, login
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for, flash
 from app.admin import *
 from flask_login import login_user
 import os
@@ -14,10 +14,7 @@ def login_staff():
         password = request.form.get('password', '')
         password = hashlib.md5(password.encode('utf-8')).hexdigest()
 
-        user = Account.query.join(Staff, Staff.id == Account.id)\
-                            .filter(Account.username == username, Account.password == password)\
-                            .add_columns(Account.id, Staff.user_role).first()
-
+        user = get_account(username=username,password=password)
 
         if user:
             acc = Account.query.filter(Account.id == user.id).first()
@@ -32,18 +29,92 @@ def login_staff():
     elif request.method == 'GET':
         return render_template('login.html')
 
-    return redirect(url_for("index"))
+    return redirect(url_for('search_flight_staff'))
+
+
+@app.route('/staff/search-flight', methods=['POST', 'GET'])
+def search_flight_staff():
+    airports = get_all_airport()
+    schedules = get_all_schedule()
+
+    enumerate_schedules = enumerate(schedules)
+    count_result = len(schedules)
+
+    flight = None
+
+    if request.form.get('btn') == "SEARCH":
+        if request.method == 'POST':
+            departure = request.form.get('from_locate')
+            arrival = request.form.get('to_locate')
+            date_flight = request.form.get('date_flight')
+            if departure == "Flight from..." or departure is None and arrival == 'Flight to...' or departure is None and date_flight is None:
+                schedules = get_all_schedule()
+            else:
+                schedules = search_schedule(arrival_locate=arrival, departure_locate=departure, date=date_flight)
+            enumerate_schedules = enumerate(schedules)
+            count_result = len(schedules)
+            if schedules:
+                return render_template("staff/search-flight.html", airports=airports,
+                                       enumerate_schedules=enumerate_schedules, count_result=count_result)
+            else:
+                return render_template("staff/search-flight.html", airports=airports)
+
+    if request.form.get('btn') not in ["RESET", "ORDER TICKET NOW", "SEARCH"]:
+        if request.method == "POST":
+            id_flight = request.form.get('btn')
+            seats = get_seats(id_flight=id_flight)
+            enumerate_seat = enumerate(seats)
+            flight = get_flight_by_id(idFlight=id_flight)
+
+            return render_template("staff/search-flight.html", airports=airports,
+                                   enumerate_schedules=enumerate_schedules, enumerate_seat=enumerate_seat,
+                                   count_result=count_result, seats=seats, flight=flight, scroll="section_ticket")
+
+    if request.form.get('btn') == "ORDER TICKET NOW":
+        if request.method == 'POST':
+            mess_err = ''
+            id_flight = request.form.get('id_flight')
+            if id_flight == None:
+                mess_err = 'Please choose flight in above'
+                return render_template("staff/search-flight.html", airports=airports,
+                                       enumerate_schedules=enumerate_schedules,
+                                       count_result=count_result, scroll='section_ticket', mess_err=mess_err)
+            id_user = current_user.id
+            first_name = request.form.get('first_name')
+            last_name = request.form.get('last_name')
+            phone = request.form.get('phone')
+            email = request.form.get('email')
+
+            if not add_customer(firstname=first_name, lastname=last_name, phone=phone, email=email):
+                mess_err = " system error"
+                return render_template("staff/search-flight.html", airports=airports,
+                               enumerate_schedules=enumerate_schedules,
+                               count_result=count_result,scroll='section_ticket', mess_err=mess_err)
+            else:
+                id_customer = get_customer(firstname=first_name, lastname=last_name, phone=phone, email=email)
+
+            if update_ticket():
+                pass
+
+    return render_template("staff/search-flight.html", airports=airports,
+                           enumerate_schedules=enumerate_schedules,
+                           count_result=count_result, flight=flight)
 
 
 @app.route('/logout')
 def logout_usr():
     logout_user()
-    return redirect(url_for('search_flight'))
+    return redirect(url_for('search_flight_staff'))
 
 
 @app.route("/")
 def index():
     return redirect(url_for("search_flight"))
+
+
+@app.route("/staff")
+def index_staff():
+    return redirect(url_for("login_staff"))
 
 
 @login.user_loader
@@ -58,9 +129,7 @@ def login_admin():
         username = request.form.get("username")
         password = request.form.get("password")
         password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
-        user = Account.query.join(Staff, Staff.id == Account.id)\
-                            .filter(Account.username == username, Account.password == password)\
-                            .add_columns(Account.id, Staff.user_role).first()
+        user = get_account(username=username,password=password)
 
         if user:
             acc = Account.query.filter(Account.id == user.id).first()
@@ -144,17 +213,25 @@ def search_flight():
                                    count_result=count_result, seats=seats,flight=flight, scroll="section_ticket")
 
     if  request.form.get('btn') == "ORDER TICKET NOW":
-        id_flight = request.form.get('td_idFlight')
-        seats = get_seats(id_flight=id_flight)
-        enumerate_seat = enumerate(seats)
+
         if  request.method == 'POST':
-            pass
+            mess_err = ''
+            id_flight = request.form.get('id_flight')
+            if id_flight == None:
+                mess_err= 'Please choose flight in above'
+                return render_template("search-flight.html", airports=airports,
+                              enumerate_schedules=enumerate_schedules,
+                              count_result=count_result, scroll='section_ticket', mess_err=mess_err)
+            first_name = request.form.get('first_name')
+            last_name = request.form.get('last_name')
+            phone = request.form.get('phone')
+            email = request.form.get('email')
 
-        return render_template("search-flight.html", airports=airports,
-                               enumerate_schedules=enumerate_schedules,
-                               count_result=count_result, enumerate_seat=enumerate_seat,seats=seats)
+        # return render_template("search-flight.html", airports=airports,
+        #                        enumerate_schedules=enumerate_schedules,
+        #                        count_result=count_result)
 
-    return render_template("search-flight.html",airports=airports,
+    return render_template("search-flight.html", airports=airports,
                            enumerate_schedules=enumerate_schedules,
                            count_result=count_result, flight=flight)
 
