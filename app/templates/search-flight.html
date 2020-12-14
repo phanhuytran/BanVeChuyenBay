@@ -192,9 +192,9 @@
                                             <div class="radio-seat">
                                                 {% for j in range(i - 3, i + 1) %}
                                                     {% if seats[j].is_empty %}
-                                                        <input type="radio" name="seat" id={{ seats[j].seat_location }} required/>
+                                                        <input type="radio" name="seat" value="{{ seats[j].seat_location }}" required/>
                                                     {% else %}
-                                                        <input disabled type="radio" name="seat" id={{ seats[j].seat_location }} required/>
+                                                        <input disabled type="radio" name="seat" value="{{ seats[j].seat_location }}" required/>
                                                     {% endif %}
                                                 {% endfor %}
                                             </div>
