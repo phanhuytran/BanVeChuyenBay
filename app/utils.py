@@ -140,8 +140,8 @@ def get_all_airport():
     return airports
 
 
-def get_seats(id_flight):
-    seats  = Ticket.query.join(Seat, Ticket.idTicket == Seat.idSeat)\
+def get_seats_by_id_flight(id_flight):
+    seats = Ticket.query.join(Seat, Ticket.idSeat == Seat.idSeat)\
                 .join(SeatLocation, SeatLocation.id == Seat.seatLocation)\
                 .join(Schedule, Schedule.idFlight == Ticket.idFlight)\
                 .join(TypeSeat, TypeSeat.id == SeatLocation.typeSeat)\
@@ -155,6 +155,26 @@ def get_seats(id_flight):
                 .order_by(asc(SeatLocation.name)).all()
 
     return seats
+
+
+def get_id_seat(id_flight, seat_location):
+    seat = Seat.query.join(Ticket, Ticket.idSeat == Seat.idSeat) \
+        .join(SeatLocation, SeatLocation.id == Seat.seatLocation) \
+        .join(Schedule, Schedule.idFlight == Ticket.idFlight) \
+        .join(TypeSeat, TypeSeat.id == SeatLocation.typeSeat) \
+        .filter(Schedule.idFlight == id_flight, SeatLocation.name == seat_location) \
+        .add_columns(SeatLocation.name.label("seat_location"),
+                     TypeSeat.name.label("type_seat"),
+                     Ticket.idTicket,
+                     Ticket.is_empty,
+                     Seat.idSeat
+                     ) \
+        .order_by(asc(SeatLocation.name)).first()
+
+    return seat.idSeat
+
+
+
 
 
 def update_ticket(id_customer, id_staff, id_seat, id_flight):
@@ -188,11 +208,10 @@ def add_customer(firstname,lastname,identity_card, phone, email = None):
         return False
 
 
-def get_customer(firstname,lastname,identity_card, phone):
+def get_customer(firstname,lastname,identity_card):
     customer = Customer.query.filter(Customer.firstname == firstname,
                                      Customer.lastname == lastname,
-                                     Customer.identity_card == identity_card,
-                                     Customer.phone == phone).first()
+                                     Customer.identity_card == identity_card).first()
 
     return customer
 
@@ -211,3 +230,4 @@ def get_customer(firstname,lastname,identity_card, phone):
 # print(get_flight_by_id(1))
 # print(get_seats(1))
 # update_ticket(id_customer=1, id_staff=2, id_seat=2, id_flight=1)
+print(get_id_seat(1,"A1"))

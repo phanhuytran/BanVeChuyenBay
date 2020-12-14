@@ -1,0 +1,83 @@
+{% extends 'base/index.html' %}
+
+{% block login_staff %}
+    <div class="nav navbar-nav navbar-right">
+        {% if current_user.is_authenticated %}
+        <span class="hover-user">
+            <a class="navbar-hover"><i class="fa fa-user"> User</i></a>
+            <div class="sub-content">
+                <span>Username: </span>{{ current_user.username }}
+            </div>
+        </span>
+        <a class="navbar-hover" href="{{ url_for('logout_usr') }}"><i class="fa fa-sign-out"> Log out</i></a>
+        {% else %}
+        <a class="navbar-hover" href="{{ url_for('login_staff') }}"><i class="fa fa-sign-in"></i> Sign in</a>
+        <a class="navbar-hover" href="{{ url_for('register') }}"><i class="fa fa-user-plus"></i> Sign up</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block function %}
+
+    <section class="contact-form" id="section_ticket">
+        <div class="container">
+            <div class="section-heading">
+                <h2>booking confirmation</h2>
+                <h2 id="demo"></h2>
+            </div>
+            <div class="s009">
+                <form action="{{ url_for('search_flight_staff') }}" method="post">
+                    <div class="inner-form">
+                        <div class="advance-search">
+                            <table class="table table-hover table-air-ticket-info">
+                                <tr>
+                                    <td colspan=2><span class="desc">AIR TICKET INFORMATION</span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">First name:</th>
+                                    <td>Do Trong</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Last name:</th>
+                                    <td>Nguyen</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Identity card:</th>
+                                    <td>023454337</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Email:</th>
+                                    <td>no@no</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Phone:</th>
+                                    <td>00793388885</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Flight:</th>
+                                    <td>From TPHCM to Hanoi - 1(id)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Departure date:</th>
+                                    <td>32-13-2020</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Seat:</th>
+                                    <td>A1</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Price:</th>
+                                    <td>6 triệu đô</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col">Staff confirmed:</th>
+                                    <td>{{ current_user.username }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

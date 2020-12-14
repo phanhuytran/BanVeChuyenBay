@@ -8,7 +8,6 @@
             document.location.hash = '#' + '{{ scroll }}';
         </script>
     {% endif %}
-
     <section class="contact-form" id="section_search">
         <div class="container">
             <div class="section-heading">
@@ -87,7 +86,11 @@
                                             <td>{{ schedule.departure_time }}</td>
                                             <td>{{ schedule.empty_seats }}</td>
                                             <td>
-                                                <button class="btn-book-ticket" type="submit" name="btn" value={{ schedule.idFlight }}>Book ticket</button>
+                                                <button class="btn-book-ticket"  type="submit"
+                                                         name="btn" value={{ schedule.idFlight }}>Book ticket</button>
+{#                                                <a onclick="myFunction({{ i + 1 }})" href="#section_ticket"  >#}
+{#                                                    Book ticket#}
+{#                                                </a>#}
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -115,12 +118,12 @@
                     <div class="inner-form">
                         <div class="advance-search">
                             <span  class="desc">ORDER TICKETS</span>
-                            <div class="mess_err"><a href="#section_search">{{ mess_err }}</a></div>
+                            <div class="mess_err"> <a href="#section_search">{{ mess_err }}</a></div>
 
                             <table class="table table-hover" style="text-align:left" >
                                 <thead>
                                     <tr>
-                                        <th scope="row">Id Flight</th>
+                                        <th scope="row" >Id Flight</th>
                                         <th scope="row">departure airport</th>
                                         <th scope="row">arrival airport</th>
                                         <th scope="row">departure date</th>
@@ -130,8 +133,8 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        {% if flight %}
-                                            <td>{{ flight.idFlight }}</td>
+                                         {% if flight %}
+                                            <td name="id_flight" id="id_flight">{{ flight.idFlight }}</td>
                                             <td>{{ flight.departure_airport }}</td>
                                             <td>{{ flight.arrival_airport }}</td>
                                             <td>{{ flight.departure_date }}</td>
@@ -147,28 +150,29 @@
                                         {% endif %}
                                     </tr>
                                 </tbody>
+
                             </table>
                             <div class="row">
                                 <div class="input-field">
                                     <img style="width:80%" src="{{ url_for('static', filename='img/vna1.png') }}"/>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="first_name" id="first-name" placeholder="First name..." required/>
+                                    <input type="text" name="first_name" placeholder="First name..." required/>
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="last_name" id="last-name" placeholder="Last name..." required />
+                                    <input type="text" name="last_name" placeholder="Last name..." required />
                                 </div>
                             </div>
 
                             <div class="row second">
                                 <div class="input-field">
-                                    <input type="text" name="identity_card" id="identiy-card" placeholder="Identity card..." required />
+                                    <input type="text" name="identity_card" placeholder="Identity card..." required />
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="email" id="email" placeholder="Email..." />
+                                    <input type="text" name="email" placeholder="Email..." />
                                 </div>
                                 <div class="input-field">
-                                    <input type="text" name="phone" id="phone" placeholder="Phone..."  required/>
+                                    <input type="text" name="phone" placeholder="Phone..."  required/>
                                 </div>
                             </div><br/>
 
@@ -186,7 +190,7 @@
                                             <div class="radio-seat">
                                                 {% for j in range(i - 3, i + 1) %}
                                                     {% if seats[j].is_empty %}
-                                                        <input type="radio" name="seat" id="seat" value="{{ seats[j].seat_location }}" required/>
+                                                        <input type="radio" name="seat" value="{{ seats[j].seat_location }}" required/>
                                                     {% else %}
                                                         <input disabled type="radio" name="seat" value="{{ seats[j].seat_location }}" required/>
                                                     {% endif %}
@@ -750,7 +754,16 @@
         </div>
     </section>
     <script>
+        {#function myFunction(i) {#}
+        {#    document.getElementById("td_idFlight").innerHTML = document.getElementById("tb_schedules").rows[i].cells[1].innerHTML;#}
+        {#    document.getElementById("td_departure_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[2].innerHTML;#}
+        {#    document.getElementById("td_arrival_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[3].innerHTML;#}
+        {#    document.getElementById("td_departure_date").innerHTML = document.getElementById("tb_schedules").rows[i].cells[6].innerHTML;#}
+        {#    document.getElementById("td_departure_time").innerHTML = document.getElementById("tb_schedules").rows[i].cells[7].innerHTML;#}
+        {#    document.getElementById("td_empty_seats").innerHTML = document.getElementById("tb_schedules").rows[i].cells[8].innerHTML;#}
+        {#}#}
         function confirmBookTicket() {
+<<<<<<< HEAD
             var a = document.getElementById("first-name").value;
             var b = document.getElementById("last-name").value;
             var c = document.getElementById("identity-card").value;
@@ -765,8 +778,22 @@
                 } else {
                     txt = "You pressed Cancel!";
                 }
-                document.getElementById("demo").innerHTML = txt;
+<!--                document.getElementById("demo").innerHTML = txt;-->
+=======
+            var txt = '';
+            var r = confirm("are you sure!");
+
+            if (r == true) {
+                txt = "You pressed OK!";
+            } else {
+                txt = "You pressed Cancel!";
+>>>>>>> phu
             }
-        }
+<!--            document.getElementById("demo").innerHTML = txt;-->
+}
     </script>
 {% endblock %}
+
+
+
+
