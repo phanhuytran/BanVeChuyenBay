@@ -88,7 +88,6 @@
             {% elif current_user.is_authenticated and current_user.username == 'nguyentrong' %}
                 <a class="navbar-hover" href="/admin"><i class="fa fa-fw fa-tasks"></i> Manage</a>
             {% endif %}
-
         {% else %}
             <a href="{{ url_for('search_flight') }}" style="width:12%"><img src="{{ url_for('static', filename='img/vna.png') }}"></a>
             <a class="navbar-hover" href="{{ url_for('search_flight') }}"><i class="fa fa-fw fa-home"></i> Home</a>
