@@ -287,17 +287,15 @@ def search_flight():
 
 @app.route("/staff/check-booking-status")
 def check_booking_status_staff():
-    return render_template("staff/check-booking-status.html")
+    if current_user.is_authenticated:
+        return render_template("staff/check-booking-status.html")
+    else:
+        return render_template("error-404.html")
 
 
 @app.route("/check-booking-status")
 def check_booking_status():
     return render_template("check-booking-status.html")
-
-
-@app.route("/receive-flight-schedule")
-def receive_flight_schedule():
-    return render_template("receive-flight-schedule.html")
 
 
 @app.route("/contact")
