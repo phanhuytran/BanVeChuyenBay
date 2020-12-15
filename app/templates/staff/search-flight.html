@@ -103,7 +103,7 @@
                                             <td>{{ schedule.departure_time }}</td>
                                             <td>{{ schedule.empty_seats }}</td>
                                             <td>
-                                                <button class="btn-book-ticket"  type="submit"
+                                                <button  class="btn-book-ticket"  type="submit"
                                                          name="btn" value={{ schedule.idFlight }}>Book ticket</button>
 {#                                                <a onclick="myFunction({{ i + 1 }})" href="#section_ticket"  >#}
 {#                                                    Book ticket#}
@@ -125,7 +125,7 @@
         <div class="container">
             <div class="section-heading">
                 <h2 style="margin-bottom:-30px">flight ticket</h2>
-                <h2 id="demo"></h2>
+
             </div>
             <div class="item-tickets">
                 <a href="#section_search"><i class="fa fa-search"></i> Search Flight</a>
@@ -151,15 +151,16 @@
                                 <tbody>
                                     <tr>
                                          {% if flight %}
-                                             <td name="id_flight" id="id_flight">{{ flight.idFlight }}</td>
+                                             <td>{{ flight.idFlight }} </td>
+
                                             <td>{{ flight.departure_airport }}</td>
                                             <td>{{ flight.arrival_airport }}</td>
                                             <td>{{ flight.departure_date }}</td>
                                             <td>{{ flight.departure_time }}</td>
                                             <td>{{ flight.empty_seats }}</td>
                                          {% else %}
-                                             <td name="id_flight"> <a href="#section_search">Choose in above...</a></td>
-                                            <td id="id_flight">...</td>
+                                             <td > <a href="#section_search">Choose in above...</a></td>
+                                            <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
@@ -171,7 +172,7 @@
                             </table>
                             <div class="row">
                                 <div class="input-field">
-                                    <img style="width:80%" src="{{ url_for('static', filename='img/vna1.png') }}"/>
+                                    <input type="text" name="id_flight" placeholder="Id flight..." required/>
                                 </div>
                                 <div class="input-field">
                                     <input type="text" name="first_name" placeholder="First name..." required/>
