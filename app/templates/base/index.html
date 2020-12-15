@@ -93,9 +93,9 @@
             <a class="navbar-hover" href="{{ url_for('search_flight_staff') }}"><i class="fa fa-fw fa-home"></i> Home</a>
             <a class="navbar-hover" href="{{ url_for('check_booking_status_staff') }}"><i class="fa fa-fw fa-plane"></i> Booking Status</a>
 
-            {% if current_user.is_authenticated and current_user.username != 'nguyentrong' %}
-                <a class="navbar-hover" href="{{ url_for('report') }}"><i class="fa fa-fw fa-file"></i> Report</a>
-            {% elif current_user.is_authenticated and current_user.username == 'nguyentrong' %}
+{#            {% if current_user.is_authenticated and current_user.username != 'nguyentrong' %}#}
+{#                <a class="navbar-hover" href="{{ url_for('report') }}"><i class="fa fa-fw fa-file"></i> Report</a>#}
+            {% if current_user.is_authenticated and current_user.username == 'nguyentrong' %}
                 <a class="navbar-hover" href="/admin"><i class="fa fa-fw fa-tasks"></i> Manage</a>
             {% endif %}
 

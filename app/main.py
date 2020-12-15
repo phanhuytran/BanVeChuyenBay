@@ -217,14 +217,14 @@ def search_flight():
             if departure == "Flight from..." or departure is None and arrival == 'Flight to...' or departure is None and date_flight is None:
                 schedules = get_all_schedule()
             else:
-                schedules = search_schedule(arrival_locate = arrival, departure_locate=departure, date=date_flight)
+                schedules = search_schedule(arrival_locate=arrival, departure_locate=departure, date=date_flight)
             enumerate_schedules = enumerate(schedules)
             count_result = len(schedules)
             if schedules:
                 return render_template("search-flight.html", airports=airports,
                                        enumerate_schedules=enumerate_schedules, count_result=count_result)
             else:
-                return render_template("search-flight.html", airports=airports)
+                return render_template("staff/search-flight.html", airports=airports)
 
     if request.form.get('btn') not in ["RESET", "ORDER TICKET NOW", "SEARCH"]:
         if request.method == "POST":
@@ -235,27 +235,50 @@ def search_flight():
 
             return render_template("search-flight.html", airports=airports,
                                    enumerate_schedules=enumerate_schedules, enumerate_seat=enumerate_seat,
-                                   count_result=count_result, seats=seats,flight=flight, scroll="section_ticket")
+                                   count_result=count_result, seats=seats, flight=flight, scroll="section_ticket")
 
-    if  request.form.get('btn') == "ORDER TICKET NOW":
-
-        if  request.method == 'POST':
+    if request.form.get('btn') == "ORDER TICKET NOW":
+        if request.method == 'POST':
             mess_err = ''
             id_flight = request.form.get('id_flight')
-            if id_flight == None:
-                mess_err= 'Please choose flight in above'
+
+            if not id_flight:
+                mess_err = 'Please choose flight in above'
                 return render_template("search-flight.html", airports=airports,
-                              enumerate_schedules=enumerate_schedules,
-                              count_result=count_result, scroll='section_ticket', mess_err=mess_err)
+                                       enumerate_schedules=enumerate_schedules,
+                                       count_result=count_result, scroll='section_ticket', mess_err=mess_err)
+            else:
+                if not get_flight_by_id(idFlight=id_flight):
+                    mess_err = 'mã chuyến bay ko hợp lệ'
+                    return render_template("search-flight.html", airports=airports,
+                                           enumerate_schedules=enumerate_schedules,
+                                           count_result=count_result, scroll='section_ticket', mess_err=mess_err)
+
+
             first_name = request.form.get('first_name')
             last_name = request.form.get('last_name')
             phone = request.form.get('phone')
             email = request.form.get('email')
+            identity_card = request.form.get('identity_card')
+            seat_location = request.form.get('seat')
+            id_seat = get_id_seat(id_flight=id_flight, seat_location=seat_location)
 
+            if not get_customer(firstname=first_name, lastname=last_name, identity_card=identity_card):
 
-        # return render_template("search-flight.html", airports=airports,
-        #                        enumerate_schedules=enumerate_schedules,
-        #                        count_result=count_result)
+                if not add_customer(firstname=first_name, lastname=last_name,
+                                    identity_card=identity_card, phone=phone, email=email):
+                    mess_err = " system error"
+                    return render_template("search-flight.html", airports=airports,
+                                           enumerate_schedules=enumerate_schedules,
+                                           count_result=count_result, scroll='section_ticket', mess_err=mess_err)
+
+            customer = get_customer(firstname=first_name, lastname=last_name, identity_card=identity_card)
+            if update_ticket_for_customer(id_flight=id_flight, id_customer=customer.id,
+                             id_seat=id_seat):
+                mess_err = '''đặt vé thành công, vui lòng vào mục check-booking- status đẻ xem danh sách vé đã đặt'''
+                return render_template("staff/search-flight.html", airports=airports,
+                                       enumerate_schedules=enumerate_schedules,
+                                       count_result=count_result, scroll='section_ticket', mess_err=mess_err)
 
     return render_template("search-flight.html", airports=airports,
                            enumerate_schedules=enumerate_schedules,
