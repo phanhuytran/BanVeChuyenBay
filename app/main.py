@@ -112,7 +112,7 @@ def search_flight_staff():
 
 
             customer = get_customer(firstname=first_name, lastname=last_name, identity_card=identity_card)
-            if update_ticket(id_flight=id_flight,id_customer=customer.id,id_staff=current_user.staff.id,id_seat=id_seat):
+            if update_ticket_for_Staff(id_flight=id_flight,id_customer=customer.id,id_staff=current_user.staff.id,id_seat=id_seat):
                 mess_err=  '''Successful booking, please go to Booking Status to see a list of tickets booked'''
                 return  render_template("staff/search-flight.html", airports=airports,
                                enumerate_schedules=enumerate_schedules,
@@ -275,7 +275,7 @@ def search_flight():
             customer = get_customer(firstname=first_name, lastname=last_name, identity_card=identity_card)
             if update_ticket_for_customer(id_flight=id_flight, id_customer=customer.id,
                              id_seat=id_seat):
-                mess_err = '''đặt vé thành công, vui lòng vào mục check-booking- status đẻ xem danh sách vé đã đặt'''
+                mess_err = '''Successful booking, please go to Booking Status to see a list of tickets booked'''
                 return render_template("staff/search-flight.html", airports=airports,
                                        enumerate_schedules=enumerate_schedules,
                                        count_result=count_result, scroll='section_ticket', mess_err=mess_err)
@@ -288,6 +288,7 @@ def search_flight():
 @app.route("/staff/check-booking-status")
 def check_booking_status_staff():
     return render_template("staff/check-booking-status.html")
+
 
 @app.route("/check-booking-status")
 def check_booking_status():
@@ -304,13 +305,20 @@ def contact():
     return render_template("contact.html")
 
 
-@app.route("/revenue")
-def revenue():
-    return render_template("revenue.html")
+@app.route("/revenue-month")
+def revenue_month():
+    if current_user.is_authenticated and current_user.username == 'nguyentrong':
+        return render_template("revenue-month.html")
+    elif current_user.is_authenticated and current_user.username != 'nguyentrong' or not(current_user.is_authenticated):
+        return render_template("error-404.html")
 
-@app.route('/check-booking-status')
-def check_bookinf_status():
-    return render_template("check-booking-status.html")
+
+@app.route("/revenue-year")
+def revenue_year():
+    if current_user.username == 'nguyentrong':
+        return render_template("revenue-year.html")
+    elif current_user.is_authenticated and current_user.username != 'nguyentrong' or not(current_user.is_authenticated):
+        return render_template("error-404.html")
 
 
 if __name__ == "__main__":

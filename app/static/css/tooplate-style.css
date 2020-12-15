@@ -546,3 +546,17 @@ div.mess_err {
     margin-bottom:3%;
     font-size:20px;
 }
+
+canvas#myChart {
+    width: 90% !important;
+}
+
+div.err-404 {
+    background-color: rgba(0, 0, 0, 0.8);
+    width:100%;
+    margin: 4.8% 0;
+}
+
+div.err-404 img {
+    margin: 8% auto;
+}
