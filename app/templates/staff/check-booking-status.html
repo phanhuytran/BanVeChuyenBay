@@ -29,50 +29,53 @@
                 <form action="{{ url_for('search_flight_staff') }}" method="post">
                     <div class="inner-form">
                         <div class="advance-search">
-                            <table class="table table-hover table-air-ticket-info">
-                                <tr>
-                                    <td colspan=2><span class="desc">AIR TICKET INFORMATION</span></td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">First name:</th>
-                                    <td>Do Trong</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Last name:</th>
-                                    <td>Nguyen</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Identity card:</th>
-                                    <td>023454337</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Email:</th>
-                                    <td>no@no</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Phone:</th>
-                                    <td>00793388885</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Flight:</th>
-                                    <td>From TPHCM to Hanoi - 1(id)</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Departure date:</th>
-                                    <td>32-13-2020</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Seat:</th>
-                                    <td>A1</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Price:</th>
-                                    <td>6 triệu đô</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Staff confirmed:</th>
-                                    <td>{{ current_user.username }}</td>
-                                </tr>
+                            <table class="table table-hover table-air-ticket-info" style="text-align:left" >
+                                <thead>
+                                    <tr>
+                                        <td colspan=11><span class="desc">AIR TICKET INFORMATION</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">No</th>
+                                        <th scope="row">First name</th>
+                                        <th scope="row">Last name</th>
+                                        <th scope="row">Identity card</th>
+                                        <th scope="row">Email</th>
+                                        <th scope="row">Phone</th>
+                                        <th scope="row">Flight</th>
+                                        <th scope="row">Departure date</th>
+                                        <th scope="row">Seat</th>
+                                        <th scope="row">Price</th>
+                                        <th scope="row">Staff confirmed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Phan Huy</td>
+                                        <td>Tran</td>
+                                        <td>025832688</td>
+                                        <td>abc@fox</td>
+                                        <td>0775398511</td>
+                                        <td>TPHCM - Hanoi (id: 1)</td>
+                                        <td>32-13-2020</td>
+                                        <td>A1</td>
+                                        <td>6 triệu đô</td>
+                                        <td>{{ current_user.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Do Trong</td>
+                                        <td>Nguyen</td>
+                                        <td>020202099</td>
+                                        <td>fox@abc</td>
+                                        <td>0887098511</td>
+                                        <td>TPHCM - Binh Thuan (id: 3)</td>
+                                        <td>32-13-2020</td>
+                                        <td>B1</td>
+                                        <td>12 triệu đô</td>
+                                        <td>{{ current_user.username }}</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>

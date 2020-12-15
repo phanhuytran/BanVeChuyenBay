@@ -525,20 +525,21 @@ div.item-tickets {
 
 table.table-air-ticket-info {
     margin: 40px auto;
-    width: 50%;
+    width: 100%;
     text-align: left;
     border: 5px double black;
 }
 
 table.table-air-ticket-info span.desc {
-    padding-top: 8%;
+    padding-top: 4%;
     font-size: 20px !important;
     color: #364a59 !important;
     text-align: center !important;
 }
 
-table.table-air-ticket-info th {
-    padding: 2% 5% !important;
+table.table-air-ticket-info th, table.table-air-ticket-info td {
+    padding-top: 1.5% !important;
+    padding-bottom: 1.5% !important;
 }
 
 div.mess_err {

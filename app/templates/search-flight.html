@@ -9,7 +9,6 @@
         </script>
     {% endif %}
 
-
     <section class="contact-form" id="section_search">
         <div class="container">
             <div class="section-heading">
@@ -125,7 +124,7 @@
                             <table class="table table-hover" style="text-align:left" >
                                 <thead>
                                     <tr>
-                                        <th scope="row" >Id Flight</th>
+                                        <th scope="row">Id Flight</th>
                                         <th scope="row">departure airport</th>
                                         <th scope="row">arrival airport</th>
                                         <th scope="row">departure date</th>
@@ -136,14 +135,14 @@
                                 <tbody>
                                     <tr>
                                          {% if flight %}
-                                             <td name="id_flight" id="id_flight">{{ flight.idFlight }}</td>
+                                            <td name="id_flight" id="id_flight">{{ flight.idFlight }}</td>
                                             <td>{{ flight.departure_airport }}</td>
                                             <td>{{ flight.arrival_airport }}</td>
                                             <td>{{ flight.departure_date }}</td>
                                             <td>{{ flight.departure_time }}</td>
                                             <td>{{ flight.empty_seats }}</td>
                                          {% else %}
-                                             <td name="id_flight"> <a href="#section_search">Choose in above...</a></td>
+                                            <td name="id_flight"> <a href="#section_search">Choose in above...</a></td>
                                             <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
@@ -154,6 +153,7 @@
                                 </tbody>
 
                             </table>
+
                             <div class="row">
                                 <div class="input-field">
                                     <img style="width:80%" src="{{ url_for('static', filename='img/vna1.png') }}"/>
