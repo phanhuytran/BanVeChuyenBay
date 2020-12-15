@@ -315,7 +315,7 @@ def revenue_month():
 
 @app.route("/revenue-year")
 def revenue_year():
-    if current_user.username == 'nguyentrong':
+    if current_user.is_authenticated and current_user.username == 'nguyentrong':
         return render_template("revenue-year.html")
     elif current_user.is_authenticated and current_user.username != 'nguyentrong' or not(current_user.is_authenticated):
         return render_template("error-404.html")
