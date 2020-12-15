@@ -177,10 +177,26 @@ def get_id_seat(id_flight, seat_location):
 
 
 
-def update_ticket(id_customer, id_staff, id_seat, id_flight):
+def update_ticket_for_Staff(id_customer, id_staff, id_seat, id_flight):
     ticket = Ticket.query.filter(Ticket.idSeat == id_seat, Ticket.idFlight == id_flight).first()
     ticket.idCustomer = id_customer
     ticket.idAccount = id_staff
+    ticket.is_empty =  False
+
+    try:
+        db.session.merge(ticket)
+        db.session.flush()
+        db.session.commit()
+        return True
+    except Exception as ex:
+        print(ex)
+        return False
+
+
+def update_ticket_for_customer(id_customer, id_seat, id_flight):
+    ticket = Ticket.query.filter(Ticket.idSeat == id_seat, Ticket.idFlight == id_flight).first()
+    ticket.idCustomer = id_customer
+
     ticket.is_empty =  False
 
     try:
