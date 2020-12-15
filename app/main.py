@@ -80,7 +80,7 @@ def search_flight_staff():
             id_flight = request.form.get('id_flight')
 
             if not id_flight:
-                mess_err = 'please choose flight in above'
+                mess_err = 'Please choose flight in above'
                 return render_template("staff/search-flight.html", airports=airports,
                                        enumerate_schedules=enumerate_schedules,
                                        count_result=count_result, scroll='section_ticket', mess_err=mess_err)
@@ -113,7 +113,7 @@ def search_flight_staff():
 
             customer = get_customer(firstname=first_name, lastname=last_name, identity_card=identity_card)
             if update_ticket(id_flight=id_flight,id_customer=customer.id,id_staff=current_user.staff.id,id_seat=id_seat):
-                mess_err=  '''đặt vé thành công, vui lòng vào mục check-booking- status đẻ xem danh sách vé đã đặt'''
+                mess_err=  '''Successful booking, please go to Booking Status to see a list of tickets booked'''
                 return  render_template("staff/search-flight.html", airports=airports,
                                enumerate_schedules=enumerate_schedules,
                                count_result=count_result,scroll='section_ticket', mess_err=mess_err)
@@ -243,7 +243,7 @@ def search_flight():
             mess_err = ''
             id_flight = request.form.get('id_flight')
             if id_flight == None:
-                mess_err= 'please choose flight in above'
+                mess_err= 'Please choose flight in above'
                 return render_template("search-flight.html", airports=airports,
                               enumerate_schedules=enumerate_schedules,
                               count_result=count_result, scroll='section_ticket', mess_err=mess_err)
@@ -262,6 +262,15 @@ def search_flight():
                            count_result=count_result, flight=flight)
 
 
+@app.route("/staff/check-booking-status")
+def check_booking_status_staff():
+    return render_template("staff/check-booking-status.html")
+
+@app.route("/check-booking-status")
+def check_booking_status():
+    return render_template("check-booking-status.html")
+
+
 @app.route("/receive-flight-schedule")
 def receive_flight_schedule():
     return render_template("receive-flight-schedule.html")
@@ -272,9 +281,9 @@ def contact():
     return render_template("contact.html")
 
 
-@app.route("/report")
-def report():
-    return render_template("report.html")
+@app.route("/revenue")
+def revenue():
+    return render_template("revenue.html")
 
 @app.route('/check-booking-status')
 def check_bookinf_status():
