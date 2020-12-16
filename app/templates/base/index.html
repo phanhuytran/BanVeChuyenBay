@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/css-bonus/owl-carousel.css') }}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     <script>
         $(document).ready(function() {
             $(".goToTop > a").hide();
@@ -56,7 +57,8 @@
                     <div class="logo">
                         {% if request.path == url_for('search_flight_staff')
                             or request.path == url_for('check_booking_status_staff')
-                            or request.path == url_for('revenue')
+                            or request.path == url_for('revenue_month')
+                            or request.path == url_for('revenue_year')
                         %}
                             <a href="{{ url_for('search_flight_staff') }}">
                                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Flight Template">
@@ -72,7 +74,8 @@
                     <div class="page-direction-button">
                         {% if request.path == url_for('search_flight_staff')
                             or request.path == url_for('check_booking_status_staff')
-                            or request.path == url_for('revenue')
+                            or request.path == url_for('revenue_month')
+                            or request.path == url_for('revenue_year')
                         %}
                             <a href="{{ url_for('search_flight_staff') }}"><i class="fa fa-home"></i>Go Back Home</a>
                         {% else %}
@@ -87,14 +90,16 @@
     <div class="navbar">
         {% if request.path == url_for('search_flight_staff')
             or request.path == url_for('check_booking_status_staff')
-            or request.path == url_for('revenue')
+            or request.path == url_for('revenue_month')
+            or request.path == url_for('revenue_year')
         %}
             <a href="{{ url_for('search_flight_staff') }}" style="width:12%"><img src="{{ url_for('static', filename='img/vna.png') }}"></a>
             <a class="navbar-hover" href="{{ url_for('search_flight_staff') }}"><i class="fa fa-fw fa-home"></i> Home</a>
-            <a class="navbar-hover" href="{{ url_for('check_booking_status_staff') }}"><i class="fa fa-fw fa-plane"></i> Booking Status</a>
 
-{#            {% if current_user.is_authenticated and current_user.username != 'nguyentrong' %}#}
-{#                <a class="navbar-hover" href="{{ url_for('report') }}"><i class="fa fa-fw fa-file"></i> Report</a>#}
+            {% if current_user.is_authenticated %}
+                <a class="navbar-hover" href="{{ url_for('check_booking_status_staff') }}"><i class="fa fa-fw fa-plane"></i> Booking Status</a>
+            {% endif %}
+
             {% if current_user.is_authenticated and current_user.username == 'nguyentrong' %}
                 <a class="navbar-hover" href="/admin"><i class="fa fa-fw fa-tasks"></i> Manage</a>
             {% endif %}
@@ -103,6 +108,7 @@
             <a href="{{ url_for('search_flight') }}" style="width:12%"><img src="{{ url_for('static', filename='img/vna.png') }}"></a>
             <a class="navbar-hover" href="{{ url_for('search_flight') }}"><i class="fa fa-fw fa-home"></i> Home</a>
             <a class="navbar-hover" href="{{ url_for('check_booking_status') }}"><i class="fa fa-fw fa-plane"></i> Booking Status</a>
+
         {% endif %}
 
         <a class="navbar-hover" href="{{ url_for('contact') }}"><i class="fa fa-fw fa-envelope"></i> Contact</a>
@@ -113,7 +119,6 @@
 
     {% block function %}
     {% endblock %}
-
     <footer>
         <div class="container">
             <div class="row">

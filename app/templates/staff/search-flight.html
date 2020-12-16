@@ -151,15 +151,14 @@
                                 <tbody>
                                     <tr>
                                          {% if flight %}
-                                             <td>{{ flight.idFlight }} </td>
-
+                                            <td>{{ flight.idFlight }} </td>
                                             <td>{{ flight.departure_airport }}</td>
                                             <td>{{ flight.arrival_airport }}</td>
                                             <td>{{ flight.departure_date }}</td>
                                             <td>{{ flight.departure_time }}</td>
                                             <td>{{ flight.empty_seats }}</td>
                                          {% else %}
-                                             <td > <a href="#section_search">Choose in above...</a></td>
+                                            <td><a href="#section_search">Choose in above...</a></td>
                                             <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
@@ -793,7 +792,3 @@
 }
     </script>
 {% endblock %}
-
-
-
-

@@ -40,6 +40,8 @@ class Account(db.Model, UserMixin):
     username = Column(String(20))
     password = Column(String(50))
     ticket = relationship('Ticket', backref='account', lazy=True)
+    def __str__(self):
+        return str(self.username)
 
     def __str__(self):
         return str(self.id)
@@ -54,6 +56,8 @@ class Customer(Base, UserMixin):
     email = Column(String(50))
     phone = Column(String(20), nullable=False)
     ticket = relationship('Ticket', backref = 'customer', lazy = True)
+    def __str__(self):
+        return str(self.id)
 
     def __str__(self):
         return str(self.id)

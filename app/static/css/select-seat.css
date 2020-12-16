@@ -48,6 +48,7 @@ div.radio-seat input {
 
 button.btn-book-ticket {
     padding:3% 7%;
+    width: 100%;
     border: 0;
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
     background: #364a59;

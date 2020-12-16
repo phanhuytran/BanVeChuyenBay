@@ -542,7 +542,26 @@ table.table-air-ticket-info th, table.table-air-ticket-info td {
     padding-bottom: 1.5% !important;
 }
 
-div.mess_err {
+div.mess_err a {
     margin-bottom:3%;
     font-size:20px;
+}
+
+canvas#myChart {
+    width: 90% !important;
+}
+
+div.err-404 {
+    background-color: rgba(0, 0, 0, 0.8);
+    width:100%;
+    margin: 3.98% 0;
+}
+
+div.err-404 img {
+    margin: 4% auto 0 auto;
+}
+
+div.err-404 div.item-tickets {
+    margin-bottom: 2%;
+    text-align: center;
 }

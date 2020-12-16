@@ -54,7 +54,7 @@ span.hover-user:hover div.sub-content {
 	color:#fff;
 }
 
-.navbar .navbar-hover:hover {
+.navbar .navbar-hover:hover, .navbar .navbar-hover:active {
     background-color: #364a59;
     color: #fff;
 }

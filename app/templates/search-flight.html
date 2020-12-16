@@ -1,7 +1,5 @@
 {% extends 'base/index.html' %}
 
-
-
 {% block function %}
 
     {% if scroll %}
@@ -10,7 +8,6 @@
             document.location.hash = '#' + '{{ scroll }}';
         </script>
     {% endif %}
-
 
     <section class="contact-form" id="section_search">
         <div class="container">
@@ -90,11 +87,7 @@
                                             <td>{{ schedule.departure_time }}</td>
                                             <td>{{ schedule.empty_seats }}</td>
                                             <td>
-                                                <button class="btn-book-ticket"  type="submit"
-                                                         name="btn" value={{ schedule.idFlight }}>Book ticket</button>
-{#                                                <a onclick="myFunction({{ i + 1 }})" href="#section_ticket"  >#}
-{#                                                    Book ticket#}
-{#                                                </a>#}
+                                                <button class="btn-book-ticket" type="submit" name="btn" value={{ schedule.idFlight }}>Book ticket</button>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -127,7 +120,7 @@
                             <table class="table table-hover" style="text-align:left" >
                                 <thead>
                                     <tr>
-                                        <th scope="row" >Id Flight</th>
+                                        <th scope="row">Id Flight</th>
                                         <th scope="row">departure airport</th>
                                         <th scope="row">arrival airport</th>
                                         <th scope="row">departure date</th>
@@ -138,14 +131,14 @@
                                 <tbody>
                                     <tr>
                                          {% if flight %}
-                                             <td >{{ flight.idFlight }}</td>
+                                            <td>{{ flight.idFlight }}</td>
                                             <td>{{ flight.departure_airport }}</td>
                                             <td>{{ flight.arrival_airport }}</td>
                                             <td>{{ flight.departure_date }}</td>
                                             <td>{{ flight.departure_time }}</td>
                                             <td>{{ flight.empty_seats }}</td>
                                          {% else %}
-                                             <td> <a href="#section_search">Choose in above...</a></td>
+                                            <td> <a href="#section_search">Choose in above...</a></td>
                                             <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
@@ -154,8 +147,8 @@
                                         {% endif %}
                                     </tr>
                                 </tbody>
-
                             </table>
+
                             <div class="row">
                                 <div class="input-field">
                                     <input type="text" name="id_flight" placeholder="Id flight..." required/>
@@ -758,7 +751,14 @@
         </div>
     </section>
     <script>
-
+        {#function myFunction(i) {#}
+        {#    document.getElementById("td_idFlight").innerHTML = document.getElementById("tb_schedules").rows[i].cells[1].innerHTML;#}
+        {#    document.getElementById("td_departure_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[2].innerHTML;#}
+        {#    document.getElementById("td_arrival_airport").innerHTML = document.getElementById("tb_schedules").rows[i].cells[3].innerHTML;#}
+        {#    document.getElementById("td_departure_date").innerHTML = document.getElementById("tb_schedules").rows[i].cells[6].innerHTML;#}
+        {#    document.getElementById("td_departure_time").innerHTML = document.getElementById("tb_schedules").rows[i].cells[7].innerHTML;#}
+        {#    document.getElementById("td_empty_seats").innerHTML = document.getElementById("tb_schedules").rows[i].cells[8].innerHTML;#}
+        {#}#}
         function confirmBookTicket() {
             var txt = '';
             var r = confirm("are you sure!");
