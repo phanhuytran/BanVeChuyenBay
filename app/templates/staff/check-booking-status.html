@@ -23,16 +23,16 @@
         <div class="container">
             <div class="section-heading">
                 <h2>booking confirmation</h2>
-                <h2 id="demo"></h2>
+                <h2> {{ mess_err }}</h2>
             </div>
             <div class="s009">
-                <form action="{{ url_for('search_flight_staff') }}" method="post">
+                <form action="{{ url_for('check_booking_status_staff') }}" method="post">
                     <div class="inner-form">
                         <div class="advance-search">
                             <table class="table table-hover table-air-ticket-info" style="text-align:left" >
                                 <thead>
                                     <tr>
-                                        <td colspan=11><span class="desc">AIR TICKET INFORMATION</span></td>
+                                        <td colspan=12><span class="desc">AIR TICKET INFORMATION</span></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">No</th>
@@ -41,40 +41,56 @@
                                         <th scope="row">Identity card</th>
                                         <th scope="row">Email</th>
                                         <th scope="row">Phone</th>
-                                        <th scope="row">Flight</th>
-                                        <th scope="row">Departure date</th>
+                                        <th scope="row">Id flight</th>
+                                        <th scope="row">Export time</th>
                                         <th scope="row">Seat</th>
                                         <th scope="row">Price</th>
                                         <th scope="row">Staff confirmed</th>
+                                        <th scope="row">delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                {% for ticket, ticket_info in zip_ticket_info %}
                                     <tr>
-                                        <td>1</td>
-                                        <td>Phan Huy</td>
-                                        <td>Tran</td>
-                                        <td>025832688</td>
-                                        <td>abc@fox</td>
-                                        <td>0775398511</td>
-                                        <td>TPHCM - Hanoi (id: 1)</td>
-                                        <td>32-13-2020</td>
-                                        <td>A1</td>
-                                        <td>6 triệu đô</td>
-                                        <td>{{ current_user.username }}</td>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ ticket.customer.firstname}}</td>
+                                        <td>{{ ticket.customer.lastname }}</td>
+                                        <td>{{ ticket.customer.identity_card }}</td>
+                                    {% if ticket.customer.email  %}
+                                        <td>{{ ticket.customer.email}}</td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
+                                        <td>{{ ticket.customer.phone }}</td>
+                                        <td>{{ ticket.idFlight}}</td>
+                                        {% if ticket.exportTime %}
+                                            <td>{{ ticket.exportTime }}</td>
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
+                                        <td>{{ ticket_info.seat_location }}</td>
+                                        <td>{{ ticket_info.price }}$</td>
+                                        {% if ticket.idAccount %}
+                                        <td>đã xác nhận</td>
+                                        <td></td>
+                                        {% else %}
+                                        <td>
+
+                                            <button class="btn-book-ticket" onclick="confirmBookTicket()"
+                                                      value="{{ ticket.idTicket }}" name="confirm"
+                                                     style="width:300px">Confirm</button>
+
+                                        </td>
+                                        <td>
+
+                                            <button class="btn-book-ticket" onclick="confirmBookTicket()"
+                                                      value="{{ ticket.idTicket }}" name="delete"
+                                                     style="width:300px">Delete</button>
+                                        </td>
+                                        {% endif %}
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Do Trong</td>
-                                        <td>Nguyen</td>
-                                        <td>020202099</td>
-                                        <td>fox@abc</td>
-                                        <td>0887098511</td>
-                                        <td>TPHCM - Binh Thuan (id: 3)</td>
-                                        <td>32-13-2020</td>
-                                        <td>B1</td>
-                                        <td>12 triệu đô</td>
-                                        <td>{{ current_user.username }}</td>
-                                    </tr>
+                                {% endfor %}
+
                                 </tbody>
                             </table>
                         </div>
@@ -82,5 +98,20 @@
                 </form>
             </div>
         </div>
+
+    <script>
+
+        function confirmBookTicket() {
+            var txt = '';
+            var r = confirm("are you sure!");
+
+            if (r == true) {
+                txt = "You pressed OK!";
+            } else {
+                txt = "You pressed Cancel!";
+            }
+            document.getElementById("demo").innerHTML = txt;
+            }
+    </script>
     </section>
 {% endblock %}

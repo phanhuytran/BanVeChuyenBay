@@ -1,11 +1,14 @@
 import hashlib
 from pprint import pprint
 from flask_admin import BaseView, Admin
-from sqlalchemy import desc, Date,asc
+from pymysql import NULL
+from sqlalchemy import desc, Date, asc, or_
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql.functions import count
 from app import db
-from app.Models import Schedule, Airport, Plane, Seat, Staff, Account, Ticket, SeatLocation, TypeSeat, Customer
+from app.Models import Schedule, Airport, Plane, Seat, \
+    Staff, Account, Ticket, SeatLocation, TypeSeat, Customer,UserRole
+from datetime import datetime
 
 
 class MyView(BaseView):
@@ -133,7 +136,7 @@ def get_flight_by_id(idFlight):
         .order_by(desc(Schedule.departureDate)).first()
 
     return flight
-
+print('filgid ',get_flight_by_id(1))
 
 def get_all_airport():
     airports = Airport.query.all()
@@ -155,6 +158,37 @@ def get_seats_by_id_flight(id_flight):
                 .order_by(asc(SeatLocation.name)).all()
 
     return seats
+
+
+def get_ticket_by_id_account(id_account):
+    tickets = Ticket.query.filter(or_(Ticket.idAccount == id_account, Ticket.idAccount.is_(None)),Ticket.idCustomer != None).all()
+    return tickets
+
+
+
+def get_ticket_by_id_ticket(id_ticket):
+    tickets = Ticket.query.join(Seat, Ticket.idSeat == Seat.idSeat)\
+                .join(SeatLocation, SeatLocation.id == Seat.seatLocation)\
+                .join(Schedule, Schedule.idFlight == Ticket.idFlight)\
+                .join(TypeSeat, TypeSeat.id == SeatLocation.typeSeat)\
+                .join(Customer, Customer.id == Ticket.idCustomer)\
+                .filter(Ticket.idTicket == id_ticket)\
+                .add_columns(SeatLocation.name.label("seat_location"),
+                    TypeSeat.name.label("type_seat"),
+                    TypeSeat.price.label("price"),
+                    Ticket.idTicket,
+                    Ticket.is_empty,
+                    Customer.lastname,
+                    Customer.firstname,
+                    Customer.phone,
+                    Customer.email,
+                    Customer.identity_card,
+                    Schedule.idFlight,
+                    Ticket.idAccount,
+                    Ticket.exportTime).first()
+
+    return tickets
+
 
 
 def get_id_seat(id_flight, seat_location):
@@ -182,6 +216,25 @@ def update_ticket_for_Staff(id_customer, id_staff, id_seat, id_flight):
     ticket.idCustomer = id_customer
     ticket.idAccount = id_staff
     ticket.is_empty =  False
+
+    try:
+        db.session.merge(ticket)
+        db.session.flush()
+        db.session.commit()
+        return True
+    except Exception as ex:
+        print(ex)
+        return False
+
+
+def update_ticket(id_ticket, id_account, confirm=True):
+    ticket = Ticket.query.filter(Ticket.idTicket == id_ticket).first()
+    if confirm:
+        ticket.idAccount = id_account
+        ticket.exportTime = datetime.now()
+    else:
+        ticket.idCustomer = None
+
 
     try:
         db.session.merge(ticket)
@@ -232,18 +285,5 @@ def get_customer(firstname,lastname,identity_card):
     return customer
 
 
-
-
-
-
-# def book_ticket(id_flight, seat_location):
-#,
-# print(count_seat_not_emty(1))
-#
-#
-# print(get_schedule(depature_locate= "Ha Noi", arrival_locate='Binh Thuan', date='2020-12-03'))
-# print(get_all_schedule())
-# print(get_flight_by_id(1))
-# print(get_seats(1))
-# update_ticket(id_customer=1, id_staff=2, id_seat=2, id_flight=1)
-# print(get_id_seat(1,"A1"))
+# print(get_ticket_by_id_account(1))
+# print(get_ticket_by_id_ticket(1))

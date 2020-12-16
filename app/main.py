@@ -112,7 +112,7 @@ def search_flight_staff():
 
 
             customer = get_customer(firstname=first_name, lastname=last_name, identity_card=identity_card)
-            if update_ticket(id_flight=id_flight,id_customer=customer.id,id_staff=current_user.staff.id,id_seat=id_seat):
+            if update_ticket_for_Staff(id_flight=id_flight,id_customer=customer.id,id_staff=current_user.staff.id,id_seat=id_seat):
                 mess_err=  '''Successful booking, please go to Booking Status to see a list of tickets booked'''
                 return  render_template("staff/search-flight.html", airports=airports,
                                enumerate_schedules=enumerate_schedules,
@@ -285,9 +285,24 @@ def search_flight():
                            count_result=count_result, flight=flight)
 
 
-@app.route("/staff/check-booking-status")
+@app.route("/staff/check-booking-status", methods=["POST", "GET"])
 def check_booking_status_staff():
-    return render_template("staff/check-booking-status.html")
+    tickets = get_ticket_by_id_account(current_user.staff.id)
+    id_tickets = [t.idTicket for t in tickets ]
+    list_ticket_info = [get_ticket_by_id_ticket(id) for id in id_tickets]
+    zip_ticket_info = zip(tickets,list_ticket_info)
+    mess_err = ''
+    if request.method == 'POST':
+        if request.form.get('confirm'):
+            id_ticket = request.form.get('confirm')
+            if update_ticket(id_ticket=id_ticket, id_account=current_user.id):
+                mess_err= 'Confirm successfully'
+            else:
+                mess_err= 'Confirm unsuccessfully'
+            return render_template("staff/check-booking-status.html",
+                                       zip_ticket_info=zip_ticket_info,mess_err=mess_err)
+
+    return render_template("staff/check-booking-status.html",zip_ticket_info=zip_ticket_info)
 
 @app.route("/check-booking-status")
 def check_booking_status():

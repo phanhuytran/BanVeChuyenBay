@@ -41,6 +41,9 @@ class Account(db.Model, UserMixin):
     password = Column(String(50))
     ticket = relationship('Ticket', backref='account', lazy=True)
 
+    def __str__(self):
+        return str(self.id)
+
 
 class Customer(Base, UserMixin):
     __tablename__ = 'customer'
@@ -51,6 +54,9 @@ class Customer(Base, UserMixin):
     email = Column(String(50))
     phone = Column(String(20), nullable=False)
     ticket = relationship('Ticket', backref = 'customer', lazy = True)
+
+    def __str__(self):
+        return str(self.id)
 
 
 class Plane(Base):
@@ -94,6 +100,8 @@ class TypeSeat(Base):
     name = Column(String(100),nullable=False)
     price = Column(Float,nullable=False)
     seat = relationship('SeatLocation', backref='typeseat', lazy=True)
+
+
 
 
 class SeatLocation(Base):
