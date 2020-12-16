@@ -52,7 +52,6 @@
                                         <span>{{ count_result }}</span>results
                                     </div>
                                     <div class="submit-search">
-                                        <input class="btn-delete" type="submit" value="RESET" />
                                         <input class="btn-search" type="submit" value="SEARCH" name="btn"/>
                                     </div>
                                 </div>
@@ -108,15 +107,14 @@
                 <h2 id="demo"></h2>
             </div>
             <div class="item-tickets">
-                <a href="#section_search"><i class="fa fa-search"></i> Search Flight</a>
+                <a style="color: hsl(53deg 83% 34%)" href="#section_search"><i class="fa fa-search"></i> Search Flight</a>
             </div>
             <div class="s009">
                 <form action="{{ url_for('search_flight') }}" method="post">
                     <div class="inner-form">
                         <div class="advance-search">
                             <span  class="desc">ORDER TICKETS</span>
-                            <div class="mess_err"> <a href="#section_search">{{ mess_err }}</a></div>
-
+                            <div class="mess_err"> <a href="{{ url_for('check_booking_status') }}">{{ mess_err }}</a></div><br/>
                             <table class="table table-hover" style="text-align:left" >
                                 <thead>
                                     <tr>
@@ -209,7 +207,6 @@
                                         PRICE: <span style="font-size:20px"> VND</span>
                                     </div>
                                     <div class="submit-search">
-                                        <input class="btn-delete" type="submit" value="RESET" />
                                         <input onclick="confirmBookTicket()" class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px" name="btn"/>
                                     </div>
                                 </div>
