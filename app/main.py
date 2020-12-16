@@ -317,11 +317,20 @@ def check_booking_status_staff():
 
 @app.route("/check-booking-status", methods=['POST', 'GET'])
 def check_booking_status():
-    firstname = request.form.get('first_name')
-    lastname = request.form.get('last_name')
-    identity_card = request.form.get('identity_card')
-    phone = request.form.get('phone')
+    if request.method == 'POST':
+        firstname = request.form.get('first_name')
+        lastname = request.form.get('last_name')
+        identity_card = request.form.get('identity_card')
+        phone = request.form.get('phone')
 
+        id_customer = get_id_cusomer(firstname=firstname, lastname=lastname, identity_card=identity_card, phone=phone)
+        list_id_tickets = get_list_id_ticket_by_id_customer(id_customer)
+
+        list_ticket = [get_ticket_by_id_ticket(item) for item in list_id_tickets]
+
+
+
+        return render_template('check-booking-status.html', list_ticket=list_ticket)
 
 
 

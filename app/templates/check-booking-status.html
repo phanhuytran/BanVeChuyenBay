@@ -9,7 +9,7 @@
                 <h2 id="demo"></h2>
             </div>
             <div class="s009">
-                <form action="{{ url_for('search_flight') }}" method="post">
+                <form action="{{ url_for('check_booking_status') }}" method="post">
                     <div class="inner-form">
                         <div class="advance-search">
                             <div class="row">
@@ -62,36 +62,30 @@
                                         <th scope="row">Departure date</th>
                                         <th scope="row">Seat</th>
                                         <th scope="row">Price</th>
-                                        <th scope="row">Staff confirmed</th>
+                                        <th scope="row">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Phan Huy</td>
-                                        <td>Tran</td>
-                                        <td>025832688</td>
-                                        <td>abc@fox</td>
-                                        <td>0775398511</td>
-                                        <td>TPHCM - Hanoi (id: 1)</td>
-                                        <td>32-13-2020</td>
-                                        <td>A1</td>
-                                        <td>6 triệu đô</td>
-                                        <td>{{ current_user.username }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Do Trong</td>
-                                        <td>Nguyen</td>
-                                        <td>020202099</td>
-                                        <td>fox@abc</td>
-                                        <td>0887098511</td>
-                                        <td>TPHCM - Binh Thuan (id: 3)</td>
-                                        <td>32-13-2020</td>
-                                        <td>B1</td>
-                                        <td>12 triệu đô</td>
-                                        <td>{{ current_user.username }}</td>
-                                    </tr>
+                                    {% for ticket in list_ticket %}
+                                        <tr>
+                                            <th scope="row">{{ loop.index }}</th>
+                                            <td>{{ ticket.firstname }}</td>
+                                            <td>{{ ticket.lastname }}</td>
+                                            <td>{{ ticket.identity_card }}</td>
+                                            <td>{{ ticket.email }}</td>
+                                            <td>{{ ticket.phone }}</td>
+                                            <td>{{ ticket.idFlight }}</td>
+                                            <td>{{ ticket.derpartureTime }}</td>
+                                            <td>{{ ticket.seat_location }}</td>
+                                            <td>{{ ticket.price }}</td>
+                                            {% if ticket.id_account %}
+                                                <td>Successful ticket booking</td>
+                                            {% else %}
+                                                <td>Waiting for recognition</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+
                                 </tbody>
                             </table>
                         </div>
