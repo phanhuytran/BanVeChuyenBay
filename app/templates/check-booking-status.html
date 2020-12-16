@@ -69,19 +69,19 @@
                                     {% for ticket in list_ticket %}
                                         <tr>
                                             <th scope="row">{{ loop.index }}</th>
-                                            <td>ticket.firstname</td>
-                                            <td>ticket.lastname</td>
-                                            <td>ticket.identity_card</td>
-                                            <td>ticket.email</td>
-                                            <td>ticket.phone</td>
-                                            <td>ticket.idFlight</td>
-                                            <td>ticket.derpartureTime</td>
-                                            <td>ticket.seat_location</td>
-                                            <td>ticket.price</td>
+                                            <td>{{ ticket.firstname }}</td>
+                                            <td>{{ ticket.lastname }}</td>
+                                            <td>{{ ticket.identity_card }}</td>
+                                            <td>{{ ticket.email }}</td>
+                                            <td>{{ ticket.phone }}</td>
+                                            <td>{{ ticket.idFlight }}</td>
+                                            <td>{{ ticket.derpartureTime }}</td>
+                                            <td>{{ ticket.seat_location }}</td>
+                                            <td>{{ ticket.price }}</td>
                                             {% if ticket.id_account %}
-                                                <td> Đã đặt thành công</td>
+                                                <td>Successful ticket booking</td>
                                             {% else %}
-                                                <td>Đang chờ ghi nhận</td>
+                                                <td>Waiting for recognition</td>
                                             {% endif %}
                                         </tr>
                                     {% endfor %}
