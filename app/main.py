@@ -16,7 +16,6 @@ def login_staff():
 
         user = get_account(username=username,password=password)
 
-
         if user:
             acc = Account.query.filter(Account.id == user.id).first()
             if user.user_role:
@@ -133,7 +132,10 @@ def index():
 
 @app.route("/staff")
 def index_staff():
-    return redirect(url_for("login_staff"))
+    if current_user.is_authenticated:
+        return redirect(url_for("search_flight_staff"))
+    else:
+        return redirect(url_for("login_staff"))
 
 
 @login.user_loader
@@ -247,7 +249,6 @@ def search_flight():
                     return render_template("search-flight.html", airports=airports,
                                            enumerate_schedules=enumerate_schedules,
                                            count_result=count_result, scroll='section_ticket', mess_err=mess_err)
-
 
             first_name = request.form.get('first_name')
             last_name = request.form.get('last_name')
