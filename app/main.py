@@ -43,7 +43,6 @@ def search_flight_staff():
 
     flight = None
 
-
     if request.form.get('btn') == "SEARCH":
         if request.method == 'POST':
             departure = request.form.get('from_locate')
@@ -68,11 +67,9 @@ def search_flight_staff():
             enumerate_seat = enumerate(seats)
             flight = get_flight_by_id(idFlight=id_flight)
 
-
             return render_template("staff/search-flight.html", airports=airports,
                                    enumerate_schedules=enumerate_schedules, enumerate_seat=enumerate_seat,
                                    count_result=count_result, seats=seats, flight=flight, scroll="section_ticket")
-
 
     if request.form.get('btn') == "ORDER TICKET NOW":
         if request.method == 'POST':
@@ -100,7 +97,6 @@ def search_flight_staff():
             seat_location = request.form.get('seat')
             id_seat = get_id_seat(id_flight=id_flight,seat_location=seat_location)
 
-
             if not get_customer(firstname=first_name, lastname=last_name,identity_card=identity_card):
 
                 if not add_customer(firstname=first_name, lastname=last_name,
@@ -110,20 +106,18 @@ def search_flight_staff():
                                enumerate_schedules=enumerate_schedules,
                                count_result=count_result,scroll='section_ticket', mess_err=mess_err)
 
-
             customer = get_customer(firstname=first_name, lastname=last_name, identity_card=identity_card)
             if update_ticket_for_Staff(id_flight=id_flight,id_customer=customer.id,id_staff=current_user.staff.id,id_seat=id_seat):
                 mess_err=  '''Successful booking, please go to Booking Status to see a list of tickets booked'''
                 return  render_template("staff/search-flight.html", airports=airports,
                                enumerate_schedules=enumerate_schedules,
                                count_result=count_result,scroll='section_ticket', mess_err=mess_err)
-
-
-
-
-    return render_template("staff/search-flight.html", airports=airports,
-                           enumerate_schedules=enumerate_schedules,
-                           count_result=count_result, flight=flight)
+    if current_user.is_authenticated:
+        return render_template("staff/search-flight.html", airports=airports,
+                               enumerate_schedules=enumerate_schedules,
+                               count_result=count_result, flight=flight)
+    else:
+        return render_template("login.html")
 
 
 @app.route('/logout')
@@ -224,7 +218,7 @@ def search_flight():
                 return render_template("search-flight.html", airports=airports,
                                        enumerate_schedules=enumerate_schedules, count_result=count_result)
             else:
-                return render_template("staff/search-flight.html", airports=airports)
+                return render_template("search-flight.html", airports=airports)
 
     if request.form.get('btn') not in ["RESET", "ORDER TICKET NOW", "SEARCH"]:
         if request.method == "POST":
@@ -276,7 +270,7 @@ def search_flight():
             if update_ticket_for_customer(id_flight=id_flight, id_customer=customer.id,
                              id_seat=id_seat):
                 mess_err = '''Successful booking, please go to Booking Status to see a list of tickets booked'''
-                return render_template("staff/search-flight.html", airports=airports,
+                return render_template("search-flight.html", airports=airports,
                                        enumerate_schedules=enumerate_schedules,
                                        count_result=count_result, scroll='section_ticket', mess_err=mess_err)
 
