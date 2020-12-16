@@ -160,6 +160,23 @@ def get_seats_by_id_flight(id_flight):
     return seats
 
 
+def get_id_seat(id_flight, seat_location):
+    seat = Seat.query.join(Ticket, Ticket.idSeat == Seat.idSeat) \
+        .join(SeatLocation, SeatLocation.id == Seat.seatLocation) \
+        .join(Schedule, Schedule.idFlight == Ticket.idFlight) \
+        .join(TypeSeat, TypeSeat.id == SeatLocation.typeSeat) \
+        .filter(Schedule.idFlight == id_flight, SeatLocation.name == seat_location) \
+        .add_columns(SeatLocation.name.label("seat_location"),
+                     TypeSeat.name.label("type_seat"),
+                     Ticket.idTicket,
+                     Ticket.is_empty,
+                     Seat.idSeat
+                     ) \
+        .order_by(asc(SeatLocation.name)).first()
+
+    return seat.idSeat
+
+
 def get_ticket_by_id_account(id_account):
     tickets = Ticket.query.filter(or_(Ticket.idAccount == id_account, Ticket.idAccount.is_(None)),Ticket.idCustomer != None).all()
     return tickets
@@ -191,25 +208,29 @@ def get_ticket_by_id_ticket(id_ticket):
 
 
 
-def get_id_seat(id_flight, seat_location):
-    seat = Seat.query.join(Ticket, Ticket.idSeat == Seat.idSeat) \
+
+def get_ticket_by_id_customer(id_customer):
+    tickets = Ticket.query.join(Seat, Ticket.idSeat == Seat.idSeat) \
         .join(SeatLocation, SeatLocation.id == Seat.seatLocation) \
         .join(Schedule, Schedule.idFlight == Ticket.idFlight) \
         .join(TypeSeat, TypeSeat.id == SeatLocation.typeSeat) \
-        .filter(Schedule.idFlight == id_flight, SeatLocation.name == seat_location) \
+        .join(Customer, Customer.id == Ticket.idCustomer) \
+        .filter(Ticket.idTicket == id_customer) \
         .add_columns(SeatLocation.name.label("seat_location"),
                      TypeSeat.name.label("type_seat"),
+                     TypeSeat.price.label("price"),
                      Ticket.idTicket,
                      Ticket.is_empty,
-                     Seat.idSeat
-                     ) \
-        .order_by(asc(SeatLocation.name)).first()
+                     Customer.lastname,
+                     Customer.firstname,
+                     Customer.phone,
+                     Customer.email,
+                     Customer.identity_card,
+                     Schedule.idFlight,
+                     Ticket.idAccount,
+                     Ticket.exportTime).first()
 
-    return seat.idSeat
-
-
-
-
+    return tickets
 
 def update_ticket_for_Staff(id_customer, id_staff, id_seat, id_flight):
     ticket = Ticket.query.filter(Ticket.idSeat == id_seat, Ticket.idFlight == id_flight).first()
@@ -285,5 +306,12 @@ def get_customer(firstname,lastname,identity_card):
     return customer
 
 
+
+def get_id_cusomer(firstname, lastname, identity_card, phone):
+    customer = Customer.query.filter(Customer.firstname == firstname,
+                                     Customer.lastname == lastname,
+                                     Customer == identity_card, Customer.phone == phone).first()
+
+    return customer.id
 # print(get_ticket_by_id_account(1))
 # print(get_ticket_by_id_ticket(1))
