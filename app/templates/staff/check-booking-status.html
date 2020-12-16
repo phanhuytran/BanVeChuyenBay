@@ -45,8 +45,7 @@
                                         <th scope="row">Export time</th>
                                         <th scope="row">Seat</th>
                                         <th scope="row">Price</th>
-                                        <th scope="row">Staff confirmed</th>
-                                        <th scope="row">delete</th>
+                                        <th scope="row" colspan=2 style="text-align:center">Confirmation status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,19 +70,15 @@
                                         <td>{{ ticket_info.seat_location }}</td>
                                         <td>{{ ticket_info.price }}$</td>
                                         {% if ticket.idAccount %}
-                                        <td>đã xác nhận</td>
-                                        <td></td>
+                                        <td colspan=2 style="text-align:center">Confirmed</td>
                                         {% else %}
                                         <td>
-
-                                            <button class="btn-book-ticket" onclick="confirmBookTicket()"
+                                            <button class="btn-book-ticket-1" onclick="confirmBookTicket()"
                                                       value="{{ ticket.idTicket }}" name="confirm"
                                                      style="width:300px">Confirm</button>
-
                                         </td>
                                         <td>
-
-                                            <button class="btn-book-ticket" onclick="confirmBookTicket()"
+                                            <button class="btn-book-ticket-1" onclick="confirmBookTicket()"
                                                       value="{{ ticket.idTicket }}" name="delete"
                                                      style="width:300px">Delete</button>
                                         </td>
