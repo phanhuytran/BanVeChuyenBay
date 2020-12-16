@@ -36,39 +36,11 @@
                                 </div>
                             </div><br/>
 
-                            <span class="desc">SELECT SEAT</span>
-                            <div class="seat">
-                                <div class="seat-class">
-                                    {% for i, seat in enumerate_seat %}
-                                        {% if seat.is_empty == False %}
-                                            <button disabled class="seat-reserved">{{ seat.seat_location }}</button>
-                                        {% else %}
-                                            <button disabled>{{ seat.seat_location }}</button>
-                                        {% endif %}
-                                        {% if i % 4 == 3 %}
-                                            <br/>
-                                            <div class="radio-seat">
-                                                {% for j in range(i - 3, i + 1) %}
-                                                    <input type="radio" name="seat" id={{ seats[j].seat_location }} required/>
-                                                {% endfor %}
-                                            </div>
-                                            <br/>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                                <div class="seat-note">
-                                    <button disabled class="seat-reserved"></button><span class="desc">Seat is reserved</span>
-                                    <button disabled></button><span class="desc">Seat is empty</span>
-                                </div>
-                            </div>
-
                             <div class="row third">
                                 <div class="input-field">
                                     <div class="result-count">
-                                        PRICE: <span style="font-size:20px">2,000,000.00 VND</span>
                                     </div>
                                     <div class="submit-search">
-                                        <input class="btn-delete" type="submit" value="RESET" />
                                         <input class="btn-search" type="submit" value="ORDER TICKET NOW" style="width:300px" name="btn"/>
                                     </div>
                                 </div>

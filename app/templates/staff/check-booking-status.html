@@ -23,7 +23,6 @@
         <div class="container">
             <div class="section-heading">
                 <h2>booking confirmation</h2>
-                <h2> {{ mess_err }}</h2>
             </div>
             <div class="s009">
                 <form action="{{ url_for('check_booking_status_staff') }}" method="post">
@@ -32,7 +31,10 @@
                             <table class="table table-hover table-air-ticket-info" style="text-align:left" >
                                 <thead>
                                     <tr>
-                                        <td colspan=12><span class="desc">AIR TICKET INFORMATION</span></td>
+                                        <td colspan=12>
+                                            <span class="desc">AIR TICKET INFORMATION</span>
+                                            <div class="mess-err-1">{{ mess_err }}</div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">No</th>
