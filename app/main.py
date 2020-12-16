@@ -245,7 +245,7 @@ def search_flight():
                                        count_result=count_result, scroll='section_ticket', mess_err=mess_err)
             else:
                 if not get_flight_by_id(idFlight=id_flight):
-                    mess_err = 'Invalid flight code'
+                    mess_err = 'mã chuyến bay ko hợp lệ'
                     return render_template("search-flight.html", airports=airports,
                                            enumerate_schedules=enumerate_schedules,
                                            count_result=count_result, scroll='section_ticket', mess_err=mess_err)
@@ -280,7 +280,7 @@ def search_flight():
                            count_result=count_result, flight=flight)
 
 
-@app.route("/staff/check-booking-status", methods=["POST", "GET"])
+@app.route("/staff/check-booking-status",methods=['POST', 'GET'])
 def check_booking_status_staff():
     if current_user.is_authenticated:
         tickets = get_ticket_by_id_account(current_user.staff.id)
@@ -292,23 +292,39 @@ def check_booking_status_staff():
             if request.form.get('confirm'):
                 id_ticket = request.form.get('confirm')
                 if update_ticket(id_ticket=id_ticket, id_account=current_user.id):
-                    mess_err= 'Confirm successfully'
+                    mess_err = 'Confirm successfully'
                 else:
-                    mess_err= 'Confirm unsuccessfully'
-
+                    mess_err = 'Confirm unsuccessfully'
                 return render_template("staff/check-booking-status.html",
-                                           zip_ticket_info=zip_ticket_info,mess_err=mess_err)
+                                       zip_ticket_info=zip_ticket_info, mess_err=mess_err)
+
+            if request.form.get('delete'):
+                id_ticket = request.form.get('delete')
+                if update_ticket(id_ticket=id_ticket,id_account=current_user.id, confirm=False):
+                    mess_err = 'Delete successfully'
+                else:
+                    mess_err = 'Delete unsuccessfully'
+                return render_template("staff/check-booking-status.html",
+                                       zip_ticket_info=zip_ticket_info, mess_err=mess_err)
+
         if request.method == 'GET':
-            return render_template("staff/check-booking-status.html",zip_ticket_info=zip_ticket_info)
+                return render_template("staff/check-booking-status.html", zip_ticket_info=zip_ticket_info)
+
+
     else:
         return render_template("error-404.html")
 
 
-
-
-
-@app.route("/check-booking-status")
+@app.route("/check-booking-status", methods=['POST', 'GET'])
 def check_booking_status():
+    firstname = request.form.get('first_name')
+    lastname = request.form.get('last_name')
+    identity_card = request.form.get('identity_card')
+    phone = request.form.get('phone')
+
+
+
+
     return render_template("check-booking-status.html")
 
 
