@@ -2,7 +2,7 @@ import hashlib
 from pprint import pprint
 from flask_admin import BaseView, Admin
 from pymysql import NULL
-from sqlalchemy import desc, Date, asc, or_
+from sqlalchemy import desc, Date, asc, or_, extract
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql.functions import count
 from app import db
@@ -304,6 +304,24 @@ def get_id_cusomer(firstname, lastname, identity_card, phone):
                                      Customer.identity_card == identity_card, Customer.phone == phone).first()
 
     return customer.id
+
+
+
+def report_by_month(month, year):
+    ticket = Ticket.query.join(Seat, Ticket.idSeat == Seat.idSeat) \
+        .join(SeatLocation, SeatLocation.id == Seat.seatLocation) \
+        .join(Schedule, Schedule.idFlight == Ticket.idFlight) \
+        .join(TypeSeat, TypeSeat.id == SeatLocation.typeSeat) \
+        .join(Customer, Customer.id == Ticket.idCustomer) \
+        .join(Account, Account.id == Ticket.idAccount) \
+        .filter(extract("month", Ticket.exportTime) == month,
+                extract("year", Ticket.exportTime) == year) \
+        .add_columns(Schedule.idFlight,
+                     count(Ticket.idTicket).label('count_ticket'),
+                    TypeSeat.price,
+                     ).group_by(Schedule.idFlight)
+
+    return ticket
 # print(get_ticket_by_id_account(1))
 # print(get_ticket_by_id_ticket(1))
 

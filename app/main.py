@@ -342,10 +342,27 @@ def contact():
     return render_template("contact.html")
 
 
-@app.route("/revenue-month")
+@app.route("/revenue-month",methods=['POST', 'GET'])
 def revenue_month():
     if current_user.is_authenticated and current_user.username == 'nguyentrong':
-        return render_template("revenue-month.html")
+        if request.method == 'POST':
+            month = request.form.get('month')
+            year =request.form.get('year')
+            tick = report_by_month(month=month, year=year)
+            enum_tick =enumerate(tick)
+            list_doanh_thu = [t.count_ticket * t.price for t in tick]
+            list_id_flight = [str(t.idFlight) for t in tick]
+            print(list_id_flight)
+            sum = 0
+            for i in list_doanh_thu:
+                sum += i
+
+            list_rate = [t/sum*100 for t in list_doanh_thu]
+
+            return render_template("revenue-month.html",enum_tick=enum_tick,
+                               list_doanh_thu=list_doanh_thu,sum=sum,list_rate=list_rate,list_id_flight=list_id_flight)
+
+        return render_template('revenue-month.html')
     elif current_user.is_authenticated and current_user.username != 'nguyentrong' or not(current_user.is_authenticated):
         return render_template("error-404.html")
 

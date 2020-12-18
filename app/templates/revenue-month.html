@@ -22,7 +22,7 @@
     <section class="contact-form">
         <div class="container">
             <div class="s009">
-                <form action="{{ url_for('search_flight_staff') }}" method="post">
+                <form action="{{ url_for('revenue_month') }}" method="post">
                     <div class="inner-form">
                         <div class="advance-search">
                             <div class="col-md-12">
@@ -33,6 +33,16 @@
                                     <a style="color: hsl(53deg 83% 34%)" href="{{ url_for('revenue_year') }}"><i class="fa fa-money"></i> Revenue Year</a>
                                 </div>
                             </div>
+
+                            <div>
+                                <input class="form-control" type="text" name="year" placeholder="Year..."/>
+                            </div><br/>
+                            <div>
+                                <input class="form-control" type="text" name="month" placeholder="Month..."/>
+                            </div><br/>
+                            <div>
+                                <input class="form-control alert-danger" type="submit" name="submit" value="Submit"/>
+                            </div><br/>
                             <div class="report-month">
                                 <span>Month: </span>
                                 <span>12</span>
@@ -48,13 +58,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {% for i,t in enum_tick %}
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Ho Chi Minh city - Tien Giang</td>
-                                    <td>335</td>
-                                    <td>80%</td>
-                                    <td>167.500.000</td>
+                                    <th scope="row">{{ loop.index }}</th>
+                                    <td>{{t.idFlight}}</td>
+                                    <td>{{  t.count_ticket }}</td>
+                                    <td>{{ "{:.2f}".format(list_rate[i]) }}%</td>
+                                    <td>{{ list_doanh_thu[i] }}</td>
                                 </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                             <div class="container">
@@ -77,14 +89,14 @@
         let massPopChart = new Chart(myChart, {
             type:'bar',
             data:{
-                labels:['Id flight 1', 'Id flight 2', 'Id flight 3', 'Id flight 4'],
+                labels:['Id flight 1', 'Id flight 2', 'Id flight 3'],
                 datasets:[{
                     label:'Price',
                     data:[
-                        317594,
-                        381045,
-                        343060,
-                        406519,
+                        66.6,
+                        16.6,
+                        16.6,
+
                     ],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.6)',
